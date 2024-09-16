@@ -6,14 +6,16 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Board {
-    IMU imu = null;
     private final DcMotor[] drivebase = {null, null, null, null};
+    IMU imu = null;
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
@@ -45,6 +47,17 @@ public class Board {
             );
         } catch (Throwable e) {
             fails.put("IMU", e);
+        }
+
+        try {
+            FileWriter writer = new FileWriter("BOARD_LOG.txt", false);
+
+            for (String dev : fails.keySet()) {
+                writer.write(dev + " : " + Objects.requireNonNull(fails.get(dev)) + "\n");
+            }
+
+            writer.close();
+        } catch (IOException ignored) {
         }
     }
 
