@@ -37,11 +37,11 @@ public class Board {
         try {
             imu = hwMap.get(IMU.class, "imu");
 
-            imu.initialize( //TODO: GET VALUES GET VALUES GET VALUES GET VALUES (subtle, eh?)
+            imu.initialize(
                     new IMU.Parameters(
                             new RevHubOrientationOnRobot(
-                                    null,
-                                    null
+                                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                                    RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
                             )
                     )
             );
