@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -57,8 +56,7 @@ public class Board {
             }
 
             writer.close();
-        } catch (IOException ignored) {
-        }
+        } catch (Throwable ignored) {}
     }
 
     double getAngle() {
