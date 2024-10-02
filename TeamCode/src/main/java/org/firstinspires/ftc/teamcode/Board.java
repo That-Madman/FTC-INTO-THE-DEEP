@@ -78,6 +78,10 @@ public class Board {
         }
     }
 
+    void setSpoolPower (double power) {
+        spool.setPower(power);
+    }
+
     double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
