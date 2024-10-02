@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
+    private DcMotor spool = null;
     IMU imu = null;
 
     public void init(HardwareMap hwMap) {
@@ -31,6 +32,14 @@ public class Board {
             drivebase[3].setDirection(DcMotorSimple.Direction.REVERSE);
         } catch (Throwable e) {
             fails.put("The Drivebase", e);
+        }
+
+        try {
+            spool = hwMap.get(DcMotor.class, "spool");
+
+            spool.setDirection(DcMotorSimple.Direction.FORWARD);
+        } catch (Throwable e) {
+            fails.put("Spool Motor", e);
         }
 
         try {
