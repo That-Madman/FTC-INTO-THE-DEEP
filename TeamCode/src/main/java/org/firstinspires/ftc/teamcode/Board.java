@@ -82,6 +82,14 @@ public class Board {
         spool.setPower(power);
     }
 
+    void setClaw (boolean open) {
+        if (open) {
+            claw.setPosition(0); //open position, according to Caleb
+        } else {
+            claw.setPosition(1); //thus follows that this is the closed position
+        }
+    }
+
     double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
