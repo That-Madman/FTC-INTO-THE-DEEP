@@ -15,10 +15,11 @@ import java.util.Objects;
 
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
-    IMU imu = null;
     private DcMotor spool = null;
 
     private Servo claw = null;
+
+    private IMU imu = null;
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
