@@ -120,7 +120,6 @@ public class PID {
         prevTime = (System.nanoTime() / 1e9);
     }
 
-
     /**
      * Utilizes the PID values given to calculate the output needed to reach the desired endpoint.
      * @param target The target value
