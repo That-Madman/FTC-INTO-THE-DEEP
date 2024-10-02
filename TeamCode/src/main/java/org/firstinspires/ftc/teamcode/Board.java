@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -14,8 +15,10 @@ import java.util.Objects;
 
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
-    private DcMotor spool = null;
     IMU imu = null;
+    private DcMotor spool = null;
+
+    private Servo claw = null;
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
@@ -43,6 +46,12 @@ public class Board {
         }
 
         try {
+            claw = hwMap.get(Servo.class, "claw");
+        } catch (Throwable e) {
+            fails.put("Gripper", e);
+        }
+
+        try {
             imu = hwMap.get(IMU.class, "imu");
 
             imu.initialize(
@@ -65,7 +74,8 @@ public class Board {
             }
 
             writer.close();
-        } catch (Throwable ignored) {}
+        } catch (Throwable ignored) {
+        }
     }
 
     double getAngle() {
