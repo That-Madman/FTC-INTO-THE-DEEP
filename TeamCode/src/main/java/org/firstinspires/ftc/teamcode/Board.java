@@ -78,11 +78,11 @@ public class Board {
         }
     }
 
-    void setSpoolPower (double power) {
+    public void setSpoolPower (double power) {
         spool.setPower(power);
     }
 
-    void setClaw (boolean open) {
+    public void setClaw (boolean open) {
         if (open) {
             claw.setPosition(0); //open position, according to Caleb
         } else {
@@ -90,7 +90,7 @@ public class Board {
         }
     }
 
-    double getAngle() {
+    public double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
 
