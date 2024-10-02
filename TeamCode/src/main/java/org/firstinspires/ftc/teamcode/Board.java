@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
-    private DcMotor spool = null;
+    private DcMotorEx spool = null;
 
     private Servo claw = null;
 
@@ -39,7 +40,7 @@ public class Board {
         }
 
         try {
-            spool = hwMap.get(DcMotor.class, "spool");
+            spool = hwMap.get(DcMotorEx.class, "spool");
 
             spool.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Throwable e) {
@@ -81,6 +82,10 @@ public class Board {
 
     public void setSpoolPower (double power) {
         spool.setPower(power);
+    }
+
+    public int getSpoolPostion () {
+        return spool.getCurrentPosition();
     }
 
     public void setClaw (boolean open) {
