@@ -7,6 +7,9 @@ import org.firstinspires.ftc.teamcode.Board;
 
 @TeleOp
 public class MainTele extends OpMode {
+    boolean bHeld = false;
+    boolean clawOpen = false;
+
     Board board = new Board();
 
     @Override
@@ -24,5 +27,13 @@ public class MainTele extends OpMode {
 
         //for spool function
         board.setSpoolPower(gamepad2.right_trigger - gamepad2.left_trigger);
+
+        if (gamepad2.b && !bHeld) {
+            clawOpen = !clawOpen;
+        }
+
+        board.setClaw(clawOpen);
+
+        bHeld = gamepad2.b;
     }
 }
