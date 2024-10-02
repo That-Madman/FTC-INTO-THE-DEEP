@@ -22,15 +22,8 @@ public class MainTele extends OpMode {
                 gamepad1.right_stick_x
         );
 
-        if (gamepad1.right_trigger > 0) {
-           board.setSpoolPower(1);
-        }
-        else if (gamepad1.left_trigger > 0) {
-            board.setSpoolPower(-1);
-            }
-        else {
-            board.setSpoolPower(0);
-         }
-        //board.setSpoolPower(gamepad.right_trigger - gamepad.left_trigger);
+        //for spool function
+        //all of my training for nothing :(
+        board.setSpoolPower(gamepad1.right_trigger - gamepad1.left_trigger);
     }
 }
