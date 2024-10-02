@@ -23,7 +23,6 @@ public class MainTele extends OpMode {
         );
 
         //for spool function
-        //all of my training for nothing :(
         board.setSpoolPower(gamepad1.right_trigger - gamepad1.left_trigger);
     }
 }
