@@ -43,6 +43,7 @@ public class Board {
             spool = hwMap.get(DcMotorEx.class, "spool");
 
             spool.setDirection(DcMotorSimple.Direction.FORWARD);
+            spool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } catch (Throwable e) {
             fails.put("Spool Motor", e);
         }
