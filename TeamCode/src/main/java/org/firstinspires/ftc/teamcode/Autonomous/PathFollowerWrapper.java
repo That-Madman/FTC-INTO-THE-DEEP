@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
+
 import org.firstinspires.ftc.teamcode.PID;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class PathFollowerWrapper {
 
     //TODO Set start time and cap I
     private PID xPID, yPID, hPID;
-    private static final double mP = 1./24., mI = .01, mD = .125,
+    private static final double mP = 1./24., mI = 0, mD = 0,
                                 hP = 1./Math.PI, hI = 0, hD = 0,
                                 mMaxI = .25, hMaxI = .1;
 
@@ -62,24 +63,24 @@ public class PathFollowerWrapper {
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
     public double[] moveTo(double forward, double strafe, double heading){
-        double movementAngle = Math.atan2(strafe, forward) - localization.getAngle();
-        double x = forward * Math.cos(movementAngle) - strafe * Math.sin(movementAngle);
-        double y = forward * Math.sin(movementAngle) + strafe * Math.cos(movementAngle);
-        double h = Math.abs(heading) <= Math.toRadians(5) ? 0 : heading * .25;
+        double x = forward * Math.cos(localization.getAngle()) - strafe * Math.sin(localization.getAngle());
+        double y = forward * Math.sin(localization.getAngle()) + strafe * Math.cos(localization.getAngle());
+        double h = Math.abs(heading) <= Math.toRadians(5) ? 0 : (heading/180.) * .25;
 
-        double length = Math.hypot(x, y);
+        double movementAngle = Math.atan2(y,x) - localization.getAngle(),
+                distance = Math.hypot(x,y);
+        x = distance * Math.cos(movementAngle);
+        y = distance * Math.sin(movementAngle);
 
-        if(length > 1) {
-            x /= length;
-            y /= length;
-            h /= length;
+
+        if(distance > 1) {
+            x *= .75/distance;
+            y *= .75/distance;
         }
 
-        return new double[] {
-                x + y + h,
-                x - y + h,
-                x + y - h,
-                x - y - h};
+        return new double[]{
+                x, y, 0 //TODO fix heading control
+        };
     }
 
     /** Sets motor powers so drivebase can move towards target using PID (for when the lookahead is shrinking)
@@ -111,26 +112,23 @@ public class PathFollowerWrapper {
         }
 
         if(length > 5){
-            if(heading > Math.toRadians(5))
-                heading = Range.clip(hPID.pidCalc(-heading, 0), -.25, .25) * ((x+y)/(2.0 * length));
+            if(heading > Math.toRadians(5)) {
+                heading = Range.clip(hPID.pidCalc(0, heading), -.25, .25) * ((x + y) / (2.0 * length));
+            }
         }
-        else
-            heading = Range.clip(hPID.pidCalc(-heading, 0), -.5, .5);
+        else {
+            heading = Range.clip(hPID.pidCalc(0, heading), -.5, .5);
+        }
 
-        return new double[] {
-                x + y + heading,
-                x - y + heading,
-                x + y - heading,
-                x - y - heading};
+        return new double[]{
+                x, y, heading
+        };
     }
 
     public void resetPID(){
         xPID.resetI();
         yPID.resetI();
         hPID.resetI();
-        xPID.setStartTime();
-        yPID.setStartTime();
-        hPID.setStartTime();
     }
 
     public boolean targetReached(Pose2D target){
@@ -161,34 +159,38 @@ public class PathFollowerWrapper {
         return m;
     }
 
-    public double[] followPath(){
-        localization.update();
+    public int getCurrentWayPoint(){
+        return follower.getWayPoint();
+    }
+
+    public double[] followPath(int v, int h){
+        localization.update(v, h);
 
         if(follower != null) {
             if(targetReached(follower.getLastPoint())){
                 concludePath();
-                return new double[] {0,0,0,0};
+                return new double[] {0,0,0};
             }
             m = follower.followPath(getPose());
-            return moveTo(m.x, m.y, m.h);
+            return moveTo(m.x, m.y, 0);
         }
 
-        return new double[] {0,0,0,0};
+        return new double[] {0,0,0};
     }
-    public double[] followPathPID(){
-        localization.update();
+    public double[] followPathPID(int v, int h){
+        localization.update(v, h);
 
         if(follower != null) {
             if(targetReached(follower.getLastPoint())){
                 concludePath();
-                return new double[] {0,0,0,0};
+                return new double[] {0,0,0};
             }
 
             m = follower.followPath(getPose());
             return moveToPID(m);
         }
 
-        return new double[] {0,0,0,0};
+        return new double[] {0,0,0};
     }
 
     @Override

@@ -13,7 +13,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import Wheelie.Pose2D;
 
 public class Localization {
-    private DcMotorEx hori, vert;
     private BNO055IMU imu;
     private Orientation angles;
 
@@ -36,12 +35,6 @@ public class Localization {
         //Sets the position the robot starts in
         currentPosition = new Pose2D(start.x, start.y, start.h);
 
-        //Setting up Odom pods
-        hori = hw.get(DcMotorEx.class, "BR"); //TODO Find where odom is wired
-        vert = hw.get(DcMotorEx.class, "FR");
-        hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         //Initializing IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -51,15 +44,16 @@ public class Localization {
 
         imu = hw.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
     }
 
     /**
      * Calculates the current position based on odom pods and imu changes
      */
-    private void calculateChanges() {
+    private void calculateChanges(int hori, int vert) {
         //Finds the delta values in wheels and angle
-        int currentH = hori.getCurrentPosition();
-        int currentV = -vert.getCurrentPosition();
+        int currentH = hori;
+        int currentV = -vert;
         int dy = currentH - prevH;
         int dx = currentV - prevV;
         double heading = getAngle();
@@ -93,17 +87,17 @@ public class Localization {
      */
     public double getAngle(){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return -(angles.firstAngle + 2 * Math.PI) % (2 * Math.PI);
+        return AngleUnit.normalizeRadians(angles.firstAngle);
     }
 
     public int getHori(){
-        return hori.getCurrentPosition();
+        return 0;
     }
     public int getVert(){
-        return vert.getCurrentPosition();
+        return 0;
     }
 
-    public void update(){
-        calculateChanges();
+    public void update(int vert, int hori){
+        calculateChanges(vert, hori);
     }
 }

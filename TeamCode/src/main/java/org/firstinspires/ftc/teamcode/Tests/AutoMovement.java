@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Autonomous.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 
 @Autonomous
-public class RedObserverAuto extends LinearOpMode {
+public class AutoMovement extends LinearOpMode {
 
     //TODO add necessary rotations
     private PathFollowerWrapper followerWrapper;
@@ -21,17 +22,9 @@ public class RedObserverAuto extends LinearOpMode {
     private Pose2D start = new Pose2D(0,0,0);
 
     private Pose2D[] toSub = new Pose2D[] {
-            new Pose2D(0, 24, 0),
-            new Pose2D(24, 24, 0),
-            new Pose2D(24, 48, 0),
-            new Pose2D(12, 48, 0),
-    }, toObser = new Pose2D[] {
-                new Pose2D(12, 48, 0),
-                new Pose2D(72,48,0),
-                new Pose2D(72, 0, 0),
-    },backUp = new Pose2D[] {
-            new Pose2D(72,0,0),
-            new Pose2D(72, 24, 0),
+            new Pose2D(0,0,0),
+            new Pose2D(24, 0, 0),
+            new Pose2D(24, 24, 0)
     };
     @Override
     public void runOpMode() throws InterruptedException {
@@ -51,12 +44,22 @@ public class RedObserverAuto extends LinearOpMode {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while(followerWrapper.getFollower() != null && opModeIsActive()){
-            double[] powers = followerWrapper.followPath(1,2);
-            //.setPowers(powers[0], powers[3], powers[1], powers[2]);
-            board.setPowers(powers[0], powers[3], powers[1], powers[2]);
+            double[] vectorCom = followerWrapper.followPath(board.getDrivePosition(1), board.getDrivePosition(2));
+            board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);
 
-            telemetry.addData("Position", followerWrapper.getPose());
-            telemetry.addData("Powers", Arrays.toString(powers));
+            telemetry.addData("Position",
+                    followerWrapper.getPose().x + ", " +
+                            followerWrapper.getPose().y + ", " +
+                            followerWrapper.getPose().h);
+            telemetry.addData("Vector", Arrays.toString(vectorCom));
+
+            telemetry.addLine();
+            Pose2D goal = a[followerWrapper.getCurrentWayPoint()+1];
+            telemetry.addData("Goal",
+                    goal.x + ", " +
+                    goal.y + ", " +
+                    goal.h);
+
             telemetry.update();
         }
         //TODO move this timer out of the function;
