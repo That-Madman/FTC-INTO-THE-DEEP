@@ -14,6 +14,8 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Objects;
 
+import Wheelie.PID;
+
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
     private DcMotorEx spool = null;
@@ -21,6 +23,8 @@ public class Board {
     private Servo claw = null;
 
     private IMU imu = null;
+
+    private PID spoolPID = new PID(0.01, 0, 0);
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
@@ -85,9 +89,13 @@ public class Board {
         spool.setPower(power);
     }
 
-    public int getSpoolPostion () {
+    public int getSpoolPosition () {
         return spool.getCurrentPosition();
     }
+
+   public void setSpoolPos (int pos) {
+        spool.setPower(spoolPID.pidCalc(pos, getSpoolPosition()));
+   }
 
     public void setClaw (boolean open) {
         if (open) {
