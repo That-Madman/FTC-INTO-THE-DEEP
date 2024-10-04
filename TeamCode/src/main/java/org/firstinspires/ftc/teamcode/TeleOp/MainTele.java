@@ -37,7 +37,6 @@ public class MainTele extends OpMode {
         );
 
         //for spool function
-
         spoolTarg += (int) (spoolDil * (gamepad2.right_trigger - gamepad2.left_trigger));
         spoolTarg = min(spoolTarg, MAXIMUM);
         spoolTarg = max(spoolTarg, MINIMUM);
