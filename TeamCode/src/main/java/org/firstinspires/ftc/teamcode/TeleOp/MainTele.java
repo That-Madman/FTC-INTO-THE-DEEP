@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.SpoolStates.MAXIMUM;
+import static org.firstinspires.ftc.teamcode.SpoolStates.MINIMUM;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,9 +15,13 @@ public class MainTele extends OpMode {
     boolean bHeld = false;
     boolean clawOpen = false;
 
-    //aAlreadyHeld = false;
+    int spoolTarg = 0;
+
+    //AlreadyHeld = false;
 
     Board board = new Board();
+
+    final int spoolDil = 100;
 
     @Override
     public void init() {
@@ -28,7 +37,11 @@ public class MainTele extends OpMode {
         );
 
         //for spool function
-        board.setSpoolPower(gamepad2.right_trigger - gamepad2.left_trigger);
+
+        spoolTarg += (int) (spoolDil * (gamepad2.right_trigger - gamepad2.left_trigger));
+        spoolTarg = min(spoolTarg, MAXIMUM);
+        spoolTarg = max(spoolTarg, MINIMUM);
+        board.setSpoolPos(spoolTarg);
 
         if (gamepad2.b && !bHeld) {
             clawOpen = !clawOpen;
