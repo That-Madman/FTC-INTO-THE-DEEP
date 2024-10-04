@@ -39,13 +39,8 @@ public class MainTele extends OpMode {
         bHeld = gamepad2.b;
 
         /* Code here is place holder code for the horizontal expansion system
-        if(gamepad2.a && (aAlreadyHeld = false)) {
-            if (board.getHorzServoPosition >= 0) {
-                board.setHorzServoPosition(-1);
-                }
-            else {
-                board.setHorzServoPosition(1);
-                }
+        if (gamepad2.a && !aAlreadyHeld) {
+            extended = !extended
            }
         aAlreadyHeld = (gamepad2.a);
          */
