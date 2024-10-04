@@ -10,6 +10,8 @@ public class MainTele extends OpMode {
     boolean bHeld = false;
     boolean clawOpen = false;
 
+    //aAlreadyHeld = false;
+
     Board board = new Board();
 
     @Override
@@ -35,5 +37,18 @@ public class MainTele extends OpMode {
         board.setClaw(clawOpen);
 
         bHeld = gamepad2.b;
+
+        /* Code here is place holder code for the horizontal expansion system
+        if(gamepad2.a && (aAlreadyHeld = false)) {
+            if (board.getHorzServoPosition >= 0) {
+                board.setHorzServoPosition(-1);
+                }
+            else {
+                board.setHorzServoPosition(1);
+                }
+           }
+        aAlreadyHeld = (gamepad2.a);
+         */
+
     }
 }
