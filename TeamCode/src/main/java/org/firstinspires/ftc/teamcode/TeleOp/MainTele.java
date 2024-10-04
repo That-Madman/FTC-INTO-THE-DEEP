@@ -17,7 +17,7 @@ public class MainTele extends OpMode {
 
     int spoolTarg = 0;
 
-    //AlreadyHeld = false;
+    //alreadyHeld = false;
 
     Board board = new Board();
 
