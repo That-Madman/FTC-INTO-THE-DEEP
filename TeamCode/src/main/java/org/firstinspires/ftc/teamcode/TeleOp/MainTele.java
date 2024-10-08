@@ -72,8 +72,7 @@ public class MainTele extends OpMode {
                     spoolTarg = MINIMUM;
                     break;
             }
-        }
-        else if (gamepad2.left_bumper && !leftBumperHeld) {
+        } else if (gamepad2.left_bumper && !leftBumperHeld) {
             switch (spoolTarg) {
                 case CHAMBERHIGH:
                     spoolTarg = BUCKETLOW;
