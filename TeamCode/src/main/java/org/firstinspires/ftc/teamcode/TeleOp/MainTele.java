@@ -27,6 +27,9 @@ public class MainTele extends OpMode {
 
     Board board = new Board();
 
+    /**
+     * The dilation of the spool
+     */
     final int spoolDil = 100;
 
     @Override
@@ -88,10 +91,12 @@ public class MainTele extends OpMode {
                     spoolTarg = BUCKETHIGH;
                     break;
                 default:
-                    spoolTarg = BUCKETLOW;
+                    spoolTarg = MINIMUM;
                     break;
             }
         }
+
+        board.setSpoolPos(spoolTarg);
 
         if (gamepad2.b && !bHeld) {
             clawOpen = !clawOpen;
