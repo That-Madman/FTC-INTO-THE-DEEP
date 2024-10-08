@@ -159,14 +159,14 @@ public class PID {
         double currErr = target - currPos;
         double p = kP * currErr;
 
-        i += kI * (currErr * ((System.nanoTime() / 1e9) - prevTime));
+        i += kI * (currErr * ((double) (System.nanoTime() / 1e9) - prevTime));
 
         if (maxI == maxI) {
             i = Math.min(i, maxI);
             i = Math.max(i, -maxI);
         }
 
-        double d = kD * (currErr - prevErr) / ((System.nanoTime() / 1e9) - prevTime);
+        double d = kD * (currErr - prevErr) / ((double) (System.nanoTime() / 1e9) - prevTime);
 
         prevErr = currErr;
         prevTime = (System.nanoTime() / 1e9);

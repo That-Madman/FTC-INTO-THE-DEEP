@@ -35,6 +35,15 @@ public class Board {
             drivebase[1].setDirection(DcMotorSimple.Direction.FORWARD);
             drivebase[2].setDirection(DcMotorSimple.Direction.FORWARD);
             drivebase[3].setDirection(DcMotorSimple.Direction.REVERSE);
+
+            drivebase[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivebase[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            drivebase[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivebase[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            drivebase[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivebase[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            drivebase[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivebase[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         } catch (Throwable e) {
             fails.put("The Drivebase", e);
         }
@@ -139,5 +148,9 @@ public class Board {
         double newRight = r * Math.cos(theta);
 
         drive(newForward, newRight, rotate);
+    }
+
+    public int getDrivePosition(int index){
+        return drivebase[index].getCurrentPosition();
     }
 }

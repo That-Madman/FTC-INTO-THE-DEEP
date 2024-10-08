@@ -22,6 +22,7 @@ public class PathFollowerWrapper {
 
     //TODO Set start time and cap I
     private PID xPID, yPID, hPID;
+
     private static final double mP = 1./24., mI = 0, mD = 0,
                                 hP = 1./Math.PI, hI = 0, hD = 0,
                                 mMaxI = .25, hMaxI = .1;
@@ -94,11 +95,8 @@ public class PathFollowerWrapper {
         double x = Math.cos(localization.getAngle()) * forward + Math.sin(localization.getAngle()) * strafe;
         double y = Math.cos(localization.getAngle()) * strafe - Math.sin(localization.getAngle()) * forward;
 
-        double movementAngle = Math.atan2(strafe, forward) - localization.getAngle(),
-                distance = Math.hypot(x, y);
-
-        x = xPID.pidCalc(distance * Math.cos(movementAngle), 0);
-        y = yPID.pidCalc(distance * Math.sin(movementAngle), 0);
+        x = xPID.pidCalc(x, 0);
+        y = yPID.pidCalc(y, 0);
 
         double length = Math.hypot(x,y);
 
