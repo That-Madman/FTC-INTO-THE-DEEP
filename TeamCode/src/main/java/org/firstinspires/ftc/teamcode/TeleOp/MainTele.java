@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.SpoolStates.BUCKETHIGH;
+import static org.firstinspires.ftc.teamcode.SpoolStates.BUCKETLOW;
+import static org.firstinspires.ftc.teamcode.SpoolStates.CHAMBERHIGH;
+import static org.firstinspires.ftc.teamcode.SpoolStates.CHAMBERLOW;
 import static org.firstinspires.ftc.teamcode.SpoolStates.MAXIMUM;
 import static org.firstinspires.ftc.teamcode.SpoolStates.MINIMUM;
 import static java.lang.Math.max;
@@ -14,10 +18,12 @@ import org.firstinspires.ftc.teamcode.Board;
 public class MainTele extends OpMode {
     boolean bHeld = false;
     boolean clawOpen = false;
+    boolean rightBumperHeld = false;
+    boolean leftBumperHeld = false;
 
     int spoolTarg = 0;
 
-    //AlreadyHeld = false;
+    //aAlreadyHeld = false;
 
     Board board = new Board();
 
@@ -42,6 +48,51 @@ public class MainTele extends OpMode {
         spoolTarg = max(spoolTarg, MINIMUM);
         board.setSpoolPos(spoolTarg);
 
+        if (gamepad2.right_bumper && !rightBumperHeld) {
+            switch(spoolTarg) {
+                case MINIMUM:
+                    spoolTarg = CHAMBERLOW;
+                    break;
+                case CHAMBERLOW:
+                    spoolTarg = BUCKETLOW;
+                    break;
+                case CHAMBERHIGH:
+                    spoolTarg = BUCKETHIGH;
+                    break;
+                case BUCKETLOW:
+                    spoolTarg = CHAMBERHIGH;
+                    break;
+                case BUCKETHIGH:
+                    spoolTarg = MAXIMUM;
+                    break;
+                default:
+                    spoolTarg = MINIMUM;
+                    break;
+            }
+        }
+        else if (gamepad2.left_bumper && !leftBumperHeld) {
+            switch (spoolTarg) {
+                case CHAMBERLOW:
+                    spoolTarg = MINIMUM;
+                    break;
+                case CHAMBERHIGH:
+                    spoolTarg = BUCKETLOW;
+                    break;
+                case BUCKETLOW:
+                    spoolTarg = CHAMBERLOW;
+                    break;
+                case BUCKETHIGH:
+                    spoolTarg = CHAMBERHIGH;
+                    break;
+                case MAXIMUM:
+                    spoolTarg = BUCKETHIGH;
+                    break;
+                default:
+                    spoolTarg = BUCKETLOW;
+                    break;
+            }
+        }
+
         if (gamepad2.b && !bHeld) {
             clawOpen = !clawOpen;
         }
@@ -54,8 +105,11 @@ public class MainTele extends OpMode {
         if (gamepad2.a && !aAlreadyHeld) {
             extended = !extended
            }
-        aAlreadyHeld = (gamepad2.a);
+        aAlreadyHeld = gamepad2.a;
          */
 
+        /* spool code
+
+         */
     }
 }
