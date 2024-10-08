@@ -112,9 +112,5 @@ public class MainTele extends OpMode {
            }
         aAlreadyHeld = gamepad2.a;
          */
-
-        /* spool code
-
-         */
     }
 }
