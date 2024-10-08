@@ -75,9 +75,6 @@ public class MainTele extends OpMode {
         }
         else if (gamepad2.left_bumper && !leftBumperHeld) {
             switch (spoolTarg) {
-                case CHAMBERLOW:
-                    spoolTarg = MINIMUM;
-                    break;
                 case CHAMBERHIGH:
                     spoolTarg = BUCKETLOW;
                     break;
@@ -95,6 +92,8 @@ public class MainTele extends OpMode {
                     break;
             }
         }
+        rightBumperHeld = gamepad2.right_bumper;
+        leftBumperHeld = gamepad2.left_bumper;
 
         board.setSpoolPos(spoolTarg);
 
