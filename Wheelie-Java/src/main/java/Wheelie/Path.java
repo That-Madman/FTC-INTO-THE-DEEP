@@ -29,7 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Wheelie.src.main.java.Wheelie;
+package org.firstinspires.ftc.teamcode.Wheelie;
 
 import java.util.ArrayList;
 
