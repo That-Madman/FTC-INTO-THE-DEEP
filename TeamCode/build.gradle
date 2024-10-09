@@ -25,6 +25,5 @@ android {
 
 dependencies {
     implementation project(':FtcRobotController')
-    implementation project(':Wheelie')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
