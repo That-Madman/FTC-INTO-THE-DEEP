@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;
 
-import Wheelie.Path;
-import Wheelie.Pose2D;
+import org.firstinspires.ftc.teamcode.Wheelie.Path;
+import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
 
 @Autonomous
 public class RedObserverAuto extends LinearOpMode {
@@ -51,7 +51,8 @@ public class RedObserverAuto extends LinearOpMode {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while(followerWrapper.getFollower() != null && opModeIsActive()){
-            double[] powers = followerWrapper.followPath(1,2);
+            followerWrapper.updatePose(board.getDrivePosition(1), board.getDrivePosition(2), board.getAngle());
+            double[] powers = followerWrapper.followPath();
             //.setPowers(powers[0], powers[3], powers[1], powers[2]);
             board.setPowers(powers[0], powers[3], powers[1], powers[2]);
 

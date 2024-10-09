@@ -10,10 +10,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import Wheelie.Pose2D;
+import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
 
 public class Localization {
-    private BNO055IMU imu;
+    //private BNO055IMU imu;
     private Orientation angles;
 
     private int prevH = 0, prevV = 0;
@@ -27,7 +27,7 @@ public class Localization {
 
     // In inches
     public final static double H_DISTANCE_FROM_MID = 10.25; //TODO Check these values
-    public final static double V_DISTANCE_FROM_MID = 6.55;
+    public final static double V_DISTANCE_FROM_MID = 4;
 
     public Pose2D currentPosition;
 
@@ -36,7 +36,7 @@ public class Localization {
         currentPosition = new Pose2D(start.x, start.y, start.h);
 
         //Initializing IMU
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        /*BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled      = true;
@@ -45,18 +45,20 @@ public class Localization {
         imu = hw.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
+         */
+
     }
 
     /**
      * Calculates the current position based on odom pods and imu changes
      */
-    private void calculateChanges(int hori, int vert) {
+    private void calculateChanges(int hori, int vert, double angle) {
         //Finds the delta values in wheels and angle
         int currentH = hori;
         int currentV = -vert;
         int dy = currentH - prevH;
         int dx = currentV - prevV;
-        double heading = getAngle();
+        double heading = angle;
         double deltaHeading = heading - currentPosition.h;
 
         // Convert ticks to millimeters
@@ -85,10 +87,12 @@ public class Localization {
     /**
      * @return the orientation of the robot in radians
      */
-    public double getAngle(){
+    /*public double getAngle(){
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
         return AngleUnit.normalizeRadians(angles.firstAngle);
     }
+
+     */
 
     public int getHori(){
         return 0;
@@ -97,7 +101,7 @@ public class Localization {
         return 0;
     }
 
-    public void update(int vert, int hori){
-        calculateChanges(vert, hori);
+    public void update(int vert, int hori, double angle){
+        calculateChanges(vert, hori, angle);
     }
 }

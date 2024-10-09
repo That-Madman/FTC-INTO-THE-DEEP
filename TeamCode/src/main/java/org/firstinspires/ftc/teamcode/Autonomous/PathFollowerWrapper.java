@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
@@ -10,9 +11,9 @@ import org.firstinspires.ftc.teamcode.PID;
 
 import java.util.Arrays;
 
-import Wheelie.Path;
-import Wheelie.PathFollower;
-import Wheelie.Pose2D;
+import org.firstinspires.ftc.teamcode.Wheelie.Path;
+import org.firstinspires.ftc.teamcode.Wheelie.PathFollower;
+import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
 
 public class PathFollowerWrapper {
     private Localization localization;
@@ -22,8 +23,9 @@ public class PathFollowerWrapper {
 
     //TODO Set start time and cap I
     private PID xPID, yPID, hPID;
+    private ElapsedTime PIDtimer;
 
-    private static final double mP = 1./24., mI = 0, mD = 0,
+    private static final double mP = 1./50., mI = 0, mD = 0,
                                 hP = 1./Math.PI, hI = 0, hD = 0,
                                 mMaxI = .25, hMaxI = .1;
 
@@ -41,6 +43,7 @@ public class PathFollowerWrapper {
         xPID.capI(mMaxI);
         yPID.capI(mMaxI);
         hPID.capI(hMaxI);
+        PIDtimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     }
 
     public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look, double maxSpeed)
@@ -57,6 +60,7 @@ public class PathFollowerWrapper {
 
     public void setPath(Pose2D startPose, Path path){
         follower = new PathFollower(startPose, lookAhead, path);
+        PIDtimer.reset();
     }
     public PathFollower getFollower(){
         return follower;
@@ -64,62 +68,41 @@ public class PathFollowerWrapper {
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
     public double[] moveTo(double forward, double strafe, double heading){
-        double x = forward * Math.cos(localization.getAngle()) - strafe * Math.sin(localization.getAngle());
-        double y = forward * Math.sin(localization.getAngle()) + strafe * Math.cos(localization.getAngle());
-        double h = Math.abs(heading) <= Math.toRadians(5) ? 0 : (heading/180.) * .25;
+        double x = forward * Math.cos(getPose().h) - strafe * Math.sin(getPose().h);
+        double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
+        double h = heading;
 
-        double movementAngle = Math.atan2(y,x) - localization.getAngle(),
+        double movementAngle = Math.atan2(y,x) - getPose().h,
                 distance = Math.hypot(x,y);
         x = distance * Math.cos(movementAngle);
         y = distance * Math.sin(movementAngle);
 
-
-        if(distance > 1) {
-            x *= .75/distance;
-            y *= .75/distance;
-        }
+        x *= mP;
+        y *= mP;
+        h *= hP;
 
         return new double[]{
-                x, y, 0 //TODO fix heading control
+                x, y, h //TODO fix heading control
         };
     }
 
     /** Sets motor powers so drivebase can move towards target using PID (for when the lookahead is shrinking)
      * @param move output from PathFollwer class, followPath method
      */
-    public double[] moveToPID(Pose2D move){
+    public double[] moveToPID(Pose2D move, double time){
         double forward = move.x,
                 strafe = move.y,
                 heading = move.h;
 
-        double x = Math.cos(localization.getAngle()) * forward + Math.sin(localization.getAngle()) * strafe;
-        double y = Math.cos(localization.getAngle()) * strafe - Math.sin(localization.getAngle()) * forward;
+        double x = Math.cos(getPose().h) * forward + Math.sin(getPose().h) * strafe;
+        double y = Math.cos(getPose().h) * strafe - Math.sin(getPose().h) * forward;
+        double h = hPID.pidCalc(heading, 0, time);
 
-        x = xPID.pidCalc(x, 0);
-        y = yPID.pidCalc(y, 0);
-
-        double length = Math.hypot(x,y);
-
-        if(length > 1) {
-            x /= length;
-            y /= length;
-            if(Math.abs(heading) > Math.toRadians(5)){
-                x*= .75;
-                y *= .75;
-            }
-        }
-
-        if(length > 5){
-            if(heading > Math.toRadians(5)) {
-                heading = Range.clip(hPID.pidCalc(0, heading), -.25, .25) * ((x + y) / (2.0 * length));
-            }
-        }
-        else {
-            heading = Range.clip(hPID.pidCalc(0, heading), -.5, .5);
-        }
+        x = xPID.pidCalc(x, 0, time);
+        y = yPID.pidCalc(y, 0, time);
 
         return new double[]{
-                x, y, heading
+                x, y, h
         };
     }
 
@@ -130,7 +113,7 @@ public class PathFollowerWrapper {
     }
 
     public boolean targetReached(Pose2D target){
-        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= follower.look;
+        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= 2;
     }
     public void concludePath(){
         follower = null;
@@ -161,9 +144,7 @@ public class PathFollowerWrapper {
         return follower.getWayPoint();
     }
 
-    public double[] followPath(int v, int h){
-        localization.update(v, h);
-
+    public double[] followPath(){
         if(follower != null) {
             if(targetReached(follower.getLastPoint())){
                 concludePath();
@@ -175,8 +156,7 @@ public class PathFollowerWrapper {
 
         return new double[] {0,0,0};
     }
-    public double[] followPathPID(int v, int h){
-        localization.update(v, h);
+    public double[] followPathPID(){
 
         if(follower != null) {
             if(targetReached(follower.getLastPoint())){
@@ -185,10 +165,14 @@ public class PathFollowerWrapper {
             }
 
             m = follower.followPath(getPose());
-            return moveToPID(m);
+            return moveToPID(m, PIDtimer.time());
         }
 
         return new double[] {0,0,0};
+    }
+
+    public void updatePose(int vert, int hori, double angle){
+        localization.update(vert, hori, angle);
     }
 
     @Override

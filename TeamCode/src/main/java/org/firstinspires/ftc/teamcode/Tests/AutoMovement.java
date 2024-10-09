@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;
 
-import Wheelie.Path;
-import Wheelie.Pose2D;
+import org.firstinspires.ftc.teamcode.Wheelie.Path;
+import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
 
 @Autonomous
 public class AutoMovement extends LinearOpMode {
@@ -44,7 +44,11 @@ public class AutoMovement extends LinearOpMode {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while(followerWrapper.getFollower() != null && opModeIsActive()){
-            double[] vectorCom = followerWrapper.followPath(board.getDrivePosition(1), board.getDrivePosition(2));
+            followerWrapper.updatePose(
+                    board.getDrivePosition(1),
+                    board.getDrivePosition(2),
+                    board.getAngle());
+            double[] vectorCom = followerWrapper.followPath();
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);
 
             telemetry.addData("Position",
@@ -54,11 +58,13 @@ public class AutoMovement extends LinearOpMode {
             telemetry.addData("Vector", Arrays.toString(vectorCom));
 
             telemetry.addLine();
-            Pose2D goal = a[followerWrapper.getCurrentWayPoint()+1];
-            telemetry.addData("Goal",
-                    goal.x + ", " +
-                    goal.y + ", " +
-                    goal.h);
+            if(followerWrapper.getFollower() != null) {
+                Pose2D goal = a[followerWrapper.getCurrentWayPoint() + 1];
+                telemetry.addData("Goal",
+                        goal.x + ", " +
+                                goal.y + ", " +
+                                goal.h);
+            }
 
             telemetry.update();
         }
