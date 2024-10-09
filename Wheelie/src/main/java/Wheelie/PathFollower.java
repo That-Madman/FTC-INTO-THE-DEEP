@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Wheelie;
+package Wheelie;
 
 /**
  * The Path Following algorithm that takes a list of points and lookahead to determine how

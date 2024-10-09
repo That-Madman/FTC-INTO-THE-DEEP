@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Wheelie;
+package Wheelie;
 
 /**
  * A point in 2D space, alongside the heading of the point.
