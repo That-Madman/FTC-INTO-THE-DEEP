@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -21,6 +22,9 @@ public class Board {
     private DcMotorEx spool = null;
 
     private Servo claw = null;
+    private Servo horzExt = null;
+
+    private CRServo sweep = null;
 
     private IMU imu = null;
 
@@ -53,9 +57,21 @@ public class Board {
         }
 
         try {
-            claw = hwMap.get(Servo.class, "claw");
+            claw = hwMap.get(Servo.class, "gripper");
         } catch (Throwable e) {
             fails.put("Gripper", e);
+        }
+
+        try {
+            horzExt = hwMap.get(Servo.class, "arm");
+        } catch (Throwable e) {
+            fails.put("Horizontal Extension", e);
+        }
+
+        try {
+            sweep = hwMap.get(CRServo.class, "sweeper");
+        } catch (Throwable e) {
+            fails.put("The Sweeper", e);
         }
 
         try {
@@ -105,6 +121,17 @@ public class Board {
         }
     }
 
+    public void setHorzExt (boolean short_) {
+        if (short_) {
+            horzExt.setPosition(0);
+        } else {
+            horzExt.setPosition(1);
+        }
+    }
+
+    public void setSweep (double pow) {
+        sweep.setPower(pow);
+    }
 
     public double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);

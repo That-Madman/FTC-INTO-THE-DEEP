@@ -16,14 +16,16 @@ import org.firstinspires.ftc.teamcode.Board;
 
 @TeleOp
 public class MainTele extends OpMode {
+    boolean aHeld = false;
     boolean bHeld = false;
+    boolean yHeld = false;
     boolean clawOpen = false;
+    boolean shortHorz = true;
     boolean rightBumperHeld = false;
     boolean leftBumperHeld = false;
 
     int spoolTarg = 0;
-
-    //aAlreadyHeld = false;
+    int sweepState = 0;
 
     Board board = new Board();
 
@@ -104,11 +106,30 @@ public class MainTele extends OpMode {
 
         bHeld = gamepad2.b;
 
-        /* Code here is place holder code for the horizontal expansion system
-        if (gamepad2.a && !aAlreadyHeld) {
-            extended = !extended
-           }
-        aAlreadyHeld = gamepad2.a;
-         */
+        if (gamepad2.a && !aHeld) {
+           shortHorz = !shortHorz;
+        }
+
+        board.setHorzExt(shortHorz);
+
+        aHeld = gamepad2.a;
+
+        if (gamepad2.y && !yHeld) {
+            sweepState = ++sweepState % 3;
+        }
+
+        switch (sweepState) {
+            case 0:
+                board.setSweep(0);
+                break;
+            case 1:
+                board.setSweep(1);
+                break;
+            case 2:
+                board.setSweep(-1);
+                break;
+        }
+
+        yHeld = gamepad1.y;
     }
 }
