@@ -33,6 +33,7 @@ public class MainTele extends OpMode {
      * The dilation of the spool
      */
     final int spoolDil = 100;
+    final double slowDil = 0.5;
 
     @Override
     public void init() {
@@ -41,18 +42,26 @@ public class MainTele extends OpMode {
 
     @Override
     public void loop() {
-        board.driveFieldRelative(
-                -gamepad1.left_stick_y,
-                gamepad1.left_stick_x,
-                gamepad1.right_stick_x
-        );
+        if (gamepad1.left_trigger > 0) {
+            board.driveFieldRelative(
+                    -gamepad1.left_stick_y * slowDil,
+                    gamepad1.left_stick_x * slowDil,
+                    gamepad1.right_stick_x * slowDil
+            );
+        } else {
+            board.driveFieldRelative(
+                    -gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x
+            );
+        }
 
+        /*
         //for spool function
         spoolTarg += (int) (spoolDil * (gamepad2.right_trigger - gamepad2.left_trigger));
-        spoolTarg = min(spoolTarg, MAXIMUM);
+       //spoolTarg = min(spoolTarg, MAXIMUM);
         spoolTarg = max(spoolTarg, MINIMUM);
-        board.setSpoolPos(spoolTarg);
-
+*/
         if (gamepad2.right_bumper && !rightBumperHeld) {
             switch(spoolTarg) {
                 case MINIMUM:
@@ -96,7 +105,8 @@ public class MainTele extends OpMode {
         rightBumperHeld = gamepad2.right_bumper;
         leftBumperHeld = gamepad2.left_bumper;
 
-        board.setSpoolPos(spoolTarg);
+        //board.setSpoolPos(spoolTarg);
+        board.setSpoolPower(gamepad2.right_trigger - gamepad2.left_trigger);
 
         if (gamepad2.b && !bHeld) {
             clawOpen = !clawOpen;
@@ -115,7 +125,8 @@ public class MainTele extends OpMode {
         aHeld = gamepad2.a;
 
         if (gamepad2.y && !yHeld) {
-            sweepState = ++sweepState % 3;
+            ++sweepState;
+            sweepState %= 3;
         }
 
         switch (sweepState) {
@@ -130,6 +141,6 @@ public class MainTele extends OpMode {
                 break;
         }
 
-        yHeld = gamepad1.y;
+        yHeld = gamepad2.y;
     }
 }
