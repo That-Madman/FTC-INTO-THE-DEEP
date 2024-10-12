@@ -20,8 +20,6 @@ public class PathFollowerWrapper {
 
     private PathFollower follower;
     private double lookAhead;
-
-    //TODO Set start time and cap I
     private PID xPID, yPID, hPID;
     private ElapsedTime PIDtimer;
 
@@ -58,6 +56,11 @@ public class PathFollowerWrapper {
         hPID = new PID(hP,hI,hD);
     }
 
+    /**
+     * Sets the path for the robot to follow
+     * @param startPose the robot's starting Pose
+     * @param path the Path object the robot will follow
+     */
     public void setPath(Pose2D startPose, Path path){
         follower = new PathFollower(startPose, lookAhead, path);
         PIDtimer.reset();
@@ -66,7 +69,11 @@ public class PathFollowerWrapper {
         return follower;
     }
 
-    /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
+    /** Finds the movement vector by transforming the followPath vectors
+     * @param forward the x component of the vector outputted by PathFollower.followPath
+     * @param strafe the y component of the vector outputted by PathFollower.followPath
+     * @param heading the h component of the vector outputted by PathFollower.followPath
+     */
     public double[] moveTo(double forward, double strafe, double heading){
         double x = forward * Math.cos(getPose().h) - strafe * Math.sin(getPose().h);
         double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
@@ -82,12 +89,13 @@ public class PathFollowerWrapper {
         h *= hP;
 
         return new double[]{
-                x, y, h //TODO fix heading control
+                x, y, h
         };
     }
 
-    /** Sets motor powers so drivebase can move towards target using PID (for when the lookahead is shrinking)
+    /** Finds the movement vector using PID
      * @param move output from PathFollwer class, followPath method
+     * @param time time elasped since path was started
      */
     public double[] moveToPID(Pose2D move, double time){
         double forward = move.x,
@@ -144,6 +152,10 @@ public class PathFollowerWrapper {
         return follower.getWayPoint();
     }
 
+    /**
+     * Finds the movement vector for the robot to move along the path until its conclusion
+     * @return the movement vector
+     */
     public double[] followPath(){
         if(follower != null) {
             if(targetReached(follower.getLastPoint())){
@@ -156,6 +168,11 @@ public class PathFollowerWrapper {
 
         return new double[] {0,0,0};
     }
+
+    /**
+     * Finds the movement vector for the robot to move along the path until its conclusion (using PID)
+     * @return the movement vector
+     */
     public double[] followPathPID(){
 
         if(follower != null) {
@@ -171,6 +188,12 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
+    /**
+     * Updates the localization of the robot
+     * @param vert the current tick position of the vertical wheel
+     * @param hori the current tick position of the horizontal wheel
+     * @param angle the current angle of the robot (radians)
+     */
     public void updatePose(int vert, int hori, double angle){
         localization.update(vert, hori, angle);
     }

@@ -21,7 +21,7 @@ public class AutoMovement extends LinearOpMode {
 
     private Pose2D start = new Pose2D(0,0,0);
 
-    private Pose2D[] toSub = new Pose2D[] {
+    private Pose2D[] test = new Pose2D[] {
             new Pose2D(0,0,0),
             new Pose2D(24, 0, 0),
             new Pose2D(24, 24, 0)
@@ -34,20 +34,22 @@ public class AutoMovement extends LinearOpMode {
 
         waitForStart();
 
-        followLoop(toSub, 5);
-        //followLoop(toObser, 5);
-        //followLoop(backUp, 5);
+        followLoop(test, 5);
 
     }
 
     private void followLoop(Pose2D[] a, double waitTime){
+        //Sets the path
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
+        //Will loop until robot has reached the path's end
         while(followerWrapper.getFollower() != null && opModeIsActive()){
+            //Updating location
             followerWrapper.updatePose(
                     board.getDrivePosition(1),
                     board.getDrivePosition(2),
                     board.getAngle());
+            //Finds the movement vector
             double[] vectorCom = followerWrapper.followPath();
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);
 
@@ -68,7 +70,8 @@ public class AutoMovement extends LinearOpMode {
 
             telemetry.update();
         }
-        //TODO move this timer out of the function;
+
+        //TODO give this its own function
         ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         while(time.time() < waitTime && opModeIsActive());
 
