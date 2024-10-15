@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Autonomous.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.AutoThings.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;

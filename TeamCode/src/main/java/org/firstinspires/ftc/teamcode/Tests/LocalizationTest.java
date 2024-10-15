@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Autonomous.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.AutoThings.PathFollowerWrapper;
 
 import org.firstinspires.ftc.teamcode.Board;
 import Wheelie.Pose2D;

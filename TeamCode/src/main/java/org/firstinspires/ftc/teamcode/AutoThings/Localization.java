@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.AutoThings;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
