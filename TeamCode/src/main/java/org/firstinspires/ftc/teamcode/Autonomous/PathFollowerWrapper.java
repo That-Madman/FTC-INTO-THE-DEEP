@@ -1,19 +1,12 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-
-import org.firstinspires.ftc.teamcode.PID;
-
-import java.util.Arrays;
-
-import org.firstinspires.ftc.teamcode.Wheelie.Path;
-import org.firstinspires.ftc.teamcode.Wheelie.PathFollower;
-import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
+import Wheelie.PID;
+import Wheelie.Path;
+import Wheelie.Pose2D;
+import Wheelie.PathFollower;
 
 public class PathFollowerWrapper {
     private Localization localization;

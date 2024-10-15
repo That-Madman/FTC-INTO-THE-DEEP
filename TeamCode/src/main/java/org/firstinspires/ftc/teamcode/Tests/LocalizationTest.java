@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Autonomous.PathFollowerWrapper;
 
 import org.firstinspires.ftc.teamcode.Board;
-import org.firstinspires.ftc.teamcode.Wheelie.PathFollower;
-import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
+import Wheelie.Pose2D;
 
 @TeleOp
 public class LocalizationTest extends LinearOpMode {

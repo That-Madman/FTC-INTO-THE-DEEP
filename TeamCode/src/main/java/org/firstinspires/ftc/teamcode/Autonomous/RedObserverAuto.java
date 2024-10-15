@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;
 
-import org.firstinspires.ftc.teamcode.Wheelie.Path;
-import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
+import Wheelie.Path;
+import Wheelie.Pose2D;
 
 @Autonomous
 public class RedObserverAuto extends LinearOpMode {
