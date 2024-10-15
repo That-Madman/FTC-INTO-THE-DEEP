@@ -20,7 +20,7 @@ public class MainTele extends OpMode {
     boolean bHeld = false;
     boolean yHeld = false;
     boolean clawOpen = false;
-    boolean shortHorz = true;
+    boolean shortHorz = false;
     boolean rightBumperHeld = false;
     boolean leftBumperHeld = false;
 
@@ -33,7 +33,7 @@ public class MainTele extends OpMode {
      * The dilation of the spool
      */
     final int spoolDil = 100;
-    final double slowDil = 0.5;
+    final double slowDil = 0.25;
 
     @Override
     public void init() {
