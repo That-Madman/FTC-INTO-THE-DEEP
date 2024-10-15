@@ -17,7 +17,7 @@ public class RedObserverAuto extends LinearOpMode {
 
     //TODO add necessary rotations
     private PathFollowerWrapper followerWrapper;
-    private Board board;
+    private Board board = new Board();
 
     private Pose2D start = new Pose2D(0,0,0);
 
@@ -36,7 +36,6 @@ public class RedObserverAuto extends LinearOpMode {
     };
     @Override
     public void runOpMode() throws InterruptedException {
-        board = new Board();
         board.init(hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
 
