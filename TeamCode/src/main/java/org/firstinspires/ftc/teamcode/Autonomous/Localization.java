@@ -11,27 +11,36 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import org.firstinspires.ftc.teamcode.Wheelie.Pose2D;
+import org.openftc.easyopencv.PipelineRecordingParameters;
 
 public class Localization {
     //private BNO055IMU imu;
+    private DcMotor vert, hori;
+
     private Orientation angles;
 
     private int prevH = 0, prevV = 0;
 
     //In millimeters
-    public final static double WHEEL_DIAMETER = 48.0,
+    public final static double WHEEL_DIAMETER = 32.0,
             WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
     public final static int TICKS_PER_REV = 2000;
     public final static double MM_TO_INCH = 1.0/25.4;
     public final static double MM_PER_TICK = WHEEL_CIRCUMFERENCE / (double) TICKS_PER_REV;
 
     // In inches
-    public final static double H_DISTANCE_FROM_MID = 10.25; //TODO Check these values
-    public final static double V_DISTANCE_FROM_MID = 4;
+    public final static double H_DISTANCE_FROM_MID = 5.5; //TODO Check these values
+    public final static double V_DISTANCE_FROM_MID = 5;
 
     public Pose2D currentPosition;
 
     public Localization(HardwareMap hw, Pose2D start){
+        vert = hw.get(DcMotorEx.class, "vert");
+        hori = hw.get(DcMotorEx.class, "hori");
+        vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        vert.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hori.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //Sets the position the robot starts in
         currentPosition = new Pose2D(start.x, start.y, start.h);
 
@@ -54,7 +63,7 @@ public class Localization {
      */
     private void calculateChanges(int hori, int vert, double angle) {
         //Finds the delta values in wheels and angle
-        int currentH = hori;
+        int currentH = -hori;
         int currentV = -vert;
         int dy = currentH - prevH;
         int dx = currentV - prevV;
@@ -102,6 +111,7 @@ public class Localization {
     }
 
     public void update(int vert, int hori, double angle){
-        calculateChanges(vert, hori, angle);
+        calculateChanges(
+                this.vert.getCurrentPosition(), this.hori.getCurrentPosition(), angle);
     }
 }
