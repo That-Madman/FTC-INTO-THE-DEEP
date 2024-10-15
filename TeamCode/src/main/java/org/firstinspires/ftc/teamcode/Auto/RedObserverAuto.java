@@ -54,7 +54,7 @@ public class RedObserverAuto extends LinearOpMode {
         while(followerWrapper.getFollower() != null && opModeIsActive()){
             followerWrapper.updatePose(board.getDrivePosition(1), board.getDrivePosition(2), board.getAngle());
             double[] powers = followerWrapper.followPath();
-            //.setPowers(powers[0], powers[3], powers[1], powers[2]);
+
             board.setPowers(powers[0], powers[3], powers[1], powers[2]);
 
             telemetry.addData("Position", followerWrapper.getPose());
