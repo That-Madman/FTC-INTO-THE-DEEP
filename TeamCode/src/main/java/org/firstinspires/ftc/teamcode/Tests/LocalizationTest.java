@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.AutoThings.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.Board;
 import Wheelie.Pose2D;
 
-@TeleOp
+@TeleOp(group = "Test")
 public class LocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

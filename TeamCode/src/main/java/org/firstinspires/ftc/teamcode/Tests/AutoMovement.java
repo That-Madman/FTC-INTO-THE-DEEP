@@ -12,7 +12,7 @@ import java.util.Arrays;
 import Wheelie.Path;
 import Wheelie.Pose2D;
 
-@Autonomous
+@Autonomous (group = "Test")
 public class AutoMovement extends LinearOpMode {
 
     //TODO add necessary rotations
