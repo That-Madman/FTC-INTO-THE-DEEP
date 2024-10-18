@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.AutoThings;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,6 +16,7 @@ public class Localization {
     private DcMotorEx hori, vert;
 
     private int prevH = 0, prevV = 0;
+    private double prevHead = 0;
 
     //In millimeters
     public final static double WHEEL_DIAMETER = 32.0,
@@ -53,7 +53,7 @@ public class Localization {
         int dy = currentH - prevH;
         int dx = currentV - prevV;
         double heading = AngleUnit.normalizeRadians(angle);
-        double deltaHeading = heading - currentPosition.h;
+        double deltaHeading = heading - prevHead;
 
         // Convert ticks to millimeters
         double dH = dy * MM_PER_TICK;
@@ -75,6 +75,7 @@ public class Localization {
         // Update previous encoder values
         prevH = currentH;
         prevV = currentV;
+        prevHead = heading;
     }
 
 

@@ -21,8 +21,8 @@ public class SafetyPark extends LinearOpMode {
 
     private Pose2D[] path = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(0, 5, Math.PI / 2),
-            new Pose2D(-30, 0, Math.PI / 2)
+            new Pose2D (5, 0, 0),
+            new Pose2D (5, 30, 0)
     };
 
     @Override
