@@ -17,11 +17,12 @@ public class SafetyPark extends LinearOpMode {
     private PathFollowerWrapper followerWrapper;
     private Board board = new Board();
 
-    private Pose2D start = new Pose2D(-35, -65, 0);
+    private Pose2D start = new Pose2D(0, 0, 0);
 
     private Pose2D[] path = new Pose2D[]{
-            new Pose2D(-35, -60, 0),
-            new Pose2D(-65, -35, 0)
+            new Pose2D(0, 0, 0),
+            new Pose2D(0, 5, Math.PI / 2),
+            new Pose2D(-30, 0, Math.PI / 2)
     };
 
     @Override
@@ -39,8 +40,6 @@ public class SafetyPark extends LinearOpMode {
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) {
             followerWrapper.updatePose(
-                    board.getDrivePosition(1),
-                    board.getDrivePosition(2),
                     board.getAngle());
             double[] vectorCom = followerWrapper.followPath();
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);

@@ -18,7 +18,7 @@ public class PathFollowerWrapper {
     private PID xPID, yPID, hPID;
     private ElapsedTime PIDtimer;
 
-    private static final double mP = 1./50., mI = 0, mD = 0,
+    private static final double mP = 1./24., mI = 0, mD = 0,
                                 hP = 1./Math.PI, hI = 0, hD = 0,
                                 mMaxI = .25, hMaxI = .1;
 
@@ -164,8 +164,8 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
-    public void updatePose(int vert, int hori, double angle){
-        localization.update(vert, hori, angle);
+    public void updatePose(double angle){
+        localization.update(angle);
     }
 
     @Override

@@ -45,8 +45,6 @@ public class AutoMovement extends LinearOpMode {
 
         while(followerWrapper.getFollower() != null && opModeIsActive()){
             followerWrapper.updatePose(
-                    board.getDrivePosition(1),
-                    board.getDrivePosition(2),
                     board.getAngle());
             double[] vectorCom = followerWrapper.followPath();
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);

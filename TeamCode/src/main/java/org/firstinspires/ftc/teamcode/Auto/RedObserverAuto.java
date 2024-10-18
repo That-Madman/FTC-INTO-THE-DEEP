@@ -51,7 +51,7 @@ public class RedObserverAuto extends LinearOpMode {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while(followerWrapper.getFollower() != null && opModeIsActive()){
-            followerWrapper.updatePose(board.getDrivePosition(1), board.getDrivePosition(2), board.getAngle());
+            followerWrapper.updatePose(board.getAngle());
             double[] powers = followerWrapper.followPath();
 
             board.setPowers(powers[0], powers[3], powers[1], powers[2]);
