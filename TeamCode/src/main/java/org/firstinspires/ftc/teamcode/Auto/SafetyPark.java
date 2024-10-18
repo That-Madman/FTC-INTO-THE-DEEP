@@ -17,10 +17,10 @@ public class SafetyPark extends LinearOpMode {
     private PathFollowerWrapper followerWrapper;
     private Board board = new Board();
 
-    private Pose2D start = new Pose2D(-35, -35, 0);
+    private Pose2D start = new Pose2D(-35, -65, 0);
 
     private Pose2D[] path = new Pose2D[]{
-            new Pose2D(-35, -30, 0),
+            new Pose2D(-35, -60, 0),
             new Pose2D(-65, -35, 0)
     };
 
