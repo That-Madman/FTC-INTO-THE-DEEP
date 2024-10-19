@@ -14,29 +14,26 @@ import Wheelie.Pose2D;
 
 @Autonomous(group = "Park")
 public class RightPark extends LinearOpMode {
-    private PathFollowerWrapper followerWrapper;
-    private Board board = new Board();
+    PathFollowerWrapper followerWrapper = null;
+    Board board = new Board();
 
     private Pose2D start = new Pose2D(0, 0, 0);
-
-    private Pose2D[] path = new Pose2D[]{
+    private Pose2D[] path = new Pose2D[] {
             new Pose2D(0, 0, 0),
-            new Pose2D (5, 0, 0),
-            new Pose2D (5, 25, 0),
-            new Pose2D (0, 40, 0)
+            new Pose2D(50, 0, 0),
+            new Pose2D (50, -10, 0)
     };
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         board.init(hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
 
         waitForStart();
-
         followLoop(path, 5);
     }
 
-    private void followLoop(Pose2D[] a, final double waitTime) {
+    private void followLoop(Pose2D[] a, double waitTime) {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) {
@@ -64,6 +61,6 @@ public class RightPark extends LinearOpMode {
         }
         //TODO move this timer out of the function;
         ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-        while(time.time() < waitTime && opModeIsActive());
+        while (time.time() < waitTime && opModeIsActive()) ;
     }
 }

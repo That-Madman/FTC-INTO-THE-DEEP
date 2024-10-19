@@ -28,7 +28,7 @@ public class Board {
 
     private IMU imu = null;
 
-    private final PID spoolPID = new PID(0.01, 0, 0);
+    private final PID spoolPID = new PID(0.05, 0, 0);
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
