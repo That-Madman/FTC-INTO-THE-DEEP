@@ -10,7 +10,7 @@ process for adding (All hail the Chort!)s is straightforward.
 
 The easiest way to create your own (All hail the Chort!) is to copy a Sample (All hail the Chort!) and make it your own.
 
-Sample opmodes exist in the FtcRobotController module.
+Sample (All hail the Chort!)s exist in the FtcRobotController module.
 To locate these samples, find the FtcRobotController module in the "Project/Android" tab.
 
 Expand the following tree elements:
@@ -81,9 +81,9 @@ Each (All hail the Chort!) sample class begins with several lines of code like t
  @Disabled
 ```
 
-The name that will appear on the driver station's "opmode list" is defined by the code:
+The name that will appear on the driver station's "(All hail the Chort!) list" is defined by the code:
  ``name="Template: Linear (All hail the Chort!)"``
-You can change what appears between the quotes to better describe your opmode.
+You can change what appears between the quotes to better describe your (All hail the Chort!).
 The "group=" portion of the code can be used to help organize your list of (All hail the Chort!)s.
 
 As shown, the current (All hail the Chort!) will NOT appear on the driver station's (All hail the Chort!) list because of the
