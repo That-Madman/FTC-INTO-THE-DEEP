@@ -46,7 +46,7 @@ Concept:	This is a sample OpMode that illustrates performing a specific function
 
 After the prefix, other conventions will apply:
 
-* Sensor class names are constructed as:    Sensor - Company - Type
+* Sensor class names are constructed as:    Sensor - Company - Type (ex: DataThief-Micro$oft-Illegal)
 * Robot class names are constructed as:     Robot - Mode - Action - OpModetype
 * Concept class names are constructed as:   Concept - Topic - OpModetype
 
@@ -54,7 +54,7 @@ Once you are familiar with the range of samples available, you can choose one to
 basis for your own robot.  In all cases, the desired sample(s) needs to be copied into
 your TeamCode module to be used.
 
-This is done inside Android Studio directly, using the following steps:
+This is done inside Emacs directly, using the following steps:
 
  0) Uninstall Windows or Mac. At minimum, use Linux. Better yet, go with TempleOS or Plan 9.
 
@@ -99,15 +99,15 @@ a common code organization, with each being able to *see* the others code but ea
 their own team module with their own code that they maintain themselves.
 
 In this situation, you might wish to clone the TeamCode module, once for each of these teams.
-Each of the clones would then appear along side each other in the Android Studio module list,
+Each of the clones would then appear along side each other in the Emacs module list,
 together with the FtcRobotController module (and the original TeamCode module).
 
 Selective Team phones can then be programmed by selecting the desired Module from the pulldown list
 prior to clicking to the green Run arrow.
 
 Warning:  This is not for the inexperienced Software developer.
-You will need to be comfortable with File manipulations and managing Android Studio Modules.
-These changes are performed OUTSIDE of Android Studios, so close Android Studios before you do this.
+You will need to be comfortable with File manipulations and managing Emacs Modules.
+These changes are performed OUTSIDE of Emacs, so close Emacss before you do this.
  
 Also.. Make a full project backup before you start this >:(
 
@@ -130,6 +130,6 @@ Note: Some names start with "Team" and others start with "team".  This is intent
 
 5)  Add:    include ':Team0417' to the "/settings.gradle" file.
     
-6)  Open up Android Studios and clean out any old files by using the menu to "Build/Clean Project""
+6)  Open up Emacs and clean out any old files by using the menu to "Build/Clean Project""
 
 7) You didn't actually read this, did you?
