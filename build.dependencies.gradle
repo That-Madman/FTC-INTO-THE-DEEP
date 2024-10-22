@@ -20,4 +20,3 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.github.That-Madman:Wheelie-Java:master-SNAPSHOT'
 }
-
