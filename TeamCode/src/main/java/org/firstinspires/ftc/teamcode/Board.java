@@ -28,7 +28,7 @@ public class Board {
 
     private IMU imu = null;
 
-    private final PID spoolPID = new PID(0.05, 0, 0);
+    private final PID spoolPID = new PID(0.1, 0, 0.8);
 
     public void init(HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
@@ -130,11 +130,16 @@ public class Board {
         }
     }
 
-    public void setHorzExt (boolean short_) {
-        if (short_) {
-            horzExt.setPosition(0);
-        } else {
-            horzExt.setPosition(1);
+    public void setHorzExt (short ext) {
+        switch (ext) {
+            case 0:
+                horzExt.setPosition(0);
+                break;
+            case 1:
+                horzExt.setPosition(0.5);
+                break;
+            case 2:
+                horzExt.setPosition(1);
         }
     }
 

@@ -19,13 +19,13 @@ public class MainTele extends OpMode {
     boolean aHeld = false;
     boolean bHeld = false;
     boolean yHeld = false;
-    boolean clawOpen = false;
-    boolean shortHorz = false;
+    boolean clawOpen = true;
     boolean rightBumperHeld = false;
     boolean leftBumperHeld = false;
 
     int spoolTarg = 0;
-    int sweepState = 0;
+    short sweepState = 0;
+    short shortHorz = 2;
 
     Board board = new Board();
 
@@ -50,9 +50,9 @@ public class MainTele extends OpMode {
             );
         } else {
             board.driveFieldRelative(
-                    -gamepad1.left_stick_y,
-                    gamepad1.left_stick_x,
-                    gamepad1.right_stick_x
+                    -gamepad1.left_stick_y * 0.5,
+                    gamepad1.left_stick_x * 0.5,
+                    gamepad1.right_stick_x * 0.5
             );
         }
 
@@ -117,7 +117,8 @@ public class MainTele extends OpMode {
         bHeld = gamepad2.b;
 
         if (gamepad2.a && !aHeld) {
-           shortHorz = !shortHorz;
+            ++shortHorz;
+            shortHorz %= 3;
         }
 
         board.setHorzExt(shortHorz);
