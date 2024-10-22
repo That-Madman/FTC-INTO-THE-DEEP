@@ -136,5 +136,3 @@ Note: Some names start with "Team" and others start with "team".  This is intent
 6) Open up Emacs/Vi and clean out any old files by using the menu to "Build/Clean Project""
 
 7) You didn't actually read this, did you?
-
-8) no i didn't and i'm going to be very graciously unprofessional if you force me too.
