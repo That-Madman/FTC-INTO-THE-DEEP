@@ -56,6 +56,8 @@ your TeamCode module to be used.
 
 This is done inside Android Studio directly, using the following steps:
 
+ 0) Uninstall Windows or Mac. At minimum, use Linux. Better yet, go with TempleOS or Plan 9.
+
  1) Locate the desired sample class in the Project/Android tree.
 
  2) Right click on the sample class and select "Copy"
@@ -107,7 +109,7 @@ Warning:  This is not for the inexperienced Software developer.
 You will need to be comfortable with File manipulations and managing Android Studio Modules.
 These changes are performed OUTSIDE of Android Studios, so close Android Studios before you do this.
  
-Also.. Make a full project backup before you start this :)
+Also.. Make a full project backup before you start this >:(
 
 To clone TeamCode, do the following:
 
@@ -129,3 +131,5 @@ Note: Some names start with "Team" and others start with "team".  This is intent
 5)  Add:    include ':Team0417' to the "/settings.gradle" file.
     
 6)  Open up Android Studios and clean out any old files by using the menu to "Build/Clean Project""
+
+7) You didn't actually read this, did you?
