@@ -118,6 +118,16 @@ public class Board {
         return spool.getCurrentPosition();
     }
 
+    public void autoSpoolOverride () {
+        spool.setTargetPosition(0);
+        spool.setPower(0.75);
+        spool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void spoolTo (int pos) {
+        spool.setTargetPosition(pos);
+    }
+
    public void setSpoolPos (int pos) {
         spool.setPower(spoolPID.pidCalc(pos, getSpoolPosition()));
    }
