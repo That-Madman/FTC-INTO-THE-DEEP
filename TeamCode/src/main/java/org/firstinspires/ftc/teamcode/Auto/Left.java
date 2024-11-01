@@ -19,15 +19,17 @@ public class Left extends LinearOpMode {
     private Pose2D start = new Pose2D(0, 0, 0);
 
     private Pose2D[] path1 = new Pose2D [] {
-            new Pose2D (0,0),
+            new Pose2D (10,0),
+            new Pose2D (10, 18, 25),
+            new Pose2D (10, 36, 45)
     };
 
     private Pose2D[] path2 = new Pose2D [] {
-            new Pose2D(0,0),
+            new Pose2D(5,37, 45),
     };
 
     private Pose2D[] path3 = new Pose2D[] {
-            new Pose2D(0,0),
+
     };
 
     @Override
