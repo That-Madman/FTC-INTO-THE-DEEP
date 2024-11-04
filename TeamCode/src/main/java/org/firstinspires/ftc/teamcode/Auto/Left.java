@@ -24,23 +24,25 @@ public class Left extends LinearOpMode {
 
     final private Pose2D[] path1 = new Pose2D [] {
             new Pose2D (10,0),
-            new Pose2D (10, 18, toRadians(25)),
-            new Pose2D (10, 36, toRadians(45))
+            new Pose2D (10, -18, toRadians(25)),
+            new Pose2D (10, -36, toRadians(45))
     };
 
     final private Pose2D[] path2 = new Pose2D [] {
-            new Pose2D(5,37, toRadians(45)),
+            new Pose2D(5,-37, toRadians(45)),
+            //TODO: Finish
     };
 
     final private Pose2D[] path3 = new Pose2D[] {
-            new Pose2D (10, 36, toRadians(45)),
-            new Pose2D (10, 20, toRadians(35)),
-            new Pose2D (20, 20, 0),
-            new Pose2D (30, 15, toRadians(270))
+            new Pose2D (10, -36, toRadians(45)),
+            new Pose2D (10, -20, toRadians(35)),
+            new Pose2D (20, -20, 0),
+            new Pose2D (30, -15, toRadians(270))
     };
 
     final private Pose2D[] path4 = new Pose2D[] {
-            new Pose2D(30, 10, toRadians(270))
+            new Pose2D(30, -10, toRadians(270)),
+            new Pose2D(30, -10, toRadians(270))
     };
 
     @Override
