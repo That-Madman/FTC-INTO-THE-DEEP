@@ -28,8 +28,7 @@ public class AutoMovement extends LinearOpMode {
     };
     @Override
     public void runOpMode() throws InterruptedException {
-        board = new Board();
-        board.init(hardwareMap);
+        board = new Board(hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
 
         waitForStart();

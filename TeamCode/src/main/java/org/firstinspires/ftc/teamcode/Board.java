@@ -30,7 +30,7 @@ public class Board {
 
     private final PID spoolPID = new PID(0.1, 0, 0.8);
 
-    public void init(HardwareMap hwMap) {
+    public Board (HardwareMap hwMap) {
         HashMap<String, Throwable> fails = new HashMap<>();
 
         try {

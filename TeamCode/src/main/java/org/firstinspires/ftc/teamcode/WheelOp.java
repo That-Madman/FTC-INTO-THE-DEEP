@@ -1,41 +1,32 @@
-package org.firstinspires.ftc.teamcode.Auto.Park;
+package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.AutoThings.PathFollowerWrapper;
-import org.firstinspires.ftc.teamcode.Board;
 
 import java.util.Arrays;
 
 import Wheelie.Path;
 import Wheelie.Pose2D;
 
-@Autonomous(group = "Park")
-public class LeftPark extends LinearOpMode {
-    PathFollowerWrapper followerWrapper = null;
-    Board board = null;
-
-    private Pose2D start = new Pose2D(0, 0, 0);
-    private Pose2D[] path = new Pose2D[] {
-            new Pose2D(0, 0, 0),
-            new Pose2D(5, 0, 0),
-            new Pose2D(50, 0, Math.PI / 2),
-            new Pose2D (50, 20, 0)
-    };
+public abstract class WheelOp extends LinearOpMode {
+    private PathFollowerWrapper followerWrapper = null;
+    protected Board board = null;
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        board = new Board(hardwareMap);
-        followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
+    public void runOpMode () {
+       board = new Board (hardwareMap);
+       followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
-        waitForStart();
-        followLoop(path, 5);
+       waitForStart();
 
+       run();
     }
 
-    private void followLoop(Pose2D[] a, double waitTime) {
+    public abstract void run ();
+
+    protected void followLoop(Pose2D[] a, final double waitTime) {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) {
@@ -61,7 +52,6 @@ public class LeftPark extends LinearOpMode {
 
             telemetry.update();
         }
-        //TODO move this timer out of the function;
         ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         while (time.time() < waitTime && opModeIsActive()) ;
     }

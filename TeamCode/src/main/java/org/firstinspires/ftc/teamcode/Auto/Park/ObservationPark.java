@@ -15,7 +15,7 @@ import Wheelie.Pose2D;
 @Autonomous(group = "Park")
 public class ObservationPark extends LinearOpMode {
     private PathFollowerWrapper followerWrapper;
-    private Board board = new Board();
+    private Board board = null;
 
     private Pose2D start = new Pose2D(0, 0, 0);
 
@@ -28,7 +28,7 @@ public class ObservationPark extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        board.init(hardwareMap);
+        board = new Board (hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
 
         waitForStart();

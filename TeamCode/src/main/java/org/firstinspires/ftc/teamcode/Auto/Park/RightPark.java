@@ -15,7 +15,7 @@ import Wheelie.Pose2D;
 @Autonomous(group = "Park")
 public class RightPark extends LinearOpMode {
     PathFollowerWrapper followerWrapper = null;
-    Board board = new Board();
+    Board board = null;
 
     private Pose2D start = new Pose2D(0, 0, 0);
     private Pose2D[] path = new Pose2D[] {
@@ -26,7 +26,7 @@ public class RightPark extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        board.init(hardwareMap);
+        board = new Board(hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
 
         waitForStart();

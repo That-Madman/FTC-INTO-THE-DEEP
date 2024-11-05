@@ -27,7 +27,7 @@ public class MainTele extends OpMode {
     short sweepState = 0;
     short shortHorz = 2;
 
-    Board board = new Board();
+    Board board;
 
     /**
      * The dilation of the spool
@@ -37,7 +37,7 @@ public class MainTele extends OpMode {
 
     @Override
     public void init() {
-        board.init(hardwareMap);
+        board = new Board(hardwareMap);
     }
 
     @Override

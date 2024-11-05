@@ -18,7 +18,7 @@ import Wheelie.Pose2D;
 @Autonomous
 public class Left extends LinearOpMode {
     private PathFollowerWrapper followerWrapper;
-    final private Board board = new Board();
+    private Board board = null;
 
     final private Pose2D start = new Pose2D(0, 0, 0);
 
@@ -30,7 +30,7 @@ public class Left extends LinearOpMode {
 
     final private Pose2D[] path2 = new Pose2D [] {
             new Pose2D(5,-37, toRadians(45)),
-            //TODO: Finish
+            new Pose2D(5, -37, toRadians(45))
     };
 
     final private Pose2D[] path3 = new Pose2D[] {
@@ -47,7 +47,7 @@ public class Left extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        board.init(hardwareMap);
+        board = new Board(hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, start, 8);
         board.autoSpoolOverride();
 
