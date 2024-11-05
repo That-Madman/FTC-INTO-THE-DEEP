@@ -13,6 +13,7 @@ import Wheelie.Pose2D;
 public abstract class WheelOp extends LinearOpMode {
     private PathFollowerWrapper followerWrapper = null;
     protected Board board = null;
+    ElapsedTime time = null;
 
     @Override
     public void runOpMode () {
@@ -30,8 +31,7 @@ public abstract class WheelOp extends LinearOpMode {
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) {
-            followerWrapper.updatePose(
-                    board.getAngle());
+            followerWrapper.updatePose(board.getAngle());
             double[] vectorCom = followerWrapper.followPath();
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);
 
@@ -52,7 +52,8 @@ public abstract class WheelOp extends LinearOpMode {
 
             telemetry.update();
         }
-        ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+
+        time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         while (time.time() < waitTime && opModeIsActive()) ;
     }
 }
