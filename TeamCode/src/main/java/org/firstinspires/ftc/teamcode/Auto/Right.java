@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.WheelOp;
 
 @Autonomous
-public class Right extends LinearOpMode {
+public class Right extends WheelOp {
     @Override
-    public void runOpMode () {
+    public void run () {
 
     }
 }
