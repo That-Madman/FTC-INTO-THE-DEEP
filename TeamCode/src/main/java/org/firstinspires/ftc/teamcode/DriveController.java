@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 enum ModuleSide {LEFT, RIGHT}
 
 public class DriveController {
-    Robot robot;
+    Board board;
 
     DriveModule moduleLeft;
     DriveModule moduleRight;
@@ -28,10 +28,10 @@ public class DriveController {
     //will multiply the input from the rotation joystick (max value of 1) by this factor
     public final double ROBOT_ROTATION_SCALE_FACTOR = 0.7;
 
-    public DriveController(Robot robot) {
-        this.robot = robot;
-        moduleLeft = new DriveModule(robot, ModuleSide.LEFT);
-        moduleRight = new DriveModule(robot, ModuleSide.RIGHT);
+    public DriveController(Board board) {
+        this.board = board;
+        moduleLeft = new DriveModule(board, ModuleSide.LEFT);
+        moduleRight = new DriveModule(board, ModuleSide.RIGHT);
 
         moduleLeftLastDistance = moduleLeft.getDistanceTraveled();
         moduleRightLastDistance = moduleRight.getDistanceTraveled();
@@ -75,14 +75,14 @@ public class DriveController {
     public void rotateRobot(Angle targetAngle, LinearOpMode linearOpMode) {
         //rotateModules
         int iterations = 0;
-        boolean isNegativeRotation = robot.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE;
+        boolean isNegativeRotation = board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE;
 
-        double absHeadingDiff = robot.getRobotHeading().getDifference(targetAngle);
+        double absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
         while (absHeadingDiff > ALLOWED_MODULE_ROT_ERROR && linearOpMode.opModeIsActive() && iterations < MAX_ITERATIONS_ROBOT_ROTATE /*&& System.currentTimeMillis() - startTime < ROTATE_ROBOT_TIMEOUT*/) {
-            absHeadingDiff = robot.getRobotHeading().getDifference(targetAngle);
-            double rotMag = RobotUtil.scaleVal(absHeadingDiff, 0, 25, 0, 1); //was max power 1 - WAS 0.4 max power
+            absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
+            double rotMag = RobotUtil.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
 
-            if (robot.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
+            if (board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
                 update(Vector2d.ZERO, -rotMag);
                 if (!isNegativeRotation) iterations++;
             } else {

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class DriveModule {
-    Robot robot;
+    Board board;
 
     //TODO: make sure these motors are not flipped on your drive
     DcMotor motor1; //top motor
@@ -27,7 +27,7 @@ public class DriveModule {
     //TODO: modify this variable to match drive gear ratio
     public final double TICKS_PER_WHEEL_REV = 28 * (double)(60)/11 * (double)(48)/15 * (double)(82)/22 * (double)(14)/60; //ticks per WHEEL revolution
 
-    public final double CM_WHEEL_DIAMETER = 3 * 2.54; //TODO: change to match wheel size
+    public final double CM_WHEEL_DIAMETER = 6.7;
     public final double CM_PER_WHEEL_REV = CM_WHEEL_DIAMETER * Math.PI;
     public final double CM_PER_TICK = CM_PER_WHEEL_REV/TICKS_PER_WHEEL_REV;
 
@@ -42,7 +42,7 @@ public class DriveModule {
 
     //this variable is set to 0.7 because when in RUN_USING_ENCODERS mode, powers about ~0.7 are the same
     //setting to 1 may increase robot top speed, but may decrease accuracy
-    public double MAX_MOTOR_POWER = 0.7;
+    public final double MAX_MOTOR_POWER = 0.7;
 
     //unit vectors representing motors in the rotation power vs. translation power coordinate system
     //more documentation on this coming soon
@@ -57,16 +57,16 @@ public class DriveModule {
     private double lastMotor2Encoder;
 
 
-    public DriveModule(Robot robot, ModuleSide moduleSide) {
-        this.robot = robot;
+    public DriveModule(Board board, ModuleSide moduleSide) {
+        this.board = board;
         this.moduleSide = moduleSide;
         if (moduleSide == ModuleSide.RIGHT) {
-            motor1 = robot.hardwareMap.dcMotor.get("rightTopMotor");
-            motor2 = robot.hardwareMap.dcMotor.get("rightBottomMotor");
+            motor1 = board.hardwareMap.dcMotor.get("rightTopMotor");
+            motor2 = board.hardwareMap.dcMotor.get("rightBottomMotor");
             positionVector = new Vector2d((double)18/2, 0); //points from robot center to right module
         } else {
-            motor1 = robot.hardwareMap.dcMotor.get("leftTopMotor");
-            motor2 = robot.hardwareMap.dcMotor.get("leftBottomMotor");
+            motor1 = board.hardwareMap.dcMotor.get("leftTopMotor");
+            motor2 = board.hardwareMap.dcMotor.get("leftBottomMotor");
             positionVector = new Vector2d((double)-18/2, 0); //points from robot center to left module
         }
 
@@ -85,7 +85,7 @@ public class DriveModule {
     public void updateTarget (Vector2d transVec, double rotMag) { //translation vector and rotation magnitude
         //converts robot heading to the angle type used by Vector2d class
         //converts the translation vector from a robot centric to a field centric one
-        Vector2d transVecFC = transVec.rotateBy(robot.getRobotHeading().getAngle(Angle.AngleType.ZERO_TO_360_HEADING), Angle.Direction.COUNTER_CLOCKWISE); //was converted robot heading, was clockwise
+        Vector2d transVecFC = transVec.rotateBy(board.getRobotHeading().getAngle(Angle.AngleType.ZERO_TO_360_HEADING), Angle.Direction.COUNTER_CLOCKWISE); //was converted robot heading, was clockwise
 
         //vector needed to rotate robot at the desired magnitude
         //based on positionVector of module (see definition for more info)
@@ -105,9 +105,9 @@ public class DriveModule {
         //calls method that will apply motor powers necessary to reach target vector in the best way possible, based on current position
         goToTarget(targetVector, directionMultiplier);
 
-        robot.telemetry.addData(moduleSide + " REVERSED: ", reversed);
-        robot.telemetry.addData(moduleSide + " Trans Vec FC: ", transVecFC);
-        robot.telemetry.addData(moduleSide + " Rot Vec: ", rotVec);
+        board.telemetry.addData(moduleSide + " REVERSED: ", reversed);
+        board.telemetry.addData(moduleSide + " Trans Vec FC: ", transVecFC);
+        board.telemetry.addData(moduleSide + " Rot Vec: ", rotVec);
     }
 
 
@@ -129,9 +129,9 @@ public class DriveModule {
         Vector2d powerVector = new Vector2d(moveComponent, pivotComponent); //order very important here
         setMotorPowers(powerVector);
 
-        robot.telemetry.addData(moduleSide + " Target Vector Angle: ", targetVector.getAngle());
-        robot.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
-        robot.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
+        board.telemetry.addData(moduleSide + " Target Vector Angle: ", targetVector.getAngle());
+        board.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
+        board.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
     }
 
 
@@ -152,7 +152,7 @@ public class DriveModule {
             takingShortestPath = false;
         }
 
-        robot.telemetry.addData(moduleSide + " Angle diff (abs. value): ", angleDiff);
+        board.telemetry.addData(moduleSide + " Angle diff (abs. value): ", angleDiff);
         Angle.Direction direction = currentAngle.directionTo(targetAngle);
 
         //CCW is negative for heading system
@@ -197,8 +197,8 @@ public class DriveModule {
             motor2power *= -1;
         }
 
-        robot.telemetry.addData(moduleSide + " Motor 1 Power: ", motor1power);
-        robot.telemetry.addData(moduleSide + " Motor 2 Power: ", motor2power);
+        board.telemetry.addData(moduleSide + " Motor 1 Power: ", motor1power);
+        board.telemetry.addData(moduleSide + " Motor 2 Power: ", motor2power);
         motor1.setPower(motor1power);
         motor2.setPower(motor2power);
     }
@@ -207,11 +207,11 @@ public class DriveModule {
     //for pure module rotation (usually used for precise driving in auto)
     public void rotateModule (Vector2d direction, boolean fieldCentric) {
         //converts robot heading to the angle type used by Vector2d class
-        Angle convertedRobotHeading = robot.getRobotHeading().convertAngle(Angle.AngleType.NEG_180_TO_180_CARTESIAN);
+        Angle convertedRobotHeading = board.getRobotHeading().convertAngle(Angle.AngleType.NEG_180_TO_180_CARTESIAN);
 
         //pass 0 as moveComponent
         //todo: check if fixes broke this
-        Vector2d directionFC = direction.rotateTo(robot.getRobotHeading()); //was converted robot heading
+        Vector2d directionFC = direction.rotateTo(board.getRobotHeading()); //was converted robot heading
 
         //ADDED
         if (reversed) { //reverse direction of translation because module is reversed
@@ -226,8 +226,8 @@ public class DriveModule {
             powerVector = new Vector2d(0, getPivotComponent(direction, getCurrentOrientation())); //order important here
         }
         setMotorPowers(powerVector);
-        robot.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
-        robot.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
+        board.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
+        board.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
     }
 
     //does not need to be called at the start of every program
@@ -241,8 +241,8 @@ public class DriveModule {
 
     //returns module orientation relative to ROBOT (not field) in degrees and NEG_180_TO_180_HEADING type
     public Angle getCurrentOrientation() {
-        robot.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
-        robot.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
+        board.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
+        board.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
         double rawAngle = (double)(motor2.getCurrentPosition() + motor1.getCurrentPosition())* DEGREES_PER_TICK; //motor2-motor1 makes ccw positive (?)
         return new Angle(rawAngle, Angle.AngleType.ZERO_TO_360_HEADING);
     }
@@ -270,9 +270,9 @@ public class DriveModule {
         lastMotor1Encoder = currentMotor1Encoder;
         lastMotor2Encoder = currentMotor2Encoder;
 
-        robot.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
-        robot.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
-        robot.telemetry.update();
+        board.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
+        board.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
+        board.telemetry.update();
     }
 
     public void resetDistanceTraveled () {

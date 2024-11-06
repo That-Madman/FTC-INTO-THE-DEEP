@@ -10,19 +10,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class Robot {
+public class Board {
     public DriveController driveController;
     BNO055IMU imu;
     Telemetry telemetry;
     HardwareMap hardwareMap;
     OpMode opMode;
 
-    public Robot (OpMode opMode, boolean isAuto) {
+    public Board (OpMode opMode, boolean isAuto) {
         this.hardwareMap = opMode.hardwareMap;
         this.telemetry = opMode.telemetry;
         this.opMode = opMode;
         driveController = new DriveController(this);
-        imu = opMode.hardwareMap.get(BNO055IMU.class, "imu 1");
+        imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
     }
 
 
@@ -43,6 +43,6 @@ public class Robot {
 
     public void wait (int millis, LinearOpMode linearOpMode) {
         long startTime = System.currentTimeMillis();
-        while (millis > System.currentTimeMillis() - startTime && linearOpMode.opModeIsActive()) {}
+        while (millis > System.currentTimeMillis() - startTime && linearOpMode.opModeIsActive());
     }
 }

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 //INSTRUCTIONS:
 // align modules to be facing the same direction (make sure not 180 degrees apart)
@@ -15,19 +14,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Reset Encoders", group = "Utilities")
 public class ResetEncoders extends OpMode {
-    Robot robot;
+    Board board;
 
     public void init () {
-        robot = new Robot(this, false);
+        board = new Board(this, false);
     }
 
     public void loop () {
-        telemetry.addData("LEFT Module Orientation: ", robot.driveController.moduleLeft.getCurrentOrientation().getAngle());
-        telemetry.addData("RIGHT Module Orientation: ", robot.driveController.moduleRight.getCurrentOrientation().getAngle());
+        telemetry.addData("LEFT Module Orientation: ", board.driveController.moduleLeft.getCurrentOrientation().getAngle());
+        telemetry.addData("RIGHT Module Orientation: ", board.driveController.moduleRight.getCurrentOrientation().getAngle());
         telemetry.update();
 
         if (gamepad1.y) {
-            robot.driveController.resetEncoders();
+            board.driveController.resetEncoders();
         }
     }
 }

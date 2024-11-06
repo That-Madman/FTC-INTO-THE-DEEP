@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Diff Swerve TeleOp", group = "TeleOp")
-public class TeleOp extends OpMode {
-    Robot robot;
+@TeleOp (name = "Diff Swerve TeleOp", group = "TeleOp")
+public class TeleOpMode extends OpMode {
+    Board board;
 
     //deadband for joysticks
     public double DEADBAND_MAG = 0.1;
@@ -14,7 +14,7 @@ public class TeleOp extends OpMode {
     public boolean willResetIMU = true;
 
     public void init() {
-        robot = new Robot(this, false);
+        board = new Board(this, false);
     }
 
     //allows driver to indicate that the IMU should not be reset
@@ -26,7 +26,7 @@ public class TeleOp extends OpMode {
         }
     }
     public void start () {
-        if (willResetIMU) robot.initIMU();
+        if (willResetIMU) board.initIMU();
     }
 
 
@@ -34,7 +34,7 @@ public class TeleOp extends OpMode {
         Vector2d joystick1 = new Vector2d(gamepad1.left_stick_x, -gamepad1.left_stick_y); //LEFT joystick
         Vector2d joystick2 = new Vector2d(gamepad1.right_stick_x, -gamepad2.right_stick_y); //RIGHT joystick
 
-        robot.driveController.updateUsingJoysticks(checkDeadband(joystick1), checkDeadband(joystick2));
+        board.driveController.updateUsingJoysticks(checkDeadband(joystick1), checkDeadband(joystick2));
 
 
 //        //uncomment for live tuning of ROT_ADVANTAGE constant
