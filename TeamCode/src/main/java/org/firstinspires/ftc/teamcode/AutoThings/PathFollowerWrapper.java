@@ -144,7 +144,7 @@ public class PathFollowerWrapper {
                 return new double[] {0,0,0};
             }
             m = follower.followPath(getPose());
-            return moveTo(m.x, m.y, 0);
+            return moveTo(m.x, m.y, m.h);
         }
 
         return new double[] {0,0,0};

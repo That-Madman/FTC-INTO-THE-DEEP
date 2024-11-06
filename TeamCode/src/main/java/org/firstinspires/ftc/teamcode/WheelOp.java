@@ -17,12 +17,13 @@ public abstract class WheelOp extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-       board = new Board (hardwareMap);
-       followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
+        time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+        board = new Board (hardwareMap);
+        followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
-       waitForStart();
+        waitForStart();
 
-       run();
+        run();
     }
 
     public abstract void run ();
@@ -53,7 +54,7 @@ public abstract class WheelOp extends LinearOpMode {
             telemetry.update();
         }
 
-        time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-        while (time.time() < waitTime && opModeIsActive()) ;
+        time.reset();
+        while (time.time() < waitTime && opModeIsActive());
     }
 }
