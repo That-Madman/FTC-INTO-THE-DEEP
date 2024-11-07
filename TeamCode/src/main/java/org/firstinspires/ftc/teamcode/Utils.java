@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public class RobotUtil {
-
+public class Utils {
     public static double scaleVal (double input, double minInputVal, double maxInputVal, double minOutputVal, double maxOutputVal) {
         if (input > maxInputVal) input = maxInputVal;
         double inputRange = Math.abs(maxInputVal - minInputVal);
