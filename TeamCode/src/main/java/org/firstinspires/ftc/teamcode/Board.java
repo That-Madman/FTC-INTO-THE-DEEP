@@ -17,7 +17,7 @@ public class Board {
     HardwareMap hardwareMap;
     OpMode opMode;
 
-    public Board (OpMode opMode, boolean isAuto) {
+    public Board (OpMode opMode) {
         this.hardwareMap = opMode.hardwareMap;
         this.telemetry = opMode.telemetry;
         this.opMode = opMode;

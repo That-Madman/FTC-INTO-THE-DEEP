@@ -61,13 +61,13 @@ public class DriveModule {
         this.board = board;
         this.moduleSide = moduleSide;
         if (moduleSide == ModuleSide.RIGHT) {
-            motor1 = board.hardwareMap.dcMotor.get("rightTopMotor");
-            motor2 = board.hardwareMap.dcMotor.get("rightBottomMotor");
-            positionVector = new Vector2d((double)18/2, 0); //points from robot center to right module
+            motor1 = board.hardwareMap.dcMotor.get("rt");
+            motor2 = board.hardwareMap.dcMotor.get("rb");
+            positionVector = new Vector2d((double)18/2, 0); //points from robot center to r module
         } else {
-            motor1 = board.hardwareMap.dcMotor.get("leftTopMotor");
-            motor2 = board.hardwareMap.dcMotor.get("leftBottomMotor");
-            positionVector = new Vector2d((double)-18/2, 0); //points from robot center to left module
+            motor1 = board.hardwareMap.dcMotor.get("lt");
+            motor2 = board.hardwareMap.dcMotor.get("lb");
+            positionVector = new Vector2d((double)-18/2, 0); //points from robot center to l module
         }
 
         lastMotor1Encoder = motor1.getCurrentPosition();

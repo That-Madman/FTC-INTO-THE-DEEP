@@ -17,7 +17,7 @@ public class ResetEncoders extends OpMode {
     Board board;
 
     public void init () {
-        board = new Board(this, false);
+        board = new Board(this);
     }
 
     public void loop () {

@@ -11,22 +11,22 @@ public class TeleOpMode extends OpMode {
     public double DEADBAND_MAG = 0.1;
     public Vector2d DEADBAND_VEC = new Vector2d(DEADBAND_MAG, DEADBAND_MAG);
 
-    public boolean willResetIMU = true;
+    public boolean willResetIMU = false;
 
     public void init() {
-        board = new Board(this, false);
+        board = new Board(this);
     }
 
-    //allows driver to indicate that the IMU should not be reset
-    //used when starting TeleOp after auto or if program crashes in the middle of match
-    //relevant because of field-centric controls
     public void init_loop() {
         if (gamepad1.y) {
-            willResetIMU = false;
+            willResetIMU = !willResetIMU;
         }
+            telemetry.addData("IMU reset?", willResetIMU);
     }
     public void start () {
-        if (willResetIMU) board.initIMU();
+        if (willResetIMU) {
+            board.initIMU();
+        }
     }
 
 
@@ -34,7 +34,9 @@ public class TeleOpMode extends OpMode {
         Vector2d joystick1 = new Vector2d(gamepad1.left_stick_x, -gamepad1.left_stick_y); //LEFT joystick
         Vector2d joystick2 = new Vector2d(gamepad1.right_stick_x, -gamepad2.right_stick_y); //RIGHT joystick
 
-        board.driveController.updateUsingJoysticks(checkDeadband(joystick1), checkDeadband(joystick2));
+        board.driveController.updateUsingJoysticks(
+                checkDeadband(joystick1),
+                checkDeadband(joystick2));
 
 
 //        //uncomment for live tuning of ROT_ADVANTAGE constant
