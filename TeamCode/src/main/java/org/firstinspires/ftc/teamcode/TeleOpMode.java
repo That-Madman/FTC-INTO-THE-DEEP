@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp (name = "Diff Swerve TeleOp", group = "TeleOp")
+@TeleOp (name = "TeleOp")
 public class TeleOpMode extends OpMode {
     Board board;
 
