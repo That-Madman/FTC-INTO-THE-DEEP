@@ -25,6 +25,9 @@ public class PathFollowerWrapper {
     //The max speed of the motors
     public static double SPEED_PERCENT = 1;
 
+    //The acceptable margin of error in inches and radians
+    public final static double MAX_TRANSLATOIN_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians(5);
+
     public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look)
     {
         localization = new Localization(hw, startPose);
@@ -49,30 +52,35 @@ public class PathFollowerWrapper {
         xPID = new PID(mP,mI,mD);
         yPID = new PID(mP,mI,mD);
         hPID = new PID(hP,hI,hD);
+        xPID.capI(mMaxI);
+        yPID.capI(mMaxI);
+        hPID.capI(hMaxI);
+        PIDtimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     }
 
+    /** Initializes a new path to follow */
     public void setPath(Pose2D startPose, Path path){
         follower = new PathFollower(startPose, lookAhead, path);
         PIDtimer.reset();
     }
-    public PathFollower getFollower(){
-        return follower;
-    }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
     public double[] moveTo(double forward, double strafe, double heading){
+        //Rotates the vector based on robot's heading
         double x = forward * Math.cos(getPose().h) - strafe * Math.sin(getPose().h);
         double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
         double h = heading;
 
-        double movementAngle = Math.atan2(y,x) - getPose().h,
-                distance = Math.hypot(x,y);
-        x = distance * Math.cos(movementAngle);
-        y = distance * Math.sin(movementAngle);
+        if(Math.hypot(x,y) < MAX_TRANSLATOIN_ERROR){ //Stops translational movement, focus on heading
+            x = 0;
+            y = 0;
+        } else { //Minimizes the heading control
+            h *= hP;
+        }
 
+        //Rescales the vector based on the distance/rotation
         x *= mP;
         y *= mP;
-        h *= hP;
 
         return new double[]{
                 x, y, h //TODO fix heading control
@@ -87,12 +95,14 @@ public class PathFollowerWrapper {
                 strafe = move.y,
                 heading = move.h;
 
+        //Rotates the vector based on robot's heading
         double x = Math.cos(getPose().h) * forward + Math.sin(getPose().h) * strafe;
         double y = Math.cos(getPose().h) * strafe - Math.sin(getPose().h) * forward;
-        double h = hPID.pidCalc(heading, 0, time);
 
+        //Calculates the PID values based on error
         x = xPID.pidCalc(x, 0, time);
         y = yPID.pidCalc(y, 0, time);
+        double h = hPID.pidCalc(heading, 0, time);
 
         return new double[]{
                 x, y, h
@@ -105,11 +115,17 @@ public class PathFollowerWrapper {
         hPID.resetI();
     }
 
+    /** Checks if the target pose is within error margin */
     public boolean targetReached(Pose2D target){
-        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= 2;
+        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= MAX_TRANSLATOIN_ERROR &&
+                Math.abs(target.h-getPose().h) <= MAX_ROTATION_ERROR;
     }
     public void concludePath(){
         follower = null;
+    }
+
+    public PathFollower getFollower(){
+        return follower;
     }
 
     public Pose2D getPose(){
@@ -137,33 +153,49 @@ public class PathFollowerWrapper {
         return follower.getWayPoint();
     }
 
+    /** Calculates and outputs the movement vector */
     public double[] followPath(){
         if(follower != null) {
+            //Checks if target is reached
             if(targetReached(follower.getLastPoint())){
                 concludePath();
+
+                //Don't move, at target
                 return new double[] {0,0,0};
             }
+            //Calculates the movement vector
             m = follower.followPath(getPose());
+            //Reshapes vector based on error and rotation
             return moveTo(m.x, m.y, m.h);
         }
 
+        //If there's no path, do not move
         return new double[] {0,0,0};
     }
+
+    /** Calculates and outputs the movement vector using PID */
     public double[] followPathPID(){
 
         if(follower != null) {
+            //Checks if target is reached
             if(targetReached(follower.getLastPoint())){
                 concludePath();
+
+                //Don't move, at target
                 return new double[] {0,0,0};
             }
 
+            //Calculates the movement vector
             m = follower.followPath(getPose());
+            //Reshapes vector based on PID values
             return moveToPID(m, PIDtimer.time());
         }
 
+        //If there's no path, do not move
         return new double[] {0,0,0};
     }
 
+    /** Updates the localization of the robot */
     public void updatePose(double angle){
         localization.update(angle);
     }

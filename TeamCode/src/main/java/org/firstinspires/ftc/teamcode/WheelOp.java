@@ -29,12 +29,13 @@ public abstract class WheelOp extends LinearOpMode {
     public abstract void run ();
 
     protected void followLoop(Pose2D[] a, final double waitTime) {
+        //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
-        while (followerWrapper.getFollower() != null && opModeIsActive()) {
-            followerWrapper.updatePose(board.getAngle());
-            double[] vectorCom = followerWrapper.followPath();
-            board.drive(vectorCom[0], vectorCom[1], vectorCom[2]);
+        while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
+            followerWrapper.updatePose(board.getAngle()); //Updates position
+            double[] vectorCom = followerWrapper.followPath(); //Gets the movement vector
+            board.drive(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +
