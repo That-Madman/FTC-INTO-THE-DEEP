@@ -9,18 +9,20 @@ import Wheelie.Pose2D;
 import Wheelie.PathFollower;
 
 public class PathFollowerWrapper {
-    private Localization localization;
+    private final Localization localization;
 
     private PathFollower follower;
-    private double lookAhead;
+    private final double lookAhead;
 
     //TODO Set start time and cap I
-    private PID xPID, yPID, hPID;
-    private ElapsedTime PIDtimer;
+    private final PID xPID;
+    private final PID yPID;
+    private final PID hPID;
+    private final ElapsedTime pidTimer;
 
-    private static final double mP = 1./24., mI = 0, mD = 0,
+    private static final double mP = (double) 1/24, mI = 0, mD = 0,
             hP = 1./Math.PI, hI = 0, hD = 0,
-            mMaxI = .25, hMaxI = .1;
+            mMaxI = 0.25, hMaxI = 0.1;
 
     //The max speed of the motors
     public static double SPEED_PERCENT = 1;
@@ -39,7 +41,7 @@ public class PathFollowerWrapper {
         xPID.capI(mMaxI);
         yPID.capI(mMaxI);
         hPID.capI(hMaxI);
-        PIDtimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        pidTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     }
 
     public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look, double maxSpeed)
@@ -55,13 +57,13 @@ public class PathFollowerWrapper {
         xPID.capI(mMaxI);
         yPID.capI(mMaxI);
         hPID.capI(hMaxI);
-        PIDtimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        pidTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     }
 
     /** Initializes a new path to follow */
     public void setPath(Pose2D startPose, Path path){
         follower = new PathFollower(startPose, lookAhead, path);
-        PIDtimer.reset();
+        pidTimer.reset();
     }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
@@ -188,7 +190,7 @@ public class PathFollowerWrapper {
             //Calculates the movement vector
             m = follower.followPath(getPose());
             //Reshapes vector based on PID values
-            return moveToPID(m, PIDtimer.time());
+            return moveToPID(m, pidTimer.time());
         }
 
         //If there's no path, do not move
