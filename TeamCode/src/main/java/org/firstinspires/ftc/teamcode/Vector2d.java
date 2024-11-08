@@ -3,14 +3,6 @@ package org.firstinspires.ftc.teamcode;
 //credit: this class is based on code from FRC 5818 (https://github.com/Team5818/DiffSwerve)
 
 public class Vector2d {
-
-    //Vector constants
-    public final static Vector2d FORWARD = new Vector2d(0, 1),
-            BACKWARD = new Vector2d(0, -1),
-            LEFT = new Vector2d(-1, 0),
-            RIGHT = new Vector2d(1, 0),
-            ZERO = new Vector2d(0, 0);
-
     private double x;
     private double y;
 
@@ -77,7 +69,7 @@ public class Vector2d {
 
     //returns a Vector2d in the same direction with magnitude of "target"
     public Vector2d normalize(double target) {
-        if (getMagnitude() == 0) return ZERO; //avoid dividing by zero
+        if (getMagnitude() == 0) return Utils.vZERO; //avoid dividing by zero
         return scale(target / getMagnitude());
     }
 

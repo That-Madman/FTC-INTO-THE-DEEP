@@ -69,7 +69,7 @@ public class DriveController {
             linearOpMode.telemetry.addData("Driving robot", "");
             linearOpMode.telemetry.update();
         }
-        update(Vector2d.ZERO, 0);
+        update(Utils.vZERO, 0);
     }
 
     public void rotateRobot(Angle targetAngle, LinearOpMode linearOpMode) {
@@ -83,16 +83,16 @@ public class DriveController {
             double rotMag = Utils.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
 
             if (board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
-                update(Vector2d.ZERO, -rotMag);
+                update(Utils.vZERO, -rotMag);
                 if (!isNegativeRotation) iterations++;
             } else {
-                update(Vector2d.ZERO, rotMag);
+                update(Utils.vZERO, rotMag);
                 if (isNegativeRotation) iterations++;
             }
             linearOpMode.telemetry.addData("Rotating ROBOT", "");
             linearOpMode.telemetry.update();
         }
-        update(Vector2d.ZERO, 0);
+        update(Utils.vZERO, 0);
     }
 
     //both modules must be within allowed error for method to return
@@ -110,7 +110,7 @@ public class DriveController {
             linearOpMode.telemetry.addData("Rotating MODULES", "");
             linearOpMode.telemetry.update();
         } while ((moduleLeftDifference > ALLOWED_MODULE_ROT_ERROR || moduleRightDifference > ALLOWED_MODULE_ROT_ERROR) && linearOpMode.opModeIsActive() && System.currentTimeMillis() < startTime + timemoutMS);
-        update(Vector2d.ZERO, 0);
+        update(Utils.vZERO, 0);
     }
 
 

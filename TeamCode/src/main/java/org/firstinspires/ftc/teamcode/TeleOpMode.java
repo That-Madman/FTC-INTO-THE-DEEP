@@ -7,17 +7,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TeleOpMode extends OpMode {
     Board board;
 
-    /** deadband for joysticks */
-    public double DEADBAND_MAG = 0.1;
-    public Vector2d DEADBAND_VEC = new Vector2d(DEADBAND_MAG, DEADBAND_MAG);
-
     public boolean willResetIMU = false;
 
-    public void init() {
+    public void init () {
         board = new Board(this);
     }
 
-    public void init_loop() {
+    public void init_loop () {
         if (gamepad1.y) {
             willResetIMU = !willResetIMU;
         }
@@ -30,13 +26,13 @@ public class TeleOpMode extends OpMode {
     }
 
 
-    public void loop() {
+    public void loop () {
         Vector2d joystick1 = new Vector2d(gamepad1.left_stick_x, -gamepad1.left_stick_y); //LEFT joystick
         Vector2d joystick2 = new Vector2d(gamepad1.right_stick_x, -gamepad2.right_stick_y); //RIGHT joystick
 
         board.driveController.updateUsingJoysticks(
-                checkDeadband(joystick1),
-                checkDeadband(joystick2));
+                Utils.checkDeadband(joystick1),
+                Utils.checkDeadband(joystick2));
 
 
 //        //uncomment for live tuning of ROT_ADVANTAGE constant
@@ -56,13 +52,5 @@ public class TeleOpMode extends OpMode {
         telemetry.addData("Joystick 2", joystick2);
 
         telemetry.update();
-    }
-
-    //returns zero vector if joystick is within deadband
-    public Vector2d checkDeadband(Vector2d joystick) {
-        if (Math.abs(joystick.getX()) > DEADBAND_VEC.getX() || Math.abs(joystick.getY()) > DEADBAND_VEC.getY()) {
-            return joystick;
-        }
-        return Vector2d.ZERO;
     }
 }

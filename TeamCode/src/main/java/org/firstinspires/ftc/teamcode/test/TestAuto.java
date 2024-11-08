@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.test;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Angle;
 import org.firstinspires.ftc.teamcode.Board;
 import org.firstinspires.ftc.teamcode.Utils;
 import org.firstinspires.ftc.teamcode.Vector2d;
@@ -20,12 +19,12 @@ public class TestAuto extends LinearOpMode {
         //simple sequence to demonstrate the three main autonomous primitives
 
         //rotate modules to face to the right
-        board.driveController.rotateModules(Vector2d.RIGHT, false,4000, this);
+        board.driveController.rotateModules(Utils.vRIGHT, false,4000, this);
 
         //drive 20 cm to the right (while facing forward)
-        board.driveController.drive(Vector2d.RIGHT, 20, 1, this);
+        board.driveController.drive(Utils.vRIGHT, 20, 1, this);
 
         //turn to face robot right
-        board.driveController.rotateRobot(Utils.RIGHT, this);
+        board.driveController.rotateRobot(Utils.aRIGHT, this);
     }
 }
