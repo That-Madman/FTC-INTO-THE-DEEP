@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Angle;
 import org.firstinspires.ftc.teamcode.Board;
+import org.firstinspires.ftc.teamcode.Utils;
 import org.firstinspires.ftc.teamcode.Vector2d;
 
 @Autonomous(name = "Diff Swerve Test Auto", group = "Linear Opmode")
@@ -25,6 +26,6 @@ public class TestAuto extends LinearOpMode {
         board.driveController.drive(Vector2d.RIGHT, 20, 1, this);
 
         //turn to face robot right
-        board.driveController.rotateRobot(Angle.RIGHT, this);
+        board.driveController.rotateRobot(Utils.RIGHT, this);
     }
 }

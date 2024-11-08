@@ -26,15 +26,9 @@ package org.firstinspires.ftc.teamcode;
 //NEG_180_TO_180_CARTESIAN: cartesian style, going CCW from 0 takes you up to +180, going CW takes you to -180
 
 
+import static org.firstinspires.ftc.teamcode.Utils.mod;
+
 public class Angle {
-
-    //relative to robot starting position (right = east, left = west, forward = north, backward = south)
-    public static final Angle
-            RIGHT = new Angle(90, AngleType.NEG_180_TO_180_HEADING),
-            LEFT = new Angle(-90, AngleType.NEG_180_TO_180_HEADING),
-            BACKWARD = new Angle(180, AngleType.NEG_180_TO_180_HEADING),
-            FORWARD = new Angle(0, AngleType.NEG_180_TO_180_HEADING);
-
 
     //see top for type definitions
     enum AngleType {
@@ -252,11 +246,5 @@ public class Angle {
     //returns the range between two numbers (ex. -180, 180 returns 360)
     public static double range (double num1, double num2) {
         return Math.abs(num1-num2);
-    }
-
-    //returns python version of n % m (n is dividend, m is divisor)
-    //python % never returns negative numbers, but Java % does
-    public static double mod (double n, double m) {
-        return (((n % m) + m) % m);
     }
 }
