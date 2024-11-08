@@ -35,14 +35,14 @@ public class Left extends WheelOp {
 
     @Override
     public void run () {
-        followLoop(path1, 5);
+        followPath(path1, 5);
 
-        followLoop(path2, 5);
+        followPath(path2, 5);
 
         sleep(1000);
 
-        followLoop(path3, 5);
+        followPath(path3, 5);
 
-        followLoop(path4, 5);
+        followPath(path4, 5);
     }
 }

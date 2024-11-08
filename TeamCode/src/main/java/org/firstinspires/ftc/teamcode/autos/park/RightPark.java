@@ -16,6 +16,6 @@ public class RightPark extends WheelOp {
 
     @Override
     public void run() {
-        followLoop(path, 5);
+        followPath(path, 5);
     }
 }
