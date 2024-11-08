@@ -26,7 +26,7 @@ package org.firstinspires.ftc.teamcode;
 //NEG_180_TO_180_CARTESIAN: cartesian style, going CCW from 0 takes you up to +180, going CW takes you to -180
 
 
-import static org.firstinspires.ftc.teamcode.Utils.mod;
+import static org.firstinspires.ftc.teamcode.Utils.py_style_mod;
 
 public class Angle {
 
@@ -227,7 +227,7 @@ public class Angle {
     //returns an angle between max and min, assuming a coordinate system starting at min and wrapping back to max
     //assumes min < max AND min <= 0
     public static double wrapAngle(double angle, double min, double max) {
-        angle = mod(angle, range(min, max));
+        angle = py_style_mod(angle, range(min, max));
         if (angle > max) { //won't be < min bc of second assumption
             return min + min + angle; //I have no idea why, but it seems to work for all cases under assumptions (?)
         }

@@ -20,7 +20,7 @@ public final class Utils {
 
     //returns python version of n % m (n is dividend, m is divisor)
     //python % never returns negative numbers, but Java % does
-    public static double mod (double n, double m) {
+    public static double py_style_mod(double n, double m) {
         return (((n % m) + m) % m);
     }
 }
