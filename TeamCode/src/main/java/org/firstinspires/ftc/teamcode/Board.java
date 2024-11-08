@@ -25,6 +25,7 @@ public class Board {
     private Servo horzExt = null;
 
     private CRServo sweep = null;
+    private CRServo sweep2 = null;
 
     private IMU imu = null;
 
@@ -81,6 +82,12 @@ public class Board {
             sweep = hwMap.get(CRServo.class, "sweeper");
         } catch (Throwable e) {
             fails.put("The Sweeper", e);
+        }
+
+        try {
+            sweep2 = hwMap.get(CRServo.class, "sweep2");
+        } catch (Throwable e) {
+            fails.put("The Sweeper 2", e);
         }
 
         try {
@@ -154,7 +161,8 @@ public class Board {
     }
 
     public void setSweep (double pow) {
-        sweep.setPower(pow);
+        sweep.setPower(-pow);
+        sweep2.setPower(pow);
     }
 
     public double getAngle() {
