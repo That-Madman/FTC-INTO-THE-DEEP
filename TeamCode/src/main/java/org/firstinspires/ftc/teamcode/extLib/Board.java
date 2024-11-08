@@ -38,8 +38,8 @@ public class Board {
         imu.initialize(
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(
-                                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                                RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+                                RevHubOrientationOnRobot.UsbFacingDirection.UP
                         )
                 )
         );
