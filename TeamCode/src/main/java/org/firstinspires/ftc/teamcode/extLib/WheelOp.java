@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.extLib;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.WheelieThings.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
 
 import java.util.Arrays;
 
