@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.WheelieThings;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -28,7 +30,7 @@ public class PathFollowerWrapper {
     public static double SPEED_PERCENT = 1;
 
     //The acceptable margin of error in inches and radians
-    public final static double MAX_TRANSLATOIN_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians(5);
+    public final static double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians(5);
 
     public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look)
     {
@@ -73,7 +75,7 @@ public class PathFollowerWrapper {
         double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
         double h = heading;
 
-        if(Math.hypot(x,y) < MAX_TRANSLATOIN_ERROR){ //Stops translational movement, focus on heading
+        if(Math.hypot(x,y) < MAX_TRANSLATION_ERROR){ //Stops translational movement, focus on heading
             x = 0;
             y = 0;
         } else { //Minimizes the heading control
@@ -90,7 +92,7 @@ public class PathFollowerWrapper {
     }
 
     /** Sets motor powers so drivebase can move towards target using PID (for when the lookahead is shrinking)
-     * @param move output from PathFollwer class, followPath method
+     * @param move output from PathFollower class, followPath method
      */
     public double[] moveToPID(Pose2D move, double time){
         double forward = move.x,
@@ -119,7 +121,7 @@ public class PathFollowerWrapper {
 
     /** Checks if the target pose is within error margin */
     public boolean targetReached(Pose2D target){
-        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= MAX_TRANSLATOIN_ERROR &&
+        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= MAX_TRANSLATION_ERROR &&
                 Math.abs(target.h-getPose().h) <= MAX_ROTATION_ERROR;
     }
     public void concludePath(){
@@ -202,6 +204,7 @@ public class PathFollowerWrapper {
         localization.update(angle);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MecDrivebase{" +
