@@ -113,7 +113,7 @@ public class PathFollowerWrapper {
         };
     }
 
-    public void resetPID(){
+    public void resetPidI (){
         xPID.resetI();
         yPID.resetI();
         hPID.resetI();
@@ -135,7 +135,7 @@ public class PathFollowerWrapper {
     public Pose2D getPose(){
         return localization.currentPosition;
     }
-    public String getPoseString(){
+    public String getPoseString () {
         return localization.currentPosition.x + ", " +
                 localization.currentPosition.y + ", " +
                 localization.currentPosition.h;
