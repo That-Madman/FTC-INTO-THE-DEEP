@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import Wheelie.PID;
 import Wheelie.Path;
@@ -83,11 +84,12 @@ public class PathFollowerWrapper {
         }
 
         //Rescales the vector based on the distance/rotation
-        x *= mP;
-        y *= mP;
+        double distance = 2 * Math.hypot(x,y);
+        x/= distance;
+        y/= distance;
 
         return new double[]{
-                x, y, h //TODO fix heading control
+                x, y, 0//h //TODO fix heading control
         };
     }
 
@@ -109,7 +111,7 @@ public class PathFollowerWrapper {
         double h = hPID.pidCalc(heading, 0, time);
 
         return new double[]{
-                x, y, h
+                x, y, 0//h
         };
     }
 

@@ -34,7 +34,7 @@ public abstract class WheelOp extends LinearOpMode {
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             followerWrapper.updatePose(board.getAngle()); //Updates position
-            double[] vectorCom = followerWrapper.followPath(); //Gets the movement vector
+            double[] vectorCom = followerWrapper.followPathPID(); //Gets the movement vector
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",
