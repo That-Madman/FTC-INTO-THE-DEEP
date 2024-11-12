@@ -147,7 +147,8 @@ public class PathFollowerWrapper {
         return localization.getVert ();
     }
 
-    Pose2D m;
+    private Pose2D m;
+
     public Pose2D followerValues () {
         return m;
     }

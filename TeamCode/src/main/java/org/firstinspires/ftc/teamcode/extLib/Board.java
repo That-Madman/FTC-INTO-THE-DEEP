@@ -45,6 +45,10 @@ public class Board {
         );
     }
 
+    public void resetIMU () {
+        imu.resetYaw();
+    }
+
     public double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
