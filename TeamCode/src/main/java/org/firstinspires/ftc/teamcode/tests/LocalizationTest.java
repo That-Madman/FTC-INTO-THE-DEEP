@@ -14,14 +14,16 @@ public class LocalizationTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, Math.PI/2.), 8);
+        PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, 0), 8);
         board = new Board(hardwareMap);
+
         telemetry.addLine("Initialized");
         telemetry.addLine(drive.getPoseString());
         telemetry.addLine(drive.getPoseString());
         telemetry.update();
 
         waitForStart();
+        board.resetIMU();
 
         while (opModeIsActive()) {
             drive.updatePose(board.getAngle());

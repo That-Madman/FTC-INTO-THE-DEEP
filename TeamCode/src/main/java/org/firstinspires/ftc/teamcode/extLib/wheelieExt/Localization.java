@@ -70,7 +70,7 @@ public class Localization {
         // Update the current position
         currentPosition.x += globalForward * MM_TO_INCH;
         currentPosition.y += globalStrafe * MM_TO_INCH;
-        currentPosition.h = heading + currentPosition.h;
+        currentPosition.h = deltaHeading + currentPosition.h;
 
         // Update previous encoder values
         prevH = currentH;

@@ -108,7 +108,7 @@ public class PathFollowerWrapper {
         double h = hPID.pidCalc (heading, 0, time);
 
         return new double[]{
-                x, y, 0//h
+                x, y, h
         };
     }
 
