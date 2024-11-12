@@ -61,9 +61,12 @@ public class DriveController {
         resetDistanceTraveled();
         while (getDistanceTraveled() < cmDistance && linearOpMode.opModeIsActive()) {
             //slows down drive power in certain range
-            if (cmDistance - getDistanceTraveled() < START_DRIVE_SLOWDOWN_AT_CM) {
-                //speed = RobotUtil.scaleVal(cmDistance - getDistanceTraveled(), 0, START_DRIVE_SLOWDOWN_AT_CM, 0.1, 1);
-            }
+            //TODO: IS THIS NEEDED?
+            /*
+                if (cmDistance - getDistanceTraveled() < START_DRIVE_SLOWDOWN_AT_CM) {
+                    speed = RobotUtil.scaleVal(cmDistance - getDistanceTraveled(), 0, START_DRIVE_SLOWDOWN_AT_CM, 0.1, 1);
+                }
+             */
             updateTracking();
             update(direction.normalize(speed), 0);
 

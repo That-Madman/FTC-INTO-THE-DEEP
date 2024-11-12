@@ -22,6 +22,7 @@ public class TeleOpMode extends OpMode {
             willResetIMU = !willResetIMU;
         }
             telemetry.addData("IMU reset?", willResetIMU);
+            telemetry.update();
     }
     public void start () {
         if (willResetIMU) {
