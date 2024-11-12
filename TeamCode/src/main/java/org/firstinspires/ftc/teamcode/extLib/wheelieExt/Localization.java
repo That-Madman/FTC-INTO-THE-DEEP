@@ -48,11 +48,11 @@ public class Localization {
      */
     private void calculateChanges (double angle) {
         //Finds the delta values in wheels and angle
-        int currentH = -hori.getCurrentPosition ();
-        int currentV = -vert.getCurrentPosition ();
+        int currentH = -vert.getCurrentPosition ();
+        int currentV = -hori.getCurrentPosition ();
         int dy = currentH - prevH;
         int dx = currentV - prevV;
-        double heading = AngleUnit.normalizeRadians (angle);
+        double heading = AngleUnit.normalizeRadians (-angle);
         double deltaHeading = heading - prevHead;
 
         // Convert ticks to millimeters

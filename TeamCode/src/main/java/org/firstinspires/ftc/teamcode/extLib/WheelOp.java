@@ -19,6 +19,7 @@ public abstract class WheelOp extends LinearOpMode {
     public void runOpMode () {
         time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         board = new Board (hardwareMap);
+        board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
         waitForStart();

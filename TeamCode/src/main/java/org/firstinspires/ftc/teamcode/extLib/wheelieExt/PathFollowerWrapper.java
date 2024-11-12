@@ -22,9 +22,9 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = (double) 1 / 24, mI = 0, mD = 0,
+    private final double mP = (double) 1 / 50., mI = 0.0001, mD = 0,
             hP = (double) 1 / Math.PI, hI = 0, hD = 0,
-            mMaxI = 0.25, hMaxI = 0.1;
+            mMaxI = 0.01, hMaxI = 0.1;
 
     //The max speed of the motors
     public double SPEED_PERCENT = 1;
