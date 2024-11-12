@@ -105,7 +105,9 @@ public class PathFollowerWrapper {
         //Calculates the PID values based on error
         x = xPID.pidCalc (x, 0, time);
         y = yPID.pidCalc (y, 0, time);
-        double h = hPID.pidCalc (heading, 0, time);
+        double h = 0;
+        if(Math.abs(heading) > MAX_ROTATION_ERROR)
+            h = hPID.pidCalc (heading, 0, time);
 
         return new double[]{
                 x, y, h
