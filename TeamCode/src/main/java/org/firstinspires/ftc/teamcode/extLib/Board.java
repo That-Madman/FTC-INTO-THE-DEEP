@@ -87,8 +87,8 @@ public class Board {
 
         theta = AngleUnit.normalizeRadians(theta - getAngle());
 
-        double newForward = r * Math.sin(theta);
-        double newRight = r * Math.cos(theta);
+        final double newForward = r * Math.sin(theta);
+        final double newRight = r * Math.cos(theta);
 
         drive(newForward, newRight, rotate);
     }
