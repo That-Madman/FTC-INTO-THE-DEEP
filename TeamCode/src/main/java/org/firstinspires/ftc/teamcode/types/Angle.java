@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.types;
 
 //this class allows you to avoid dealing with angle conversions!
 //different angle types are input into program and required for calculations (ex. IMU reading, vector math...)
@@ -26,17 +26,17 @@ package org.firstinspires.ftc.teamcode;
 //NEG_180_TO_180_CARTESIAN: cartesian style, going CCW from 0 takes you up to +180, going CW takes you to -180
 
 
-import static org.firstinspires.ftc.teamcode.Utils.py_style_mod;
+import static org.firstinspires.ftc.teamcode.utils.GenUtils.py_style_mod;
 
 public class Angle {
 
     //see top for type definitions
-    enum AngleType {
+    public enum AngleType {
         ZERO_TO_360_CARTESIAN, ZERO_TO_360_HEADING, NEG_180_TO_180_CARTESIAN, NEG_180_TO_180_HEADING
     }
 
     //not stored for each angle, but used to return direction between two angles
-    enum Direction {
+    public enum Direction {
         CLOCKWISE, COUNTER_CLOCKWISE
     }
 
@@ -85,8 +85,7 @@ public class Angle {
             //even though input and output types are not true to the type of intermediate angle...
             // they have the correct important characteristic (numerical or coordinate)
             double angleNewNumericalSystem = convertNumericalSystem(angle, type, numericalAndCoordinate(outputType, type)); //was type, output type
-            double angleNewCoordinateSystem = convertCoordinateSystem(angleNewNumericalSystem, numericalAndCoordinate(outputType, type), outputType); //was type, output type
-            return angleNewCoordinateSystem;
+            return convertCoordinateSystem(angleNewNumericalSystem, numericalAndCoordinate(outputType, type), outputType);
         }
     }
 
@@ -197,17 +196,11 @@ public class Angle {
     }
 
     public static boolean isCartesian (AngleType angleType) {
-        if (angleType == AngleType.ZERO_TO_360_CARTESIAN || angleType == AngleType.NEG_180_TO_180_CARTESIAN) {
-            return true;
-        }
-        return false;
+        return angleType == AngleType.ZERO_TO_360_CARTESIAN || angleType == AngleType.NEG_180_TO_180_CARTESIAN;
     }
 
     public static boolean isZeroTo360 (AngleType angleType) {
-        if (angleType == AngleType.ZERO_TO_360_CARTESIAN || angleType == AngleType.ZERO_TO_360_HEADING) {
-            return true;
-        }
-        return false;
+        return angleType == AngleType.ZERO_TO_360_CARTESIAN || angleType == AngleType.ZERO_TO_360_HEADING;
     }
 
     public static AngleType numericalAndCoordinate (AngleType numericalType, AngleType coordinateType) {

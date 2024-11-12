@@ -1,14 +1,15 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.utils;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-enum ModuleSide {LEFT, RIGHT}
+import org.firstinspires.ftc.teamcode.types.Angle;
+import org.firstinspires.ftc.teamcode.types.Vector2d;
 
 public class DriveController {
     Board board;
 
-    DriveModule moduleLeft;
-    DriveModule moduleRight;
+    public DriveModule moduleLeft;
+    public DriveModule moduleRight;
 
     //used for straight line distance tracking
     double robotDistanceTraveled = 0;
@@ -69,7 +70,7 @@ public class DriveController {
             linearOpMode.telemetry.addData("Driving robot", "");
             linearOpMode.telemetry.update();
         }
-        update(Utils.vZERO, 0);
+        update(GenUtils.vZERO, 0);
     }
 
     public void rotateRobot(Angle targetAngle, LinearOpMode linearOpMode) {
@@ -80,19 +81,19 @@ public class DriveController {
         double absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
         while (absHeadingDiff > ALLOWED_MODULE_ROT_ERROR && linearOpMode.opModeIsActive() && iterations < MAX_ITERATIONS_ROBOT_ROTATE /*&& System.currentTimeMillis() - startTime < ROTATE_ROBOT_TIMEOUT*/) {
             absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
-            double rotMag = Utils.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
+            double rotMag = GenUtils.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
 
             if (board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
-                update(Utils.vZERO, -rotMag);
+                update(GenUtils.vZERO, -rotMag);
                 if (!isNegativeRotation) iterations++;
             } else {
-                update(Utils.vZERO, rotMag);
+                update(GenUtils.vZERO, rotMag);
                 if (isNegativeRotation) iterations++;
             }
             linearOpMode.telemetry.addData("Rotating ROBOT", "");
             linearOpMode.telemetry.update();
         }
-        update(Utils.vZERO, 0);
+        update(GenUtils.vZERO, 0);
     }
 
     //both modules must be within allowed error for method to return
@@ -110,7 +111,7 @@ public class DriveController {
             linearOpMode.telemetry.addData("Rotating MODULES", "");
             linearOpMode.telemetry.update();
         } while ((moduleLeftDifference > ALLOWED_MODULE_ROT_ERROR || moduleRightDifference > ALLOWED_MODULE_ROT_ERROR) && linearOpMode.opModeIsActive() && System.currentTimeMillis() < startTime + timemoutMS);
-        update(Utils.vZERO, 0);
+        update(GenUtils.vZERO, 0);
     }
 
 

@@ -1,6 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.utils;
 
-public final class Utils {
+import org.firstinspires.ftc.teamcode.types.Angle;
+import org.firstinspires.ftc.teamcode.types.Vector2d;
+
+public final class GenUtils {
     /*
     Relative to robot starting position
     (right = east, left = west, forward = north, backward = south)
@@ -23,7 +26,7 @@ public final class Utils {
     public static final double DEADBAND_MAG = 0.1;
     public static final Vector2d DEADBAND_VEC = new Vector2d(DEADBAND_MAG, DEADBAND_MAG);
 
-    private Utils () throws Error {
+    private GenUtils() throws Error {
         throw new Error("HOW DID YOU INITIALIZE A PRIVATE FUNCTION?");
     } // If you are surprised why an error got thrown, you already failed.
 

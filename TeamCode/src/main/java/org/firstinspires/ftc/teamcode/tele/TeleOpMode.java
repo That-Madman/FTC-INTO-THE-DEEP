@@ -1,7 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tele;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.types.Vector2d;
+import org.firstinspires.ftc.teamcode.utils.Board;
+import org.firstinspires.ftc.teamcode.utils.GenUtils;
 
 @TeleOp (name = "TeleOp")
 public class TeleOpMode extends OpMode {
@@ -31,8 +35,8 @@ public class TeleOpMode extends OpMode {
         Vector2d joystick2 = new Vector2d(gamepad1.right_stick_x, -gamepad2.right_stick_y); //RIGHT joystick
 
         board.driveController.updateUsingJoysticks(
-                Utils.checkDeadband(joystick1),
-                Utils.checkDeadband(joystick2));
+                GenUtils.checkDeadband(joystick1),
+                GenUtils.checkDeadband(joystick2));
 
 
 //        //uncomment for live tuning of ROT_ADVANTAGE constant

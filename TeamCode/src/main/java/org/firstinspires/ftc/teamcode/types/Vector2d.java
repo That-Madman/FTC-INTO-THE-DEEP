@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.types;
 
 //credit: this class is based on code from FRC 5818 (https://github.com/Team5818/DiffSwerve)
+
+import org.firstinspires.ftc.teamcode.utils.GenUtils;
 
 public class Vector2d {
     private double x;
@@ -69,7 +71,7 @@ public class Vector2d {
 
     //returns a Vector2d in the same direction with magnitude of "target"
     public Vector2d normalize(double target) {
-        if (getMagnitude() == 0) return Utils.vZERO; //avoid dividing by zero
+        if (getMagnitude() == 0) return GenUtils.vZERO; //avoid dividing by zero
         return scale(target / getMagnitude());
     }
 

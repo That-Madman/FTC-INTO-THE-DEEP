@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tele;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.teamcode.utils.Board;
 
 //INSTRUCTIONS:
 // align modules to be facing the same direction (make sure not 180 degrees apart)
