@@ -13,7 +13,7 @@ public class Localization {
     //private BNO055IMU imu;
     private Orientation angles;
 
-    private DcMotorEx hori, vert;
+    private final DcMotorEx hori, vert;
 
     private int prevH = 0, prevV = 0;
     private double prevHead = 0;
@@ -31,28 +31,28 @@ public class Localization {
 
     public Pose2D currentPosition;
 
-    public Localization(HardwareMap hw, Pose2D start){
+    public Localization (HardwareMap hw, Pose2D start) {
         //Sets the position the robot starts in
-        currentPosition = new Pose2D(start.x, start.y, start.h);
+        currentPosition = new Pose2D (start.x, start.y, start.h);
 
-        hori = hw.get(DcMotorEx.class, "br");
-        vert = hw.get(DcMotorEx.class, "fr");
-        hori.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        vert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hori.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        vert.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hori = hw.get (DcMotorEx.class, "br");
+        vert = hw.get (DcMotorEx.class, "fr");
+        hori.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        vert.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hori.setMode (DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        vert.setMode (DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**
      * Calculates the current position based on odom pods and imu changes
      */
-    private void calculateChanges(double angle) {
+    private void calculateChanges (double angle) {
         //Finds the delta values in wheels and angle
-        int currentH = -hori.getCurrentPosition();
-        int currentV = -vert.getCurrentPosition();
+        int currentH = -hori.getCurrentPosition ();
+        int currentV = -vert.getCurrentPosition ();
         int dy = currentH - prevH;
         int dx = currentV - prevV;
-        double heading = AngleUnit.normalizeRadians(angle);
+        double heading = AngleUnit.normalizeRadians (angle);
         double deltaHeading = heading - prevHead;
 
         // Convert ticks to millimeters
@@ -64,8 +64,8 @@ public class Localization {
         double strafe = dH + H_DISTANCE_FROM_MID * deltaHeading;
 
         // Apply the rotation to the translation to convert to global coordinates
-        double globalForward = forward * Math.cos(heading) - strafe * Math.sin(heading);
-        double globalStrafe = forward * Math.sin(heading) + strafe * Math.cos(heading);
+        double globalForward = forward * Math.cos (heading) - strafe * Math.sin (heading);
+        double globalStrafe = forward * Math.sin (heading) + strafe * Math.cos (heading);
 
         // Update the current position
         currentPosition.x += globalForward * MM_TO_INCH;
@@ -82,21 +82,21 @@ public class Localization {
     /**
      * @return the orientation of the robot in radians
      */
-    /*public double getAngle(){
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return AngleUnit.normalizeRadians(angles.firstAngle);
+    /*public double getAngle () {
+        angles = imu.getAngularOrientation (AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        return AngleUnit.normalizeRadians (angles.firstAngle);
     }
 
      */
 
-    public int getHori(){
+    public int getHori () {
         return 0;
     }
-    public int getVert(){
+    public int getVert () {
         return 0;
     }
 
-    public void update(double angle){
-        calculateChanges(angle);
+    public void update (double angle) {
+        calculateChanges (angle);
     }
 }

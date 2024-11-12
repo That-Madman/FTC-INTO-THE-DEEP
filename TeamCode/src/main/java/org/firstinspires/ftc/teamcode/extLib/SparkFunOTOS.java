@@ -292,7 +292,7 @@ public class SparkFunOTOS extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         // calibration register reading zero, or until we reach the maximum number
         // of read attempts
         for (int numAttempts = numSamples; numAttempts > 0; numAttempts--) {
-            // Read the gryo calibration register value
+            // Read the gyro calibration register value
             byte calibrationValue = deviceClient.read8(REG_IMU_CALIB);
 
             // Check if calibration is done

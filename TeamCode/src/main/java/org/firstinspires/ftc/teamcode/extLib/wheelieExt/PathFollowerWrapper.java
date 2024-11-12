@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import Wheelie.PID;
 import Wheelie.Path;
@@ -31,19 +30,19 @@ public class PathFollowerWrapper {
     public double SPEED_PERCENT = 1;
 
     //The acceptable margin of error in inches and radians
-    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians(5);
+    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
-        localization = new Localization(hw, startPose);
+        localization = new Localization (hw, startPose);
         lookAhead = look;
 
-        xPID = new PID(mP,mI,mD);
-        yPID = new PID(mP,mI,mD);
-        hPID = new PID(hP,hI,hD);
-        xPID.capI(mMaxI);
-        yPID.capI(mMaxI);
-        hPID.capI(hMaxI);
-        pidTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        xPID = new PID (mP,mI,mD);
+        yPID = new PID (mP,mI,mD);
+        hPID = new PID (hP,hI,hD);
+        xPID.capI (mMaxI);
+        yPID.capI (mMaxI);
+        hPID.capI (hMaxI);
+        pidTimer = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
     }
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look, double maxSpeed) {
@@ -52,29 +51,29 @@ public class PathFollowerWrapper {
 
         SPEED_PERCENT = maxSpeed;
 
-        xPID = new PID(mP,mI,mD);
-        yPID = new PID(mP,mI,mD);
-        hPID = new PID(hP,hI,hD);
-        xPID.capI(mMaxI);
-        yPID.capI(mMaxI);
-        hPID.capI(hMaxI);
-        pidTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        xPID = new PID (mP,mI,mD);
+        yPID = new PID (mP,mI,mD);
+        hPID = new PID (hP,hI,hD);
+        xPID.capI (mMaxI);
+        yPID.capI (mMaxI);
+        hPID.capI (hMaxI);
+        pidTimer = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
     }
 
     /** Initializes a new path to follow */
     public void setPath (Pose2D startPose, Path path) {
-        follower = new PathFollower(startPose, lookAhead, path);
-        pidTimer.reset();
+        follower = new PathFollower (startPose, lookAhead, path);
+        pidTimer.reset ();
     }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
     public double[] moveTo (double forward, double strafe, double heading) {
         //Rotates the vector based on robot's heading
-        double x = forward * Math.cos(getPose().h) - strafe * Math.sin(getPose().h);
-        double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
+        double x = forward * Math.cos (getPose ().h) - strafe * Math.sin (getPose ().h);
+        double y = forward * Math.sin (getPose ().h) + strafe * Math.cos (getPose ().h);
         double h = heading;
 
-        if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR){ //Stops translational movement, focus on heading
+        if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
             x = 0;
             y = 0;
         } else { //Minimizes the heading control
@@ -82,7 +81,7 @@ public class PathFollowerWrapper {
         }
 
         //Rescales the vector based on the distance/rotation
-        double distance = 2 * Math.hypot(x,y);
+        double distance = 2 * Math.hypot (x,y);
         x/= distance;
         y/= distance;
 
@@ -94,45 +93,45 @@ public class PathFollowerWrapper {
     /** Sets motor powers so drivebase can move towards target using PID (for when the lookahead is shrinking)
      * @param move output from PathFollower class, followPath method
      */
-    public double[] moveToPID(Pose2D move, double time){
+    public double[] moveToPID (Pose2D move, double time) {
         double forward = move.x,
                 strafe = move.y,
                 heading = move.h;
 
         //Rotates the vector based on robot's heading
-        double x = Math.cos(getPose().h) * forward + Math.sin(getPose().h) * strafe;
-        double y = Math.cos(getPose().h) * strafe - Math.sin(getPose().h) * forward;
+        double x = Math.cos (getPose ().h) * forward + Math.sin (getPose ().h) * strafe;
+        double y = Math.cos (getPose ().h) * strafe - Math.sin (getPose ().h) * forward;
 
         //Calculates the PID values based on error
-        x = xPID.pidCalc(x, 0, time);
-        y = yPID.pidCalc(y, 0, time);
-        double h = hPID.pidCalc(heading, 0, time);
+        x = xPID.pidCalc (x, 0, time);
+        y = yPID.pidCalc (y, 0, time);
+        double h = hPID.pidCalc (heading, 0, time);
 
         return new double[]{
                 x, y, 0//h
         };
     }
 
-    public void resetPidI (){
-        xPID.resetI();
-        yPID.resetI();
-        hPID.resetI();
+    public void resetPidI () {
+        xPID.resetI ();
+        yPID.resetI ();
+        hPID.resetI ();
     }
 
     /** Checks if the target pose is within error margin */
-    public boolean targetReached(Pose2D target){
-        return Math.hypot(target.x-getPose().x, target.y-getPose().y) <= MAX_TRANSLATION_ERROR &&
-                Math.abs(target.h-getPose().h) <= MAX_ROTATION_ERROR;
+    public boolean targetReached (Pose2D target) {
+        return Math.hypot (target.x-getPose ().x, target.y-getPose ().y) <= MAX_TRANSLATION_ERROR &&
+                Math.abs (target.h-getPose ().h) <= MAX_ROTATION_ERROR;
     }
-    public void concludePath(){
+    public void concludePath () {
         follower = null;
     }
 
-    public PathFollower getFollower(){
+    public PathFollower getFollower () {
         return follower;
     }
 
-    public Pose2D getPose(){
+    public Pose2D getPose () {
         return localization.currentPosition;
     }
     public String getPoseString () {
@@ -141,36 +140,36 @@ public class PathFollowerWrapper {
                 localization.currentPosition.h;
     }
 
-    public int getHoriOdom(){
-        return localization.getHori();
+    public int getHoriOdom () {
+        return localization.getHori ();
     }
-    public int getVertOdom(){
-        return localization.getVert();
+    public int getVertOdom () {
+        return localization.getVert ();
     }
 
     Pose2D m;
-    public Pose2D followerValues(){
+    public Pose2D followerValues () {
         return m;
     }
 
-    public int getCurrentWayPoint(){
-        return follower.getWayPoint();
+    public int getCurrentWayPoint () {
+        return follower.getWayPoint ();
     }
 
     /** Calculates and outputs the movement vector */
-    public double[] followPath(){
-        if(follower != null) {
+    public double[] followPath () {
+        if (follower != null) {
             //Checks if target is reached
-            if(targetReached(follower.getLastPoint())){
-                concludePath();
+            if (targetReached (follower.getLastPoint ())) {
+                concludePath ();
 
                 //Don't move, at target
                 return new double[] {0,0,0};
             }
             //Calculates the movement vector
-            m = follower.followPath(getPose());
+            m = follower.followPath (getPose ());
             //Reshapes vector based on error and rotation
-            return moveTo(m.x, m.y, m.h);
+            return moveTo (m.x, m.y, m.h);
         }
 
         //If there's no path, do not move
@@ -178,21 +177,21 @@ public class PathFollowerWrapper {
     }
 
     /** Calculates and outputs the movement vector using PID */
-    public double[] followPathPID(){
+    public double[] followPathPID () {
 
-        if(follower != null) {
+        if (follower != null) {
             //Checks if target is reached
-            if(targetReached(follower.getLastPoint())){
-                concludePath();
+            if (targetReached (follower.getLastPoint ())) {
+                concludePath ();
 
                 //Don't move, at target
                 return new double[] {0,0,0};
             }
 
             //Calculates the movement vector
-            m = follower.followPath(getPose());
+            m = follower.followPath (getPose ());
             //Reshapes vector based on PID values
-            return moveToPID(m, pidTimer.time());
+            return moveToPID (m, pidTimer.time ());
         }
 
         //If there's no path, do not move
@@ -200,14 +199,14 @@ public class PathFollowerWrapper {
     }
 
     /** Updates the localization of the robot */
-    public void updatePose(double angle){
-        localization.update(angle);
+    public void updatePose (double angle) {
+        localization.update (angle);
     }
 
     @NonNull
     @Override
-    public String toString() {
-        return "MecDrivebase{" +
+    public String toString () {
+        return "MecDrivebase {" +
                 ", localization=" + localization +
                 ", mxPID=" + xPID +
                 ", myPID=" + yPID +
