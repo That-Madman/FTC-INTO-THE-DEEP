@@ -33,8 +33,7 @@ public class PathFollowerWrapper {
     //The acceptable margin of error in inches and radians
     public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians(5);
 
-    public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look)
-    {
+    public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
         localization = new Localization(hw, startPose);
         lookAhead = look;
 
@@ -47,9 +46,8 @@ public class PathFollowerWrapper {
         pidTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     }
 
-    public PathFollowerWrapper(HardwareMap hw, Pose2D startPose, double look, double maxSpeed)
-    {
-        localization = new Localization(hw, startPose);
+    public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look, double maxSpeed) {
+        localization = new Localization (hw, startPose);
         lookAhead=look;
 
         SPEED_PERCENT = maxSpeed;
@@ -64,19 +62,19 @@ public class PathFollowerWrapper {
     }
 
     /** Initializes a new path to follow */
-    public void setPath(Pose2D startPose, Path path){
+    public void setPath (Pose2D startPose, Path path) {
         follower = new PathFollower(startPose, lookAhead, path);
         pidTimer.reset();
     }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
-    public double[] moveTo(double forward, double strafe, double heading){
+    public double[] moveTo (double forward, double strafe, double heading) {
         //Rotates the vector based on robot's heading
         double x = forward * Math.cos(getPose().h) - strafe * Math.sin(getPose().h);
         double y = forward * Math.sin(getPose().h) + strafe * Math.cos(getPose().h);
         double h = heading;
 
-        if(Math.hypot(x,y) < MAX_TRANSLATION_ERROR){ //Stops translational movement, focus on heading
+        if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR){ //Stops translational movement, focus on heading
             x = 0;
             y = 0;
         } else { //Minimizes the heading control
@@ -88,7 +86,7 @@ public class PathFollowerWrapper {
         x/= distance;
         y/= distance;
 
-        return new double[]{
+        return new double[] {
                 x, y, 0//h //TODO fix heading control
         };
     }
