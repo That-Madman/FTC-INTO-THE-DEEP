@@ -26,7 +26,7 @@ public class TeleOpMode extends OpMode {
     }
     public void start () {
         if (willResetIMU) {
-            board.initIMU();
+            board.resetIMU();
         }
     }
 

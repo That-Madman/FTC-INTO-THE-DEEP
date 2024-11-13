@@ -13,7 +13,6 @@ public class TestAuto extends LinearOpMode {
 
     public void runOpMode() {
         board = new Board(this);
-        board.initIMU();
 
         //simple sequence to demonstrate the three main autonomous primitives
 
