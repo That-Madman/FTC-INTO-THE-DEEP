@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.utils;
 import org.firstinspires.ftc.teamcode.types.Angle;
 import org.firstinspires.ftc.teamcode.types.Vector2d;
 
+/** General Utilities */
 public final class GenUtils {
     /*
     Relative to robot starting position

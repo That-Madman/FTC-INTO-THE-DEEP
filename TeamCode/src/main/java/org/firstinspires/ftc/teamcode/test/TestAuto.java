@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.utils.Board;
 import org.firstinspires.ftc.teamcode.utils.GenUtils;
 
-@Autonomous(name = "Diff Swerve Test Auto", group = "Linear Opmode")
+@Autonomous(group = "Tests")
 
 public class TestAuto extends LinearOpMode {
     Board board;
