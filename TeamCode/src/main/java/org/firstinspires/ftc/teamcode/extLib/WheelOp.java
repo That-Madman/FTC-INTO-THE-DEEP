@@ -11,9 +11,9 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 
 public abstract class WheelOp extends LinearOpMode {
-    private PathFollowerWrapper followerWrapper = null;
-    protected Board board = null;
-    ElapsedTime time = null;
+    private PathFollowerWrapper followerWrapper;
+    protected Board board;
+    public ElapsedTime time;
 
     @Override
     public void runOpMode () {
