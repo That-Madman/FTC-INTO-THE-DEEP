@@ -63,14 +63,21 @@ public class PathFollowerWrapper {
     /** Initializes a new path to follow */
     public void setPath (Pose2D startPose, Path path) {
         follower = new PathFollower (startPose, lookAhead, path);
+        resetPidI();
         pidTimer.reset ();
     }
 
     /** Sets motor powers so drivebase can move towards target based on input (usually from the PathFollower class)*/
     public double[] moveTo (double forward, double strafe, double heading) {
         //Rotates the vector based on robot's heading
-        double x = forward * Math.cos (getPose ().h) - strafe * Math.sin (getPose ().h);
-        double y = forward * Math.sin (getPose ().h) + strafe * Math.cos (getPose ().h);
+        Pose2D diff = new Pose2D(
+                forward-getPose().x,
+                strafe-getPose().y,
+                heading-getPose().h
+        );
+
+        double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
+        double y = diff.x * Math.sin (getPose ().h) + diff.y * Math.cos (getPose ().h);
         double h = heading;
 
         if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
@@ -81,7 +88,7 @@ public class PathFollowerWrapper {
         }
 
         //Rescales the vector based on the distance/rotation
-        double distance = 2 * Math.hypot (x,y);
+        double distance = Math.hypot (x,y);
         x/= distance;
         y/= distance;
 
@@ -98,13 +105,9 @@ public class PathFollowerWrapper {
                 strafe = move.y,
                 heading = move.h;
 
-        //Rotates the vector based on robot's heading
-        double x = Math.cos (getPose ().h) * forward + Math.sin (getPose ().h) * strafe;
-        double y = Math.cos (getPose ().h) * strafe - Math.sin (getPose ().h) * forward;
-
         //Calculates the PID values based on error
-        x = xPID.pidCalc (x, 0, time);
-        y = yPID.pidCalc (y, 0, time);
+        double x = xPID.pidCalc (forward, getPose().x, time),
+        y = yPID.pidCalc(strafe, getPose().y, time);
         double h = 0;
         if(Math.abs(heading) > MAX_ROTATION_ERROR)
             h = hPID.pidCalc (heading, 0, time);
