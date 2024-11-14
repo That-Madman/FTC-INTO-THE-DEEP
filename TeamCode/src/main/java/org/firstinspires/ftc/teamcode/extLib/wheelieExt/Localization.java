@@ -10,7 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import Wheelie.Pose2D;
 
 public class Localization {
-    //private BNO055IMU imu;
     private Orientation angles;
 
     private final DcMotorEx hori, vert;
