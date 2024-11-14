@@ -25,6 +25,16 @@ public abstract class WheelOp extends LinearOpMode {
         waitForStart();
 
         run();
+
+        while(opModeIsActive()){
+            telemetry.addLine("Path is complete");
+            telemetry.addData("Position",
+                    followerWrapper.getPose().x + ", " +
+                            followerWrapper.getPose().y + ", " +
+                            followerWrapper.getPose().h);
+
+            telemetry.update();
+        }
     }
 
     public abstract void run ();

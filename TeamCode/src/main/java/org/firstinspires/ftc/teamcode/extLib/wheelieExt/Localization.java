@@ -35,8 +35,8 @@ public class Localization {
         //Sets the position the robot starts in
         currentPosition = new Pose2D (start.x, start.y, start.h);
 
-        hori = hw.get (DcMotorEx.class, "br");
-        vert = hw.get (DcMotorEx.class, "fr");
+        hori = hw.get (DcMotorEx.class, "fr");
+        vert = hw.get (DcMotorEx.class, "br");
         hori.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         vert.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hori.setMode (DcMotor.RunMode.RUN_WITHOUT_ENCODER);

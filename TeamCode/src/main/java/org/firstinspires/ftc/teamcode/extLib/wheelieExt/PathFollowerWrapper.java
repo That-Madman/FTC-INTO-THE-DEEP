@@ -22,9 +22,10 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = (double) 1 / 50., mI = 0.0001, mD = 0,
-            hP = (double) 1 / Math.PI, hI = 0, hD = 0,
-            mMaxI = 0.01, hMaxI = 0.1;
+    private final double mP = 1. / 50., mI = 0.000000000001, mD = 0,
+            hP = 1. / Math.toRadians(90), hI = 0.005, hD = .05,
+            mMaxI = 0.005, hMaxI = 0.1;
+    private boolean xi, yi, hi;
 
     //The max speed of the motors
     public double SPEED_PERCENT = 1;
@@ -105,12 +106,14 @@ public class PathFollowerWrapper {
                 strafe = move.y,
                 heading = move.h;
 
+        double x = 0, y =0;
+
         //Calculates the PID values based on error
-        double x = xPID.pidCalc (forward, getPose().x, time),
-        y = yPID.pidCalc(strafe, getPose().y, time);
-        double h = 0;
-        if(Math.abs(heading) > MAX_ROTATION_ERROR)
-            h = hPID.pidCalc (heading, 0, time);
+        if(Math.hypot(forward-getPose().x, strafe-getPose().y) > MAX_TRANSLATION_ERROR){
+            x = xPID.pidCalc (forward, getPose().x, time);
+            y = yPID.pidCalc(strafe, getPose().y, time);
+        }
+        double h = hPID.pidCalc (heading, getPose().h, time);
 
         return new double[]{
                 x, y, h
@@ -121,12 +124,19 @@ public class PathFollowerWrapper {
         xPID.resetI ();
         yPID.resetI ();
         hPID.resetI ();
+        xi = false;
+        yi = false;
+        hi = false;
     }
 
     /** Checks if the target pose is within error margin */
     public boolean targetReached (Pose2D target) {
         return Math.hypot (target.x-getPose ().x, target.y-getPose ().y) <= MAX_TRANSLATION_ERROR &&
                 Math.abs (target.h-getPose ().h) <= MAX_ROTATION_ERROR;
+    }
+
+    public boolean rotateReached (Pose2D target) {
+        return Math.abs (target.h-getPose ().h) <= MAX_ROTATION_ERROR;
     }
     public void concludePath () {
         follower = null;
