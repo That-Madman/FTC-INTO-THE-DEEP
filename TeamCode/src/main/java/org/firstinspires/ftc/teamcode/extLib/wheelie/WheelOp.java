@@ -39,7 +39,7 @@ public abstract class WheelOp extends LinearOpMode {
 
     public abstract void run ();
 
-    protected void followPath(Pose2D[] a, final double waitTime) {
+    protected void followPath(Pose2D[] a) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
@@ -67,6 +67,5 @@ public abstract class WheelOp extends LinearOpMode {
         }
 
         time.reset();
-        while (time.time() < waitTime && opModeIsActive());
     }
 }

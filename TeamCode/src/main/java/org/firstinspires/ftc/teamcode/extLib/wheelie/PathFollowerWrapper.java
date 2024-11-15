@@ -5,8 +5,6 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.extLib.wheelie.Localization;
-
 import Wheelie.PID;
 import Wheelie.Path;
 import Wheelie.Pose2D;
