@@ -23,6 +23,12 @@ public class proto extends OpMode {
         if (gamepad1.a) {
            grips[0].setPower(1);
            grips[1].setPower(1);
+        } else if (gamepad1.b) {
+            grips[0].setPower(-1);
+            grips[1].setPower(-1);
+        } else {
+            grips[0].setPower(0);
+            grips[1].setPower(0);
         }
     }
 }
