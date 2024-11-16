@@ -13,7 +13,7 @@ public class LeftPark extends WheelOp {
            // new Pose2D(5, 0, 0),
             new Pose2D(50, 0, 0),
             new Pose2D(50, 20, 0),
-            new Pose2D(50, 20, Math.toRadians(90))
+            //new Pose2D(50, 20, Math.toRadians(90))
     };
 
     @Override

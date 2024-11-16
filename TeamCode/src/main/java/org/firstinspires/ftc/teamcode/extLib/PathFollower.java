@@ -1,3 +1,9 @@
+package org.firstinspires.ftc.teamcode.extLib;
+
+import Wheelie.Path;
+import Wheelie.Pose2D;
+import Wheelie.PursuitMath;
+
 /*
  * BSD 3-Clause License
  *
@@ -26,9 +32,7 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
-package Wheelie;
 
 /**
  * The Path Following algorithm that takes a list of points and lookahead to determine how
@@ -96,7 +100,7 @@ public class PathFollower {
      * @author Kennedy Brundidge
      */
     public Pose2D followPath(Pose2D obj){
-        if(Math.hypot(obj.x-path.getPt(wayPoint), obj.y-path.getPt(wayPoint)) > translationError) {
+        if(Math.hypot(obj.x-path.getPt(wayPoint+1).x, obj.y-path.getPt(wayPoint+1).y) > translationError) {
             //Checks that robot is not approaching the last point
             if (path.pathLength() != wayPoint + 2) {
                 //Finds if the circle intersects with the next line/path
@@ -119,11 +123,13 @@ public class PathFollower {
             }
 
             return target;
-        }else if (Math.abs(path.getPt(wayPoint).h-obj.h) > headingError){
-            return new Pose2D(obj.x, obj.y, path.getPt(wayPoint));
-        }else{
-            wayPoint++;
         }
+            //new Pose2D(obj.x, obj.y, path.getPt(wayPoint+1).h);
+
+
+        if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError)
+            wayPoint+=1;
+        return path.getPt(wayPoint + 1);
     }
 
     /** Returns the index of the current Pose2D in the Path */
@@ -137,6 +143,10 @@ public class PathFollower {
 
     public void augmentWaypoint(){
         wayPoint++;
+    }
+
+    public boolean approachingLast(){
+        return getLastPoint().equals(path.getPt(wayPoint+1));
     }
 
     /** Returns the last point of the path */

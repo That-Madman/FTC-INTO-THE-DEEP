@@ -61,6 +61,11 @@ public abstract class WheelOp extends LinearOpMode {
                         goal.x + ", " +
                                 goal.y + ", " +
                                 goal.h);
+
+                telemetry.addData("Movement",
+                        followerWrapper.followerValues().x + ", " +
+                                followerWrapper.followerValues().y + ", " +
+                                followerWrapper.followerValues().h);
             }
 
             telemetry.update();
