@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.extLib;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import Wheelie.Path;
 import Wheelie.Pose2D;
 import Wheelie.PursuitMath;
@@ -47,6 +49,7 @@ public class PathFollower {
 
     private int wayPoint = 0;
     private double translationError = 5, headingError = Math.toRadians(10);
+    public Telemetry tele; //TODO Delete
 
     /** The constructor for the path follower, with the starting Pose2D, lookahead distance, and path
      * @param startPt The starting location of the robot
@@ -126,6 +129,14 @@ public class PathFollower {
         }
             //new Pose2D(obj.x, obj.y, path.getPt(wayPoint+1).h);
 
+        tele.addLine("Only rotating");
+        tele.addData("Past", path.getPt(wayPoint).h);
+        tele.addData("Target", path.getPt(wayPoint+1).h);
+        if(wayPoint+2 != path.pathLength())
+            tele.addData("Next Target", path.getPt(wayPoint+2).h);
+        tele.addData("Rotation of bot", obj.h);
+        tele.addData("wanted error", headingError);
+        tele.addData("error", Math.abs(path.getPt(wayPoint+1).h-obj.h));
 
         if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError)
             wayPoint+=1;

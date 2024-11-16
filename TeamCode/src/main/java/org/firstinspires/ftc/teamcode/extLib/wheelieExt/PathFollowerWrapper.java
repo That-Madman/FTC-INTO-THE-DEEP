@@ -9,6 +9,7 @@ import Wheelie.PID;
 import Wheelie.Path;
 import Wheelie.Pose2D;
 //import Wheelie.PathFollower;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import  org.firstinspires.ftc.teamcode.extLib.PathFollower;
 
 public class PathFollowerWrapper {
@@ -33,6 +34,7 @@ public class PathFollowerWrapper {
 
     //The acceptable margin of error in inches and radians
     public final double MAX_TRANSLATION_ERROR = 5, MAX_ROTATION_ERROR = Math.toRadians (10);
+
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
         localization = new Localization (hw, startPose);
