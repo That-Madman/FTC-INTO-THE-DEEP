@@ -48,12 +48,14 @@ public class MainTele extends OpMode {
                     gamepad1.left_stick_x,
                     gamepad1.right_stick_x
             );
+            telemetry.addData("Driving", "Field Relative");
         } else {
             board.drive(
                     -gamepad1.left_stick_y,
                     gamepad1.left_stick_x,
                     gamepad1.right_stick_x
             );
+            telemetry.addData("Driving", "Robot Relative");
         }
 
         if (gamepad1.b && bHeld) {

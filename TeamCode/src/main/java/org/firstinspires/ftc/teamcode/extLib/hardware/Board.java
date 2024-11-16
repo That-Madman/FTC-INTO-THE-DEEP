@@ -24,14 +24,10 @@ public class Board {
         base[2].setDirection(DcMotorSimple.Direction.FORWARD);
         base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
-        base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        base[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        base[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        base[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        base[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        base[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        base[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        base[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        for (DcMotor m : base) {
+            m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            m.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
         imu = hwMap.get(IMU.class, "imu");
 
