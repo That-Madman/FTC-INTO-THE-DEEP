@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.types.Angle;
 
 public class Board {
     public DriveController driveController;
-    IMU imu;
-    Telemetry telemetry;
-    HardwareMap hardwareMap;
-    OpMode opMode;
+    private final IMU imu;
+    public Telemetry telemetry;
+    public HardwareMap hardwareMap;
+    private final OpMode opMode;
 
     public Board (OpMode opMode) {
         this.hardwareMap = opMode.hardwareMap;

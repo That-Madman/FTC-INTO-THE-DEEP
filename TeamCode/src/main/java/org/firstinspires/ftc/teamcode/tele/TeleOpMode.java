@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.GenUtils;
 public class TeleOpMode extends OpMode {
     Board board;
 
-    public boolean willResetIMU = false;
+    public boolean willResetIMU;
 
     public void init () {
         board = new Board(this);

@@ -48,7 +48,7 @@ public class Vector2d {
 
     //returns Angle object
     public Angle getAngle() {
-        double angRad = Math.atan2(y, x);
+        final double angRad = Math.atan2(y, x);
         return new Angle(Math.toDegrees(angRad), Angle.AngleType.NEG_180_TO_180_CARTESIAN);
     }
 
@@ -77,7 +77,7 @@ public class Vector2d {
 
     //returns Vector2d rotated by ang degrees
     public Vector2d rotateBy(double ang, Angle.Direction direction) {
-        double angRads;
+        final double angRads;
         if (direction == Angle.Direction.COUNTER_CLOCKWISE) {
             angRads = Math.toRadians(ang); //default vector rotation direction is CCW
         } else {
@@ -123,7 +123,8 @@ public class Vector2d {
         if (limit >= maxMag) {
             return vecs;
         }
-        Vector2d[] normed = new Vector2d[vecs.length];
+
+        final Vector2d[] normed = new Vector2d[vecs.length];
         for (int i = 0; i < vecs.length; i++) {
             normed[i] = vecs[i].scale(limit / maxMag);
         }
@@ -148,13 +149,9 @@ public class Vector2d {
         if (!(obj instanceof Vector2d)) {
             return false;
         }
-        Vector2d other = (Vector2d) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) {
-            return false;
-        }
-        return true;
+        final Vector2d other = (Vector2d) obj;
+
+        return (Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x))
+                && Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y);
     }
 }

@@ -92,10 +92,10 @@ public class Angle {
     //returns absolute value of difference between two Angles (can be any type)
     //min return value is 0 and max return value is 180
     public double getDifference (Angle other) {
-        Angle otherConverted = other.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
-        Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
+        final Angle otherConverted = other.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
+        final Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
 
-        double rawDiff = Math.abs(otherConverted.getAngle() - thisConverted.getAngle());
+        final double rawDiff = Math.abs(otherConverted.getAngle() - thisConverted.getAngle());
         if (rawDiff > 180) {
             return 360 - rawDiff; //will be positive bc 360 is max rawDiff
         }
@@ -107,10 +107,10 @@ public class Angle {
     //returns either CLOCKWISE or COUNTER_CLOCKWISE
     //defaults to CLOCKWISE if angles are identical (difference is zero)
     public Direction directionTo (Angle other) {
-        Angle otherConverted = other.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
-        Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
+        final Angle otherConverted = other.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
+        final Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_CARTESIAN);
 
-        double rawDiff = Math.abs(otherConverted.getAngle() - thisConverted.getAngle());
+        final double rawDiff = Math.abs(otherConverted.getAngle() - thisConverted.getAngle());
         if (rawDiff > 180) {
             if (otherConverted.getAngle() > thisConverted.getAngle()) {
                 return Direction.CLOCKWISE;
@@ -129,8 +129,8 @@ public class Angle {
     //passing a negative degrees will work, but will reverse the direction
     //direction should indicate positive direction of the angle system being used
     public Angle rotateBy (double degrees, Direction direction) {
-        Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_HEADING);
-        double newAngle;
+        final Angle thisConverted = this.convertAngle(AngleType.ZERO_TO_360_HEADING);
+        final double newAngle;
         if (direction == Direction.CLOCKWISE) {
             newAngle = thisConverted.getAngle() + degrees;
         } else {
@@ -145,8 +145,8 @@ public class Angle {
     }
 
     public static Angle getAverageAngle (Angle angle1, Angle angle2) {
-        double difference = angle1.getDifference(angle2);
-        Direction direction = angle1.directionTo(angle2);
+        final double difference = angle1.getDifference(angle2);
+        final Direction direction = angle1.directionTo(angle2);
         return angle1.rotateBy(difference/2.0, direction);
     }
 
