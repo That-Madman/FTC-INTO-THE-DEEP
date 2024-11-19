@@ -49,8 +49,8 @@ public class DriveModule {
 
     //unit vectors representing motors in the rotation power vs. translation power coordinate system
     //more documentation on this coming soon
-    public final Vector2d MOTOR_1_VECTOR = new Vector2d(1/Math.sqrt(2), 1/Math.sqrt(2));
-    public final Vector2d MOTOR_2_VECTOR = new Vector2d(-1/Math.sqrt(2), 1/Math.sqrt(2));
+    public final Vector2d MOTOR_1_VECTOR = new Vector2d(1 / Math.sqrt(2), 1 / Math.sqrt(2));
+    public final Vector2d MOTOR_2_VECTOR = new Vector2d(-1 / Math.sqrt(2), 1 / Math.sqrt(2));
 
     //variables used for path length distance tracking
     //this tracking is useful only for straight line paths
@@ -108,9 +108,9 @@ public class DriveModule {
         //calls method that will apply motor powers necessary to reach target vector in the best way possible, based on current position
         goToTarget(targetVector, directionMultiplier);
 
-        board.telemetry.addData(moduleSide + " REVERSED: ", reversed);
-        board.telemetry.addData(moduleSide + " Trans Vec FC: ", transVecFC);
-        board.telemetry.addData(moduleSide + " Rot Vec: ", rotVec);
+        board.telemetry.addData(moduleSide + " REVERSED", reversed);
+        board.telemetry.addData(moduleSide + " Trans Vec FC", transVecFC);
+        board.telemetry.addData(moduleSide + " Rot Vec", rotVec);
     }
 
 
@@ -132,9 +132,9 @@ public class DriveModule {
         final Vector2d powerVector = new Vector2d(moveComponent, pivotComponent); //order very important here
         setMotorPowers(powerVector);
 
-        board.telemetry.addData(moduleSide + " Target Vector Angle: ", targetVector.getAngle());
-        board.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
-        board.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
+        board.telemetry.addData(moduleSide + " Target Vector Angle", targetVector.getAngle());
+        board.telemetry.addData(moduleSide + " Power Vector", powerVector);
+        board.telemetry.addData(moduleSide + " Current orientation", getCurrentOrientation().getAngle());
     }
 
 
@@ -155,7 +155,7 @@ public class DriveModule {
             takingShortestPath = false;
         }
 
-        board.telemetry.addData(moduleSide + " Angle diff (abs. value): ", angleDiff);
+        board.telemetry.addData(moduleSide + " Angle diff (abs. value)", angleDiff);
         Angle.Direction direction = currentAngle.directionTo(targetAngle);
 
         //CCW is negative for heading system
@@ -200,8 +200,8 @@ public class DriveModule {
             motor2power *= -1;
         }
 
-        board.telemetry.addData(moduleSide + " Motor 1 Power: ", motor1power);
-        board.telemetry.addData(moduleSide + " Motor 2 Power: ", motor2power);
+        board.telemetry.addData(moduleSide + " Motor 1 Power", motor1power);
+        board.telemetry.addData(moduleSide + " Motor 2 Power", motor2power);
         motor1.setPower(motor1power);
         motor2.setPower(motor2power);
     }
@@ -231,8 +231,8 @@ public class DriveModule {
             powerVector = new Vector2d(0, getPivotComponent(direction, getCurrentOrientation())); //order important here
         }
         setMotorPowers(powerVector);
-        board.telemetry.addData(moduleSide + " Power Vector: ", powerVector);
-        board.telemetry.addData(moduleSide + " Current orientation: ", getCurrentOrientation().getAngle());
+        board.telemetry.addData(moduleSide + " Power Vector", powerVector);
+        board.telemetry.addData(moduleSide + " Current orientation", getCurrentOrientation().getAngle());
     }
 
     //does not need to be called at the start of every program

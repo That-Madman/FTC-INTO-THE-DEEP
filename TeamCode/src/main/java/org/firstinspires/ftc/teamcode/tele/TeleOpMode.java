@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.utils.GenUtils;
 
 @TeleOp (name = "TeleOp")
 public class TeleOpMode extends OpMode {
-    Board board;
+    private Board board;
 
     public boolean willResetIMU;
 

@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.types.Vector2d;
 public class DriveController {
     Board board;
 
-    public DriveModule moduleLeft;
-    public DriveModule moduleRight;
+    public final DriveModule moduleLeft;
+    public final DriveModule moduleRight;
 
     //used for straight line distance tracking
     double robotDistanceTraveled = 0;
@@ -20,8 +20,10 @@ public class DriveController {
     //tolerance for module rotation (in degrees)
     public final double ALLOWED_MODULE_ROT_ERROR = 5;
 
-    //distance from target when power scaling will begin
-    public final double START_DRIVE_SLOWDOWN_AT_CM = 15;
+    /*
+        //distance from target when power scaling will begin
+        public final double START_DRIVE_SLOWDOWN_AT_CM = 15;
+     */
 
     //maximum number of times the robot will try to correct its heading when rotating
     public final int MAX_ITERATIONS_ROBOT_ROTATE = 2;
@@ -70,7 +72,7 @@ public class DriveController {
             updateTracking();
             update(direction.normalize(speed), 0);
 
-            linearOpMode.telemetry.addData("Driving robot", "");
+            linearOpMode.telemetry.addLine("Driving robot");
             linearOpMode.telemetry.update();
         }
         update(GenUtils.vZERO, 0);
@@ -82,18 +84,21 @@ public class DriveController {
         boolean isNegativeRotation = board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE;
 
         double absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
-        while (absHeadingDiff > ALLOWED_MODULE_ROT_ERROR && linearOpMode.opModeIsActive() && iterations < MAX_ITERATIONS_ROBOT_ROTATE /*&& System.currentTimeMillis() - startTime < ROTATE_ROBOT_TIMEOUT*/) {
+        while (linearOpMode.opModeIsActive() && absHeadingDiff > ALLOWED_MODULE_ROT_ERROR && iterations < MAX_ITERATIONS_ROBOT_ROTATE) {
             absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
             double rotMag = GenUtils.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
 
             if (board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
                 update(GenUtils.vZERO, -rotMag);
-                if (!isNegativeRotation) iterations++;
             } else {
                 update(GenUtils.vZERO, rotMag);
-                if (isNegativeRotation) iterations++;
             }
-            linearOpMode.telemetry.addData("Rotating ROBOT", "");
+
+            if (isNegativeRotation) {
+                ++iterations;
+            }
+
+            linearOpMode.telemetry.addLine("Rotating ROBOT");
             linearOpMode.telemetry.update();
         }
         update(GenUtils.vZERO, 0);
@@ -111,7 +116,7 @@ public class DriveController {
             moduleLeft.rotateModule(direction, fieldCentric);
             moduleRight.rotateModule(direction, fieldCentric);
 
-            linearOpMode.telemetry.addData("Rotating MODULES", "");
+            linearOpMode.telemetry.addLine("Rotating MODULES");
             linearOpMode.telemetry.update();
         } while ((moduleLeftDifference > ALLOWED_MODULE_ROT_ERROR || moduleRightDifference > ALLOWED_MODULE_ROT_ERROR) && linearOpMode.opModeIsActive() && System.currentTimeMillis() < startTime + timemoutMS);
         update(GenUtils.vZERO, 0);
@@ -133,8 +138,8 @@ public class DriveController {
         moduleRight.updateTracking();
         moduleLeft.updateTracking();
 
-        double moduleLeftChange = moduleLeft.getDistanceTraveled() - moduleLeftLastDistance;
-        double moduleRightChange = moduleRight.getDistanceTraveled() - moduleRightLastDistance;
+        final double moduleLeftChange = moduleLeft.getDistanceTraveled() - moduleLeftLastDistance;
+        final double moduleRightChange = moduleRight.getDistanceTraveled() - moduleRightLastDistance;
         robotDistanceTraveled += (moduleLeftChange + moduleRightChange) / 2;
 
         moduleLeftLastDistance = moduleLeft.getDistanceTraveled();

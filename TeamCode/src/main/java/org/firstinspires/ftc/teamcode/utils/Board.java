@@ -13,10 +13,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.types.Angle;
 
 public class Board {
-    public DriveController driveController;
+    public final DriveController driveController;
     private final IMU imu;
-    public Telemetry telemetry;
-    public HardwareMap hardwareMap;
+    public final Telemetry telemetry;
+    public final HardwareMap hardwareMap;
     private final OpMode opMode;
 
     public Board (OpMode opMode) {
