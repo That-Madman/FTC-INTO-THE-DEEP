@@ -21,7 +21,7 @@ public class MainTele extends OpMode {
 
     @Override
     public void init_loop() {
-        if (gamepad1.y && yHeld) {
+        if (gamepad1.y && !yHeld) {
             resetImu ^= true; // Inverts variable. Why do it like this? Because it's fun.
         }
 
@@ -58,11 +58,11 @@ public class MainTele extends OpMode {
             telemetry.addData("Driving", "Robot Relative");
         }
 
-        if (gamepad1.b && bHeld) {
+        if (gamepad1.b && !bHeld) {
             driveFieldRel ^= true;
         }
 
-        if (gamepad1.y && yHeld) {
+        if (gamepad1.y && !yHeld) {
             board.resetImu();
             resetImu = true;
         }

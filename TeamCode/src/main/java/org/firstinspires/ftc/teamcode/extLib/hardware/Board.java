@@ -42,7 +42,7 @@ public class Board {
     }
 
     public double getAngle () {
-        return imu.getRobotYawPitchRollAngles().getYaw();
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
 
     public void resetImu () {
@@ -69,9 +69,9 @@ public class Board {
     }
 
     public void drive(double forward, double right, double rotate) {
-        final double flp = forward + right + rotate;
+        final double flp = forward - right + rotate;
         final double frp = forward - right - rotate;
-        final double blp = forward - right + rotate;
+        final double blp = forward + right + rotate;
         final double brp = forward + right - rotate;
 
         setPowers(flp, frp, blp, brp);
