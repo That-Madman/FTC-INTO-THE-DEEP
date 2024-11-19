@@ -25,7 +25,7 @@ public class PathFollowerWrapper {
     private final ElapsedTime pidTimer;
 
     private final double mP = 1. / 50., mI = 0.00001, mD = 0.4,
-            hP = 1. / Math.toRadians(90), hI = 0.00001, hD = .001,
+            hP = 1. / Math.toRadians(90), hI = 0.00001, hD = .0,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;
 
@@ -33,7 +33,7 @@ public class PathFollowerWrapper {
     public double SPEED_PERCENT = 1;
 
     //The acceptable margin of error in inches and radians
-    public final double MAX_TRANSLATION_ERROR = 5, MAX_ROTATION_ERROR = Math.toRadians (10);
+    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
@@ -66,7 +66,7 @@ public class PathFollowerWrapper {
 
     /** Initializes a new path to follow */
     public void setPath (Pose2D startPose, Path path) {
-        follower = new PathFollower (startPose, lookAhead, path, MAX_TRANSLATION_ERROR-1, MAX_ROTATION_ERROR-1);
+        follower = new PathFollower (startPose, lookAhead, path, MAX_TRANSLATION_ERROR-1, MAX_ROTATION_ERROR-Math.toRadians(1));
         resetPidI();
         pidTimer.reset ();
     }
@@ -93,11 +93,13 @@ public class PathFollowerWrapper {
 
         //Rescales the vector based on the distance/rotation
         double distance = Math.hypot (x,y);
-        x/= distance;
-        y/= distance;
+        if(distance > 1){
+            x/= distance*2;
+            y/= distance*2;
+        }
 
         return new double[] {
-                x, y, 0//h //TODO fix heading control
+                x, y, -h //TODO fix heading control
         };
     }
 
@@ -109,16 +111,17 @@ public class PathFollowerWrapper {
                 strafe = move.y,
                 heading = move.h;
 
-        double x = 0, y =0;
+        double x = forward * Math.cos (getPose ().h) - strafe * Math.sin (getPose ().h);
+        double y = forward * Math.sin (getPose ().h) + strafe * Math.cos (getPose ().h);
 
         //Calculates the PID values based on error
-        x = xPID.pidCalc (forward, getPose().x, time);
-        y = yPID.pidCalc(strafe, getPose().y, time);
+        x = xPID.pidCalc (x, getPose().x, time);
+        y = yPID.pidCalc(y, getPose().y, time);
 
         double h = hPID.pidCalc (heading, getPose().h, time);
 
         return new double[]{
-                x, y, h
+                x, y, -h
         };
     }
 
