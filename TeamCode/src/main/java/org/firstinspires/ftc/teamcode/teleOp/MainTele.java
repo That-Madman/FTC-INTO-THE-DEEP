@@ -19,6 +19,7 @@ public class MainTele extends OpMode {
         board = new Board(hardwareMap);
     }
 
+    /*
     @Override
     public void init_loop() {
         if (gamepad1.y && !yHeld) {
@@ -39,6 +40,7 @@ public class MainTele extends OpMode {
             resetImu = false;
         }
     }
+     */
 
     @Override
     public void loop() {
@@ -62,10 +64,12 @@ public class MainTele extends OpMode {
             driveFieldRel ^= true;
         }
 
+        /*
         if (gamepad1.y && !yHeld) {
             board.resetImu();
             resetImu = true;
         }
+         */
 
         if (resetImu) {
             telemetry.addLine("IMU has been reset.");
