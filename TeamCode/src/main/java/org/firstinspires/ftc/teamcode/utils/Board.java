@@ -17,16 +17,14 @@ public class Board {
     private final IMU imu;
     public final Telemetry telemetry;
     public final HardwareMap hardwareMap;
-    private final OpMode opMode;
 
     public Board (OpMode opMode) {
-        this.hardwareMap = opMode.hardwareMap;
-        this.telemetry = opMode.telemetry;
-        this.opMode = opMode;
+        hardwareMap = opMode.hardwareMap;
+        telemetry = opMode.telemetry;
 
         driveController = new DriveController(this);
 
-        imu = opMode.hardwareMap.get(IMU.class, "imu");
+        imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(

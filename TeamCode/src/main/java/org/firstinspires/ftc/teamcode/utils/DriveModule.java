@@ -248,7 +248,9 @@ public class DriveModule {
     public Angle getCurrentOrientation() {
         board.telemetry.addData(moduleSide + "Motor 1 Encoder", motor1.getCurrentPosition());
         board.telemetry.addData(moduleSide + "Motor 2 Encoder", motor2.getCurrentPosition());
-        final double rawAngle = (double)(motor2.getCurrentPosition() + motor1.getCurrentPosition())* DEGREES_PER_TICK; //motor2-motor1 makes ccw positive (?)
+        final double rawAngle =
+                (double) (motor2.getCurrentPosition() + motor1.getCurrentPosition())
+                        * DEGREES_PER_TICK; //motor2-motor1 makes ccw positive (?)
         return new Angle(rawAngle, Angle.AngleType.ZERO_TO_360_HEADING);
     }
 
@@ -261,15 +263,15 @@ public class DriveModule {
         final double currentMotor1Encoder = motor1.getCurrentPosition();
         final double currentMotor2Encoder = motor2.getCurrentPosition();
 
-        double motor1Change = currentMotor1Encoder - lastMotor1Encoder;
-        double motor2Change = currentMotor2Encoder - lastMotor2Encoder;
+        final double motor1Change = currentMotor1Encoder - lastMotor1Encoder;
+        final double motor2Change = currentMotor2Encoder - lastMotor2Encoder;
 
         //if module is reversed, subtract distance traveled instead of adding
         //module is driving in the opposite direction that the encoders "think" it is
         if (reversed) {
-            distanceTraveled -= (motor1Change - motor2Change)/2.0 * CM_PER_TICK;
+            distanceTraveled -= (motor1Change - motor2Change) / 2.0 * CM_PER_TICK;
         } else {
-            distanceTraveled += (motor1Change - motor2Change)/2.0 * CM_PER_TICK;
+            distanceTraveled += (motor1Change - motor2Change) / 2.0 * CM_PER_TICK;
         }
 
         lastMotor1Encoder = currentMotor1Encoder;

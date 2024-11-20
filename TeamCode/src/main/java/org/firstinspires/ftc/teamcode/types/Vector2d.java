@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.types;
 
 //credit: this class is based on code from FRC 5818 (https://github.com/Team5818/DiffSwerve)
 
+import androidx.annotation.NonNull;
+
 import org.firstinspires.ftc.teamcode.utils.GenUtils;
 
 public class Vector2d {
@@ -34,7 +36,7 @@ public class Vector2d {
     public void setY (double y) { this.y = y; }
 
     public double getMagnitude() {
-        return Math.sqrt(x * x + y * y);
+        return Math.hypot(x, y);
     }
 
     public void fixFloatingPointErrors() {
@@ -131,11 +133,12 @@ public class Vector2d {
         return normed;
     }
 
-
+    @NonNull
     public Vector2d clone() {
         return new Vector2d(x,y);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.format("(%s, %s)", x, y);

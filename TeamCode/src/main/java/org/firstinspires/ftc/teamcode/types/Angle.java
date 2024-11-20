@@ -28,6 +28,8 @@ package org.firstinspires.ftc.teamcode.types;
 
 import static org.firstinspires.ftc.teamcode.utils.GenUtils.py_style_mod;
 
+import androidx.annotation.NonNull;
+
 public class Angle {
 
     //see top for type definitions
@@ -58,9 +60,10 @@ public class Angle {
     public double getAngle () { return angle; }
     public AngleType getType () { return type; }
 
+    @NonNull
     @Override
     public String toString () {
-        return "" + angle + " :" + type;
+        return angle + " :" + type;
     }
 
     //assumes DEGREES for input and output!! use built-in Java method to convert between radians and degrees
@@ -145,9 +148,7 @@ public class Angle {
     }
 
     public static Angle getAverageAngle (Angle angle1, Angle angle2) {
-        final double difference = angle1.getDifference(angle2);
-        final Direction direction = angle1.directionTo(angle2);
-        return angle1.rotateBy(difference/2.0, direction);
+        return angle1.rotateBy(angle1.getDifference (angle1) / 2.0, angle1.directionTo(angle2));
     }
 
     //INTERNAL METHODS - don't worry about these unless you're interested in how this class works

@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.types.Angle;
 import org.firstinspires.ftc.teamcode.types.Vector2d;
 
 public class DriveController {
-    Board board;
+    private final Board board;
 
     public final DriveModule moduleLeft;
     public final DriveModule moduleRight;
@@ -81,9 +81,9 @@ public class DriveController {
     public void rotateRobot(Angle targetAngle, LinearOpMode linearOpMode) {
         //rotateModules
         int iterations = 0;
-        boolean isNegativeRotation = board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE;
 
         double absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
+
         while (linearOpMode.opModeIsActive() && absHeadingDiff > ALLOWED_MODULE_ROT_ERROR && iterations < MAX_ITERATIONS_ROBOT_ROTATE) {
             absHeadingDiff = board.getRobotHeading().getDifference(targetAngle);
             double rotMag = GenUtils.scaleVal(absHeadingDiff, 0, 25, 0, moduleLeft.MAX_MOTOR_POWER); //was max power 1 - WAS 0.4 max power
@@ -94,13 +94,14 @@ public class DriveController {
                 update(GenUtils.vZERO, rotMag);
             }
 
-            if (isNegativeRotation) {
+            if (board.getRobotHeading().directionTo(targetAngle) == Angle.Direction.CLOCKWISE) {
                 ++iterations;
             }
 
             linearOpMode.telemetry.addLine("Rotating ROBOT");
             linearOpMode.telemetry.update();
         }
+
         update(GenUtils.vZERO, 0);
     }
 
