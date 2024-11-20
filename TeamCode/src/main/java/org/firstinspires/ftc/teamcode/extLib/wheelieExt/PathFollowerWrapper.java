@@ -223,6 +223,31 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
+    public double[] follow(){
+
+        if (follower != null) {
+            //Checks if target is reached
+            if (targetReached (follower.getLastPoint())) {
+                concludePath ();
+
+                //Don't move, at target
+                return new double[] {0,0,0};
+            }
+
+            //Calculates the movement vector
+            m = follower.followPath (getPose());
+            if(!follower.approachingLast()) {
+                //Reshapes vector based on PID values
+                return moveTo(m.x, m.y, m.h);
+            } else {
+                return moveToPID (m, pidTimer.time());
+            }
+        }
+
+        //If there's no path, do not move
+        return new double[] {0,0,0};
+    }
+
     /** Updates the localization of the robot */
     public void updatePose (double angle) {
         localization.update (angle);
