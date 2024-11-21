@@ -25,7 +25,7 @@ public class DriveModule {
 
     //TODO: modify this variable to match drive gear ratio
     public final double TICKS_PER_MODULE_REV = 28 * (double)(60)/11 * (double)(48)/15 * (double)(82)/22 * 2; //ticks per MODULE revolution
-    public final double DEGREES_PER_TICK = 360/TICKS_PER_MODULE_REV;
+    public final double DEGREES_PER_TICK = 360 / TICKS_PER_MODULE_REV;
 
     //TODO: modify this variable to match drive gear ratio
     public final double TICKS_PER_WHEEL_REV = 28 * (double)(60)/11 * (double)(48)/15 * (double)(82)/22 * (double)(14)/60; //ticks per WHEEL revolution
@@ -66,11 +66,11 @@ public class DriveModule {
         if (moduleSide == ModuleSide.RIGHT) {
             motor1 = board.hardwareMap.dcMotor.get("rt");
             motor2 = board.hardwareMap.dcMotor.get("rb");
-            positionVector = new Vector2d((double)18/2, 0); //points from robot center to r module
+            positionVector = new Vector2d(9, 0); //points from robot center to r module
         } else {
             motor1 = board.hardwareMap.dcMotor.get("lt");
             motor2 = board.hardwareMap.dcMotor.get("lb");
-            positionVector = new Vector2d((double)-18/2, 0); //points from robot center to l module
+            positionVector = new Vector2d(-9, 0); //points from robot center to l module
         }
 
         lastMotor1Encoder = motor1.getCurrentPosition();
@@ -120,13 +120,8 @@ public class DriveModule {
         final double moveComponent = targetVector.getMagnitude() * directionMultiplier;
 
         //how much the module needs to pivot (change its orientation)
-        final double pivotComponent;
-        if (targetVector.getMagnitude() != 0) {
-            pivotComponent = getPivotComponent(targetVector, getCurrentOrientation());
-        } else {
-            //if target vector is zero (joystick is within deadband) don't pivot modules
-            pivotComponent = 0;
-        }
+        final double pivotComponent = (0 != targetVector.getMagnitude()) ?
+                getPivotComponent(targetVector, getCurrentOrientation()) : 0;
 
         //vector in an (invented) coordinate system that represents desired (relative) module translation and module rotation
         final Vector2d powerVector = new Vector2d(moveComponent, pivotComponent); //order very important here
