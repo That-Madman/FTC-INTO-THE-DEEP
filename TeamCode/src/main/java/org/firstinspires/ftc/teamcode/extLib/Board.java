@@ -1,17 +1,22 @@
 package org.firstinspires.ftc.teamcode.extLib;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
 
     private final IMU imu;
+    private SparkFunOTOS sparkfunOTOS;
 
     public Board(HardwareMap hwMap) {
         drivebase[0] = hwMap.get(DcMotor.class, "fl");
@@ -32,6 +37,8 @@ public class Board {
         drivebase[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sparkfunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
+        configureSensor();
 
         imu = hwMap.get(IMU.class, "imu");
 
@@ -43,10 +50,6 @@ public class Board {
                         )
                 )
         );
-    }
-
-    public void resetIMU () {
-        imu.resetYaw();
     }
 
     public double getAngle() {
@@ -79,6 +82,20 @@ public class Board {
         final double brp = forward + right - rotate;
 
         setPowers(flp, frp, blp, brp);
+    }
+    private void configureSensor() {
+        sparkfunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkfunOTOS.setAngularUnit(AngleUnit.DEGREES);
+        sparkfunOTOS.setOffset(new SparkFunOTOS.Pose2D(0, 0, 0));
+        sparkfunOTOS.resetTracking();
+    }
+
+    public SparkFunOTOS.Pose2D getCurrentPose() {
+        return sparkfunOTOS.getPosition();
+    }
+
+    public void resetIMU() {
+        sparkfunOTOS.calibrateImu(255, false);
     }
 
     public void driveFieldRelative(double forward, double right, double rotate) {

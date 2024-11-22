@@ -25,7 +25,7 @@ public class PathFollowerWrapper {
     private final ElapsedTime pidTimer;
 
     private final double mP = 1. / 50., mI = 0.00001, mD = 0.4,
-            hP = 1. / Math.toRadians(90), hI = 0.00001, hD = .0,
+            hP = 1. / Math.toRadians(135), hI = 0.00001, hD = 10,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;
 
@@ -33,7 +33,7 @@ public class PathFollowerWrapper {
     public double SPEED_PERCENT = 1;
 
     //The acceptable margin of error in inches and radians
-    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
+    public final double MAX_TRANSLATION_ERROR = 5.5, MAX_ROTATION_ERROR = Math.toRadians (5);
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {

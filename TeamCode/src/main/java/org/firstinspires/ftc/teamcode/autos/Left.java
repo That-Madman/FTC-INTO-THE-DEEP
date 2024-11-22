@@ -53,6 +53,7 @@ public class Left extends WheelOp {
     @Override
     public void run () {
         followPath(p,0);
+        sleep(5000);
         followPath(p1,0);
         /*followPath(path1, 5);
 
