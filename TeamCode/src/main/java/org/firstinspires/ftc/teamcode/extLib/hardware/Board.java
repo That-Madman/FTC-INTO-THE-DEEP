@@ -13,6 +13,8 @@ public class Board {
 
     private final IMU imu;
 
+    private final LimeLight lime;
+
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
             base[1] = hwMap.get(DcMotor.class, "fr");
@@ -43,6 +45,8 @@ public class Board {
                             )
                     )
             );
+
+            lime = new LimeLight(hwMap);
     }
 
     public double getAngle() {
