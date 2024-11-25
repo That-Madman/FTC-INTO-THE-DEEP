@@ -27,8 +27,8 @@ public class Localization {
     public final static double MM_PER_TICK = WHEEL_CIRCUMFERENCE / (double) TICKS_PER_REV;
 
     // In inches
-    public final static double H_DISTANCE_FROM_MID = 7.5; //TODO Check these values
-    public final static double V_DISTANCE_FROM_MID = 5.5;
+    public final static double H_DISTANCE_FROM_MID = 5.5; //TODO Check these values
+    public final static double V_DISTANCE_FROM_MID = 7.5;
 
     public Pose2D currentPosition;
     private SparkFunOTOS sparkfunOTOS;
@@ -38,15 +38,17 @@ public class Localization {
         //Sets the position the robot starts in
         currentPosition = new Pose2D (start.x, start.y, start.h);
 
-        vert = hw.get (DcMotorEx.class, "fr");
-        hori = hw.get (DcMotorEx.class, "br");
+        vert = hw.get (DcMotorEx.class, "br");
+        hori = hw.get (DcMotorEx.class, "fr");
         hori.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         vert.setMode (DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hori.setMode (DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         vert.setMode (DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        prevH = hori.getCurrentPosition();
+        prevV = -vert.getCurrentPosition();
 
-        sparkfunOTOS = hw.get(SparkFunOTOS.class, "otos");
-        configureSparkFunOTOS();
+        //sparkfunOTOS = hw.get(SparkFunOTOS.class, "otos");
+        //configureSparkFunOTOS();
     }
     private void configureSparkFunOTOS() {
         sparkfunOTOS.setLinearUnit(DistanceUnit.INCH);
@@ -71,12 +73,12 @@ public class Localization {
      */
     private void calculateChanges (double angle) {
         //Finds the delta values in wheels and angle
-        int currentH = -vert.getCurrentPosition ();
-        int currentV = -hori.getCurrentPosition ();
+        int currentH = hori.getCurrentPosition ();
+        int currentV = -vert.getCurrentPosition ();
         int dy = currentH - prevH;
         int dx = currentV - prevV;
-        double heading = AngleUnit.normalizeRadians (angle);
-        double deltaHeading = heading - prevHead;
+        double heading = AngleUnit.normalizeRadians (-angle);
+        double deltaHeading = AngleUnit.normalizeRadians(heading - prevHead);
 
         // Convert ticks to millimeters
         double dH = dy * MM_PER_TICK * MM_TO_INCH;
@@ -92,8 +94,9 @@ public class Localization {
 
         // Update the current position
         currentPosition.x += globalForward;
-        currentPosition.y += globalStrafe;
-        currentPosition.h = deltaHeading + currentPosition.h;
+        currentPosition.y += globalStrafe
+        ;
+        currentPosition.h = AngleUnit.normalizeRadians(deltaHeading + currentPosition.h);
 
         // Update previous encoder values
         prevH = currentH;
@@ -113,10 +116,10 @@ public class Localization {
      */
 
     public int getHori () {
-        return 0;
+        return hori.getCurrentPosition();
     }
     public int getVert () {
-        return 0;
+        return vert.getCurrentPosition();
     }
 
     public void update (double angle) {

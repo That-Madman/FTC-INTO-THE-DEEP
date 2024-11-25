@@ -37,17 +37,17 @@ public class Left extends WheelOp {
 
     private Pose2D[] p = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(25, 0, 0),
-            new Pose2D(50, 0, 0),
+            new Pose2D(6, 0, 0),
+            new Pose2D(12, 0, 0),
             // new Pose2D(5, 0, 0),
             // new Pose2D(50, 20, 0),
             //new Pose2D(50, 0, Math.toRadians(90))
     };
 
     Pose2D[] p1 = new Pose2D[]{
-            new Pose2D(50,0,0),
-            new Pose2D(50, 0, Math.toRadians(45)),
-            new Pose2D(50, 0, Math.toRadians(90)),
+            new Pose2D(12,0,0),
+            new Pose2D(12, 0, Math.toRadians(45)),
+            new Pose2D(12, 0, Math.toRadians(90)),
     };
 
     @Override

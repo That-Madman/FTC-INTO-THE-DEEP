@@ -10,7 +10,7 @@ import Wheelie.Pose2D;
 public class LeftPark extends WheelOp {
     final private Pose2D[] path = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(24, 0, 0),
+            new Pose2D(12, 12, 0),
             new Pose2D(24, 24, 0),
 
             //new Pose2D(0, 0, Math.toRadians(90)),

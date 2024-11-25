@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.extLib.Board;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
 
+import Wheelie.Pose2D;
+
 
 @TeleOp(group = "Test")
 public class LocalizationTest extends LinearOpMode {
@@ -14,8 +16,10 @@ public class LocalizationTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, 0), 8);
+        PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, 0), 8);
         board = new Board(hardwareMap);
+        board.resetIMU();
+
 
         telemetry.addLine("Initialized");
         /*telemetry.addLine(drive.getPoseString());
@@ -26,7 +30,9 @@ public class LocalizationTest extends LinearOpMode {
         board.resetIMU();
 
         while (opModeIsActive()) {
-            SparkFunOTOS.Pose2D currentPose = board.getCurrentPose();
+            //SparkFunOTOS.Pose2D currentPose = board.getCurrentPose();
+            drive.updatePose(board.getAngle());
+            Pose2D currentPose = drive.getPose();
 
             telemetry.addLine("Current Pose from SparkFun OTO:");
             telemetry.addData("X Position", currentPose.x);

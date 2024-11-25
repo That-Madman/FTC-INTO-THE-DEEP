@@ -95,7 +95,8 @@ public class Board {
     }
 
     public void resetIMU() {
-        sparkfunOTOS.calibrateImu(255, false);
+        imu.resetYaw();
+        //sparkfunOTOS.calibrateImu(255, false);
     }
 
     public void driveFieldRelative(double forward, double right, double rotate) {

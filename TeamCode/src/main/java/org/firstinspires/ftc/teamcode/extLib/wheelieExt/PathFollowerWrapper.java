@@ -99,7 +99,7 @@ public class PathFollowerWrapper {
         }
 
         return new double[] {
-                x, y, -h //TODO fix heading control
+                x, y, h //TODO fix heading control
         };
     }
 
@@ -121,7 +121,7 @@ public class PathFollowerWrapper {
         double h = hPID.pidCalc (heading, getPose().h, time);
 
         return new double[]{
-                x, y, -h
+                x, y, h
         };
     }
 
