@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib.wheelieExt;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -10,6 +11,7 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 //import Wheelie.PathFollower;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import  org.firstinspires.ftc.teamcode.extLib.PathFollower;
 
 public class PathFollowerWrapper {
@@ -24,8 +26,8 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1. / 50., mI = 0.00001, mD = 0.4,
-            hP = 1. / Math.toRadians(135), hI = 0.00001, hD = 10,
+    private final double mP = 1. / 50., mI = 0.00001, mD = 0.004,
+            hP = 1. / Math.toRadians(135), hI = 0.00001, hD = .05,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;
 
@@ -77,7 +79,7 @@ public class PathFollowerWrapper {
         Pose2D diff = new Pose2D(
                 forward-getPose().x,
                 strafe-getPose().y,
-                heading-getPose().h
+                AngleUnit.normalizeRadians(heading-getPose().h)
         );
 
         double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
@@ -251,6 +253,13 @@ public class PathFollowerWrapper {
     /** Updates the localization of the robot */
     public void updatePose (double angle) {
         localization.update (angle);
+    }
+
+    public void resetPose(){
+        localization.resetPose();
+    }
+    public void resetPose(Pose2D a){
+        localization.resetPose(a);
     }
 
     @NonNull

@@ -125,4 +125,11 @@ public class Localization {
     public void update (double angle) {
         calculateChanges (angle);
     }
+
+    public void resetPose(){
+        currentPosition = new Pose2D(0,0,0);
+    }
+    public void resetPose(Pose2D a){
+        currentPosition = a;
+    }
 }
