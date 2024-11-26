@@ -101,7 +101,7 @@ public class PathFollowerWrapper {
         }
 
         return new double[] {
-                x, y, h //TODO fix heading control
+                x, y, -h //TODO fix heading control
         };
     }
 
@@ -109,21 +109,26 @@ public class PathFollowerWrapper {
      * @param move output from PathFollower class, followPath method
      */
     public double[] moveToPID (Pose2D move, double time) {
-        double forward = move.x,
-                strafe = move.y,
-                heading = move.h;
+        Pose2D diff = new Pose2D(
+                move.x-getPose().x,
+                move.y-getPose().y,
+                AngleUnit.normalizeRadians(move.h-getPose().h)
+        );
 
-        double x = forward * Math.cos (getPose ().h) - strafe * Math.sin (getPose ().h);
-        double y = forward * Math.sin (getPose ().h) + strafe * Math.cos (getPose ().h);
+        //double x = 0;// move.x * Math.cos (getPose ().h) - move.y * Math.sin (getPose ().h);
+        //double y = 0;//move.x * Math.sin (getPose ().h) + move.y * Math.cos (getPose ().h);
 
         //Calculates the PID values based on error
-        x = xPID.pidCalc (x, getPose().x, time);
-        y = yPID.pidCalc(y, getPose().y, time);
+        double x = xPID.pidCalc (move.x, getPose().x, time),
+            y = yPID.pidCalc(move.y, getPose().y, time);
 
-        double h = hPID.pidCalc (heading, getPose().h, time);
+        double h = hPID.pidCalc (move.h, getPose().h, time);
+
+        double forward = x * Math.cos (getPose ().h) - y * Math.sin (getPose ().h),
+                strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
 
         return new double[]{
-                x, y, h
+                forward, strafe, -h
         };
     }
 

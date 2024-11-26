@@ -77,7 +77,7 @@ public class Localization {
         int currentV = -vert.getCurrentPosition ();
         int dy = currentH - prevH;
         int dx = currentV - prevV;
-        double heading = AngleUnit.normalizeRadians (-angle);
+        double heading = AngleUnit.normalizeRadians (angle);
         double deltaHeading = AngleUnit.normalizeRadians(heading - prevHead);
 
         // Convert ticks to millimeters
@@ -85,12 +85,12 @@ public class Localization {
         double dV = dx * MM_PER_TICK * MM_TO_INCH;
 
         // Calculate the translation components
-        double forward = dV - V_DISTANCE_FROM_MID * deltaHeading;
-        double strafe = dH + H_DISTANCE_FROM_MID * deltaHeading;
+        double forward = dV + V_DISTANCE_FROM_MID * deltaHeading;
+        double strafe = dH - H_DISTANCE_FROM_MID * deltaHeading;
 
         // Apply the rotation to the translation to convert to global coordinates
-        double globalForward = forward * Math.cos (heading) - strafe * Math.sin (heading);
-        double globalStrafe = forward * Math.sin (heading) + strafe * Math.cos (heading);
+        double globalForward = forward * Math.cos (-heading) - strafe * Math.sin (-heading);
+        double globalStrafe = forward * Math.sin (-heading) + strafe * Math.cos (-heading);
 
         // Update the current position
         currentPosition.x += globalForward;
