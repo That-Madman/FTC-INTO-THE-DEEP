@@ -51,7 +51,9 @@ public class Left extends WheelOp {
     };
 
     Pose2D[] p2 = new Pose2D[]{
-            new Pose2D(12, 0, Math.toRadians(90))
+            new Pose2D(12, 0, Math.toRadians(90)),
+            new Pose2D(12, 0, Math.toRadians(90)),
+            new Pose2D(12, 12, 0)
     };
 
     @Override
@@ -59,6 +61,9 @@ public class Left extends WheelOp {
         followPath(p,0);
         sleep(5000);
         followPath(p1,0);
+        sleep(5000);
+        followPath(p2, 0);
+
         /*followPath(path1, 5);
 
         followPath(path2, 5);

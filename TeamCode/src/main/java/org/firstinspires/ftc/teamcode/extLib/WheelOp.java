@@ -11,7 +11,7 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 
 public abstract class WheelOp extends LinearOpMode {
-    private PathFollowerWrapper followerWrapper;
+    protected PathFollowerWrapper followerWrapper;
     protected Board board;
     public ElapsedTime time;
 
@@ -71,7 +71,7 @@ public abstract class WheelOp extends LinearOpMode {
 
             telemetry.update();
         }
-
+        followerWrapper.resetPose();
         time.reset();
         while (time.time() < waitTime && opModeIsActive());
     }
