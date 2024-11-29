@@ -26,8 +26,8 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1. / 50., mI = 0.00001, mD = 0.004,
-            hP = 1. / Math.toRadians(135), hI = 0.00001, hD = .05,
+    private final double mP = 1. / 25., mI = 0.00000, mD = 0.004, //something is wrong with the i
+            hP = 1. / Math.toRadians(135), hI = 0.0001, hD = .05,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;
 
@@ -122,7 +122,7 @@ public class PathFollowerWrapper {
         double x = xPID.pidCalc (move.x, getPose().x, time),
             y = yPID.pidCalc(move.y, getPose().y, time);
 
-        double h = hPID.pidCalc (move.h, getPose().h, time);
+        double h = hPID.pidCalc (diff.h, 0, time); //changed diff.h from move.h and changed 0 from getPose().h
 
         double forward = x * Math.cos (getPose ().h) - y * Math.sin (getPose ().h),
                 strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
