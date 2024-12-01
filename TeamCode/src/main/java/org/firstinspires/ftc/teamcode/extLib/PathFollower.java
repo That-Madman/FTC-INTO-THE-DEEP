@@ -103,44 +103,32 @@ public class PathFollower {
      * @author Kennedy Brundidge
      */
     public Pose2D followPath(Pose2D obj){
-        if(Math.hypot(obj.x-path.getPt(wayPoint+1).x, obj.y-path.getPt(wayPoint+1).y) > translationError) {
-            //Checks that robot is not approaching the last point
-            if (path.pathLength() != wayPoint + 2) {
-                //Finds if the circle intersects with the next line/path
-                Pose2D next = PursuitMath.waypointCalc
-                        (obj, look, path.getPt(wayPoint + 1), path.getPt(wayPoint + 2));
-                //If circle intersects with next line then robot can start approaching the next point
-                if (!Double.isNaN(next.x)) {
-                    wayPoint++;
-                    return next;
-                }
+        //Checks that robot is not approaching the last point
+        if (path.pathLength() != wayPoint + 2) {
+            //Finds if the circle intersects with the next line/path
+            Pose2D next = PursuitMath.waypointCalc
+                    (obj, look, path.getPt(wayPoint + 1), path.getPt(wayPoint + 2));
+            //If circle intersects with next line then robot can start approaching the next point
+            if (!Double.isNaN(next.x)) {
+                wayPoint++;
+                return next;
             }
-
-            //Finds a point for robot to approach
-            Pose2D target = PursuitMath.waypointCalc
-                    (obj, look, path.getPt(wayPoint), path.getPt(wayPoint + 1));
-
-            //Moves straight to next point if PP math is returning NaN values
-            if (Double.isNaN(target.x)) { //Magic the gathering
-                target = path.getPt(wayPoint + 1);
-            }
-
-            return target;
         }
-            //new Pose2D(obj.x, obj.y, path.getPt(wayPoint+1).h);
 
-        tele.addLine("Only rotating");
-        tele.addData("Past", path.getPt(wayPoint).h);
-        tele.addData("Target", path.getPt(wayPoint+1).h);
-        if(wayPoint+2 != path.pathLength())
-            tele.addData("Next Target", path.getPt(wayPoint+2).h);
-        tele.addData("Rotation of bot", obj.h);
-        tele.addData("wanted error", headingError);
-        tele.addData("error", Math.abs(path.getPt(wayPoint+1).h-obj.h));
+        //Finds a point for robot to approach
+        Pose2D target = PursuitMath.waypointCalc
+                (obj, look, path.getPt(wayPoint), path.getPt(wayPoint + 1));
 
-        if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError)
+        //Moves straight to next point if PP math is returning NaN values
+        if (Double.isNaN(target.x)) { //Magic the gathering
+            target = path.getPt(wayPoint + 1);
+        }
+
+        if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError &&
+                Math.hypot(target.x-obj.x, target.y-obj.y) <= translationError)
             wayPoint+=1;
-        return path.getPt(wayPoint + 1);
+
+        return target;
     }
 
     /** Returns the index of the current Pose2D in the Path */

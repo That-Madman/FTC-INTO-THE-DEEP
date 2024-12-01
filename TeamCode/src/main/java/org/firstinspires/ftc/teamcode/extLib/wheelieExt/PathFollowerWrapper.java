@@ -26,8 +26,8 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1. / 50., mI = 0.00001, mD = 0.004,
-            hP = 1. / Math.toRadians(135), hI = 0.00001, hD = .05,
+    private final double mP = 1. / 25., mI = 0.00000, mD = 0.004, //something is wrong with the i
+            hP = 1. / Math.toRadians(135), hI = 0.0001, hD = .05,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;
 
@@ -101,7 +101,7 @@ public class PathFollowerWrapper {
         }
 
         return new double[] {
-                x, y, h //TODO fix heading control
+                x, y, -h //TODO fix heading control
         };
     }
 
@@ -109,21 +109,26 @@ public class PathFollowerWrapper {
      * @param move output from PathFollower class, followPath method
      */
     public double[] moveToPID (Pose2D move, double time) {
-        double forward = move.x,
-                strafe = move.y,
-                heading = move.h;
+        Pose2D diff = new Pose2D(
+                move.x-getPose().x,
+                move.y-getPose().y,
+                AngleUnit.normalizeRadians(move.h-getPose().h)
+        );
 
-        double x = forward * Math.cos (getPose ().h) - strafe * Math.sin (getPose ().h);
-        double y = forward * Math.sin (getPose ().h) + strafe * Math.cos (getPose ().h);
+        //double x = 0;// move.x * Math.cos (getPose ().h) - move.y * Math.sin (getPose ().h);
+        //double y = 0;//move.x * Math.sin (getPose ().h) + move.y * Math.cos (getPose ().h);
 
         //Calculates the PID values based on error
-        x = xPID.pidCalc (x, getPose().x, time);
-        y = yPID.pidCalc(y, getPose().y, time);
+        double x = xPID.pidCalc (move.x, getPose().x, time),
+            y = yPID.pidCalc(move.y, getPose().y, time);
 
-        double h = hPID.pidCalc (heading, getPose().h, time);
+        double h = hPID.pidCalc (diff.h, 0, time); //changed diff.h from move.h and changed 0 from getPose().h
+
+        double forward = x * Math.cos (getPose ().h) - y * Math.sin (getPose ().h),
+                strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
 
         return new double[]{
-                x, y, h
+                forward, strafe, -h
         };
     }
 
