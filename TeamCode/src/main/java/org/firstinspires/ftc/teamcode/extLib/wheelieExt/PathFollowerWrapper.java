@@ -162,6 +162,10 @@ public class PathFollowerWrapper {
                 localization.currentPosition.h;
     }
 
+    public Localization getLocalization(){
+        return localization;
+    }
+
     public int getHoriOdom () {
         return localization.getHori ();
     }
