@@ -7,13 +7,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import Wheelie.Pose2D;
 
 public class Localization {
-    private Orientation angles;
-
+    //private Orientation angles; //TODO: FIND A REASON FOR THIS OR DELETE IT
     private final DcMotorEx hori, vert;
 
     private int prevH = 0, prevV = 0;

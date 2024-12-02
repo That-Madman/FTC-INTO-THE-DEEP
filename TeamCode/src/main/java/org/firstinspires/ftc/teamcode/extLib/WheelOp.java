@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.extLib;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
 
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public abstract class WheelOp extends LinearOpMode {
     protected void followPath(Pose2D[] a, final double waitTime) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
-        followerWrapper.getFollower().tele = telemetry; //TODO delete
+        //followerWrapper.getFollower().tele = telemetry; //TODO delete
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             followerWrapper.updatePose(board.getAngle()); //Updates position
@@ -75,6 +74,6 @@ public abstract class WheelOp extends LinearOpMode {
         //followerWrapper.resetPose();
         //followerWrapper.resetPose(new Pose2D(0,0, AngleUnit.normalizeRadians(-board.getAngle())));
         time.reset();
-        while (time.time() < waitTime && opModeIsActive());
+        while (time.time() < waitTime && opModeIsActive()); //TODO: Why is this here
     }
 }

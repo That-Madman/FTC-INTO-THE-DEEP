@@ -34,6 +34,7 @@ import Wheelie.PursuitMath;
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 
 /**
@@ -48,8 +49,8 @@ public class PathFollower {
     public double look;
 
     private int wayPoint = 0;
-    private double translationError = 5, headingError = Math.toRadians(10);
-    public Telemetry tele; //TODO Delete
+    private double translationError = 5, headingError = Math.toRadians(10); //TODO: KENNEDY WHAT THE HECK IS THIS WHY DOES THIS MAKE ANY SENSE. sincerely, Alex
+    //public Telemetry tele; //TODO Delete
 
     /** The constructor for the path follower, with the starting Pose2D, lookahead distance, and path
      * @param startPt The starting location of the robot
