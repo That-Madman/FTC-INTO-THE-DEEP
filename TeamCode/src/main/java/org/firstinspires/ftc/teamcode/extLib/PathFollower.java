@@ -6,7 +6,7 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 import Wheelie.PursuitMath;
 
-/*
+/**
  * BSD 3-Clause License
  *
  * Copyright (c) 2024, Franklin Academy Robotics
@@ -36,7 +36,7 @@ import Wheelie.PursuitMath;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-/**
+
  * The Path Following algorithm that takes a list of points and lookahead to determine how
  * the robot should move towards its destination
  *
@@ -46,10 +46,10 @@ public class PathFollower {
     public Path path;
     public Pose2D startPt;
     public double look;
+    public Telemetry tele;
 
     private int wayPoint = 0;
     private double translationError = 5, headingError = Math.toRadians(10);
-    public Telemetry tele; //TODO Delete
 
     /** The constructor for the path follower, with the starting Pose2D, lookahead distance, and path
      * @param startPt The starting location of the robot
@@ -63,7 +63,6 @@ public class PathFollower {
         this.startPt = startPt;
         this.look = look;
         this.path = path;
-
     }
 
     /** The constructor for the path follower, with the starting Pose2D, lookahead distance, and path
@@ -119,11 +118,12 @@ public class PathFollower {
         Pose2D target = PursuitMath.waypointCalc
                 (obj, look, path.getPt(wayPoint), path.getPt(wayPoint + 1));
 
-        //Moves straight to next point if PP math is returning NaN values
+        //Moves straight to next point if PP math is returning NaN values (circle and line do not intersect)
         if (Double.isNaN(target.x)) { //Magic the gathering
             target = path.getPt(wayPoint + 1);
         }
 
+        //If robot is within its margin of error, move to next point
         if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError &&
                 Math.hypot(target.x-obj.x, target.y-obj.y) <= translationError)
             wayPoint+=1;

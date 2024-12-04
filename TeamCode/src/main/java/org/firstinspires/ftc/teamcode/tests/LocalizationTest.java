@@ -18,8 +18,6 @@ public class LocalizationTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, 0), 8);
         board = new Board(hardwareMap);
-        board.resetIMU();
-
 
         telemetry.addLine("Initialized");
         /*telemetry.addLine(drive.getPoseString());
@@ -30,7 +28,6 @@ public class LocalizationTest extends LinearOpMode {
         board.resetIMU();
 
         while (opModeIsActive()) {
-            //SparkFunOTOS.Pose2D currentPose = board.getCurrentPose();
             drive.updatePose(board.getAngle());
             Pose2D currentPose = drive.getPose();
 
