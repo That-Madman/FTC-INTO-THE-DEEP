@@ -10,10 +10,21 @@ import java.util.Arrays;
 import Wheelie.Path;
 import Wheelie.Pose2D;
 
-public abstract class WheelOp extends LinearOpMode {
-    protected PathFollowerWrapper followerWrapper;
+public class ResetingAuto extends LinearOpMode {
+    private PathFollowerWrapper followerWrapper;
     protected Board board;
     public ElapsedTime time;
+
+    private Pose2D[] path1 = new Pose2D[] {
+            new Pose2D(0,0,0),
+            new Pose2D(24, 0, 0),
+            new Pose2D(24, 24, 0)
+    },
+    path2 = new Pose2D[] {
+            new Pose2D(0,0,0),
+            new Pose2D(0,0, Math.toRadians(90)),
+            new Pose2D(0, 0, Math.toRadians(180))
+    };
 
     @Override
     public void runOpMode () {
@@ -24,7 +35,10 @@ public abstract class WheelOp extends LinearOpMode {
 
         waitForStart();
 
-        run();
+        followPath(path1, 0);
+        followPath(path2, 5);
+        followPath(path1, 0);
+        followPath(path2, 0);
 
         while(opModeIsActive()){
             telemetry.addLine("Path is complete");
@@ -37,12 +51,10 @@ public abstract class WheelOp extends LinearOpMode {
         }
     }
 
-    public abstract void run ();
-
     protected void followPath(Pose2D[] a, final double waitTime) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
-        //followerWrapper.getFollower().tele = telemetry; //TODO delete
+        followerWrapper.getFollower().tele = telemetry; //TODO delete
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             followerWrapper.updatePose(board.getAngle()); //Updates position
@@ -71,9 +83,9 @@ public abstract class WheelOp extends LinearOpMode {
 
             telemetry.update();
         }
-        //followerWrapper.resetPose();
-        //followerWrapper.resetPose(new Pose2D(0,0, AngleUnit.normalizeRadians(-board.getAngle())));
+
+        followerWrapper.getLocalization().resetPose();
         time.reset();
-        while (time.time() < waitTime && opModeIsActive()); //TODO: Why is this here
+        while (time.time() < waitTime && opModeIsActive());
     }
 }
