@@ -25,6 +25,8 @@ public class Localization {
     public final static int TICKS_PER_REV = 2000;
     public final static double MM_TO_INCH = 1.0/25.4;
     public final static double MM_PER_TICK = WHEEL_CIRCUMFERENCE / (double) TICKS_PER_REV;
+    public final double X_MULT = 100.0/91.6;
+    public final double Y_MULT = 100.0/97.3;
 
     // In inches
     public final static double H_DISTANCE_FROM_MID = 5.5; //TODO Check these values
@@ -93,9 +95,8 @@ public class Localization {
         double globalStrafe = forward * Math.sin (-heading) + strafe * Math.cos (-heading);
 
         // Update the current position
-        currentPosition.x += globalForward;
-        currentPosition.y += globalStrafe
-        ;
+        currentPosition.x += globalForward * X_MULT;
+        currentPosition.y += globalStrafe * Y_MULT        ;
         currentPosition.h = AngleUnit.normalizeRadians(deltaHeading + currentPosition.h);
 
         // Update previous encoder values
@@ -133,3 +134,6 @@ public class Localization {
         currentPosition = a;
     }
 }
+//97
+//97
+//98

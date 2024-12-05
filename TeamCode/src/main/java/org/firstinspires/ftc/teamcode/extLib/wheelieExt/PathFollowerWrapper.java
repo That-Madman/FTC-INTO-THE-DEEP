@@ -26,7 +26,7 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1. / 25., mI = 0.00000, mD = 0.004, //something is wrong with the i
+    private final double mP = 1. / 25., mI = 0, mD = 0.004,
             hP = 1. / Math.toRadians(135), hI = 0.0001, hD = .05,
             mMaxI = 0.001, hMaxI = 0.0005;
     private boolean xi, yi, hi;

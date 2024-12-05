@@ -9,12 +9,12 @@ import Wheelie.Pose2D;
 public class Left extends WheelOp {
     private Pose2D[] path1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(0, -4, 0),
-            new Pose2D(30, -4, 0)
+            new Pose2D(15, 0, 0),
+            new Pose2D(30, 0, 0)
     };
 
     private Pose2D[] path2 = new Pose2D[]{
-            new Pose2D(30, -4, 0),
+            new Pose2D(30, 0, 0),
             new Pose2D(7, 0, 0),
             new Pose2D(7, 0, 0)
     };
@@ -47,11 +47,11 @@ public class Left extends WheelOp {
     private Pose2D[] path6 = new Pose2D[] {
             new Pose2D(54, 45, Math.toRadians(180)),
             new Pose2D(25, 45, Math.toRadians(180)),
-            new Pose2D(2, 45, Math.toRadians(180))
+            new Pose2D(10, 45, Math.toRadians(180))
     };
 
     private Pose2D[] path7 = new Pose2D[] {
-            new Pose2D(2, 45, Math.toRadians(180)),
+            new Pose2D(10, 45, Math.toRadians(180)),
             new Pose2D(25, 45, Math.toRadians(180)),
             new Pose2D(54, 45, Math.toRadians(180))
     };
@@ -65,19 +65,19 @@ public class Left extends WheelOp {
     private Pose2D[] path9 = new Pose2D[] {
             new Pose2D(54, 54, Math.toRadians(180)),
             new Pose2D(25, 54, Math.toRadians(180)),
-            new Pose2D(2, 54, Math.toRadians(180))
+            new Pose2D(10   , 54, Math.toRadians(180))
     };
 
     private Pose2D[] path10 = new Pose2D[] {
-            new Pose2D(2, 54, Math.toRadians(180)),
-            new Pose2D(5, 54, Math.toRadians(180)),
-            new Pose2D(8, 54, Math.toRadians(180))
+            new Pose2D(10, 54, Math.toRadians(180)),
+            new Pose2D(15, 54, Math.toRadians(180)),
+            new Pose2D(17, 54, Math.toRadians(180))
     };
 
     private Pose2D[] path11 = new Pose2D[]{
-            new Pose2D(8,54, Math.toRadians(180)),
-            new Pose2D(8, 54, Math.toRadians(90)),
-            new Pose2D(8, 54, 0)
+            new Pose2D(17,54, Math.toRadians(180)),
+            new Pose2D(17, 54, Math.toRadians(90)),
+            new Pose2D(17, 54, 0)
     };
 
     private Pose2D[] path12 = new Pose2D[]{

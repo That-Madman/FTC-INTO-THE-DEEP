@@ -123,8 +123,14 @@ public class PathFollower {
             target = path.getPt(wayPoint + 1);
         }
 
+        double angleError = path.getPt(wayPoint+1).h-obj.h;
+        if(angleError < -Math.PI)
+            angleError += Math.PI;
+        else if (angleError > Math.PI)
+            angleError -= Math.PI;
+
         //If robot is within its margin of error, move to next point
-        if(Math.abs(path.getPt(wayPoint+1).h-obj.h) <= headingError &&
+        if(Math.abs(angleError) <= headingError &&
                 Math.hypot(target.x-obj.x, target.y-obj.y) <= translationError)
             wayPoint+=1;
 
