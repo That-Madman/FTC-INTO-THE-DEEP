@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import Wheelie.PID;
-
 @TeleOp (group = "Tests")
 public class LiftPidTest extends OpMode {
     private DcMotorEx v1, v2;
