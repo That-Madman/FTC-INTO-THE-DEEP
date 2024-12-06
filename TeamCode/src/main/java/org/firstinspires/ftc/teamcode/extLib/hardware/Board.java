@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib.hardware;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -13,7 +14,7 @@ public class Board {
 
     private final IMU imu;
 
-    private final LimeLight lime;
+    private final DcMotorEx v1, v2;
 
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
@@ -35,6 +36,22 @@ public class Board {
             base[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             base[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+            v1 = hwMap.get(DcMotorEx.class, "v1");
+            v2 = hwMap.get(DcMotorEx.class, "v2");
+
+            v1.setDirection(DcMotorSimple.Direction.REVERSE);
+            v2.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            v1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            v1.setPower(1);
+            v1.setTargetPosition(0);
+            v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            v2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            v2.setPower(1);
+            v2.setTargetPosition(0);
+            v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             imu = hwMap.get(IMU.class, "imu");
 
             imu.initialize(
@@ -45,8 +62,6 @@ public class Board {
                             )
                     )
             );
-
-            lime = new LimeLight(hwMap);
     }
 
     public double getAngle() {
@@ -55,6 +70,11 @@ public class Board {
 
     public void resetImu () {
         imu.resetYaw();
+    }
+
+    public void setLift (int height) {
+        v1.setTargetPosition(height);
+        v2.setTargetPosition(height);
     }
 
     public void setPowers(double flp, double frp, double blp, double brp) {

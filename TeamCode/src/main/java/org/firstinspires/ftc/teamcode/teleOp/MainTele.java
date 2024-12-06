@@ -14,6 +14,8 @@ public class MainTele extends OpMode {
     boolean resetImu;
     boolean yHeld;
 
+    private int height;
+
     @Override
     public void init() {
         board = new Board(hardwareMap);
@@ -57,6 +59,13 @@ public class MainTele extends OpMode {
             );
             telemetry.addData("Driving", "Robot Relative");
         }
+
+        height += (int) ((gamepad2.left_trigger - gamepad1.right_trigger) * 100);
+
+        height = Math.max(height, 0);
+        height = Math.min (height, 2800);
+
+        board.setLift(height);
 
         if (gamepad1.b && !bHeld) {
             driveFieldRel ^= true;
