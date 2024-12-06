@@ -10,8 +10,8 @@ import Wheelie.PID;
 @TeleOp (group = "Tests")
 public class LiftPidTest extends OpMode {
     private DcMotorEx v1, v2;
-    private PID v1p = new PID (0.1, 0, 0);
-    private PID v2p = new PID (0.1, 0, 0);
+    private final PID v1p = new PID (0.1, 0, 0);
+    private final PID v2p = new PID (0.1, 0, 0);
 
     private int height;
 
@@ -20,7 +20,7 @@ public class LiftPidTest extends OpMode {
         v2 = hardwareMap.get(DcMotorEx.class, "v2");
 
         v1.setDirection(DcMotorSimple.Direction.FORWARD);
-        v2.setDirection(DcMotorSimple.Direction.REVERSE);
+        v2.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void loop () {
