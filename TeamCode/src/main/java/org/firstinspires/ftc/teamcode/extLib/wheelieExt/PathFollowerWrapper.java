@@ -144,7 +144,7 @@ public class PathFollowerWrapper {
     /** Checks if the target pose is within error margin */
     public boolean targetReached (Pose2D target) {
         return Math.hypot (target.x-getPose ().x, target.y-getPose ().y) <= MAX_TRANSLATION_ERROR &&
-                Math.abs (target.h-getPose ().h) <= MAX_ROTATION_ERROR;
+                Math.abs (AngleUnit.normalizeRadians(target.h-getPose ().h)) <= MAX_ROTATION_ERROR;
     }
 
     public boolean rotateReached (Pose2D target) {

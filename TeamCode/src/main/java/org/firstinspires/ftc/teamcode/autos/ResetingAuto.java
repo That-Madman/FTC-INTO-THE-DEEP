@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode.extLib;
+package org.firstinspires.ftc.teamcode.autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.extLib.Board;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
 
 import java.util.Arrays;
