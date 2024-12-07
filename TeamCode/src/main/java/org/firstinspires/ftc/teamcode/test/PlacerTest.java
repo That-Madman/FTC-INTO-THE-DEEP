@@ -8,13 +8,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class PlacerTest extends OpMode {
     boolean bigClosed;
     boolean tinyClosed;
+    boolean rotState;
+    boolean mRotState;
+
     boolean bHeld;
     boolean xHeld;
+    boolean yHeld;
+    boolean aHeld;
 
     Servo tinyGrab;
     Servo bigGrab;
     Servo lRot;
     Servo rRot;
+    Servo mRot;
 
     @Override
     public void init () {
@@ -22,6 +28,7 @@ public class PlacerTest extends OpMode {
         bigGrab = hardwareMap.get(Servo.class, "bigGrab");
         lRot = hardwareMap.get(Servo.class, "lRot");
         rRot = hardwareMap.get(Servo.class, "rRot");
+        mRot = hardwareMap.get(Servo.class, "mRot");
 
         lRot.setDirection(Servo.Direction.REVERSE);
         setRot(false);
@@ -39,8 +46,22 @@ public class PlacerTest extends OpMode {
             bigClosed ^= true;
         }
 
+        if (gamepad1.y && !yHeld) {
+            rotState ^= true;
+        }
+
+        if (gamepad1.a && !aHeld) {
+            mRotState ^= true;
+        }
+
         setTinyGrab(tinyClosed);
         setBigGrab(bigClosed);
+        setRot(rotState);
+
+        bHeld = gamepad1.b;
+        xHeld = gamepad1.x;
+        yHeld = gamepad1.y;
+        aHeld = gamepad1.a;
     }
 
     void setTinyGrab (boolean c) {
@@ -48,7 +69,7 @@ public class PlacerTest extends OpMode {
     }
 
     void setBigGrab (boolean c) {
-        bigGrab.setPosition(c ? 1 : 0.25);
+        bigGrab.setPosition(c ? 1 : 0.5);
     }
 
     void setRot (boolean u) {

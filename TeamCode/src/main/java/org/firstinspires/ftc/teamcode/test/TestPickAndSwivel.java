@@ -42,7 +42,7 @@ public class TestPickAndSwivel extends OpMode {
     }
 
     void setPick (boolean c) {
-        pick.setPosition(c ? 0.25 : 1);
+        pick.setPosition(c ? 0.5 : 1);
     }
 
     void setSwivel (byte s) {

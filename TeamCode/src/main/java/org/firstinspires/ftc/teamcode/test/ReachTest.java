@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp (group = "Tests")
 public class ReachTest extends OpMode {
     Servo r1, r2;
-    boolean re;
+    byte re;
     boolean bHeld;
 
     @Override
@@ -16,14 +16,13 @@ public class ReachTest extends OpMode {
         r2 = hardwareMap.get(Servo.class, "reachier");
 
         r2.setDirection(Servo.Direction.REVERSE);
-
-
     }
 
     @Override
     public void loop () {
         if (!bHeld && gamepad1.b) {
-            re ^= true;
+            ++re;
+            re %= 3;
         }
 
         setReach(re);
@@ -31,13 +30,22 @@ public class ReachTest extends OpMode {
         bHeld = gamepad1.b;
     }
 
-    public void setReach (boolean r) {
-        if (r) {
-            r1.setPosition(0);
-            r2.setPosition(0);
-        } else {
-            r1.setPosition(1);
-            r2.setPosition(1);
+    public void setReach (byte r) {
+        switch (r) {
+            case 0:
+                r1.setPosition(1);
+                r2.setPosition(1);
+                break;
+
+            case 1:
+                r1.setPosition(0.5);
+                r2.setPosition(0.5);
+                break;
+
+            case 2:
+                r1.setPosition(0.1);
+                r2.setPosition(0.1);
+                break;
         }
     }
 }
