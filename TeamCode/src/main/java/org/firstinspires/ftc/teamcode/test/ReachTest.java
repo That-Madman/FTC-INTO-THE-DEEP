@@ -16,6 +16,8 @@ public class ReachTest extends OpMode {
         r2 = hardwareMap.get(Servo.class, "reachier");
 
         r2.setDirection(Servo.Direction.REVERSE);
+
+
     }
 
     @Override
@@ -31,11 +33,11 @@ public class ReachTest extends OpMode {
 
     public void setReach (boolean r) {
         if (r) {
-            r1.setPosition(1);
-            r2.setPosition(1);
-        } else {
             r1.setPosition(0);
             r2.setPosition(0);
+        } else {
+            r1.setPosition(1);
+            r2.setPosition(1);
         }
     }
 }
