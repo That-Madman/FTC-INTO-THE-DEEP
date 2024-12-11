@@ -71,11 +71,11 @@ public class Left extends WheelOp {
     private Pose2D[] path9 = new Pose2D[] {
             new Pose2D(54, 52, Math.toRadians(180)),
             new Pose2D(25, 52, Math.toRadians(180)),
-            new Pose2D(2, 52, Math.toRadians(180))
+            new Pose2D(5, 52, Math.toRadians(180))
     };
 
     private Pose2D[] path10 = new Pose2D[] {
-            new Pose2D(2, 52, Math.toRadians(180)),
+            new Pose2D(5, 52, Math.toRadians(180)),
             new Pose2D(15, 52, Math.toRadians(180)),
             new Pose2D(20, 52, Math.toRadians(180))
     };
@@ -94,7 +94,7 @@ public class Left extends WheelOp {
 
     private Pose2D[] pathnot12 = new Pose2D[] {
             new Pose2D(8, -6, Math.toRadians(180)),
-            new Pose2D(8,-6, Math.toRadians(180)),
+            new Pose2D(8,-6, Math.toRadians(90)),
             new Pose2D(8, -6, 0)
     };
 
@@ -162,7 +162,7 @@ public class Left extends WheelOp {
         //followPath(path11, 0);
         //sleep(2000);
         followPath(path12, 0);
-        sleep(3000);
+        sleep(1000);
         followPath(pathnot12, 0);
         sleep(1000);
         /*followPath(path13, 0);

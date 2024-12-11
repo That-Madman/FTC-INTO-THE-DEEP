@@ -42,7 +42,7 @@ public abstract class WheelOp extends LinearOpMode {
     protected void followPath(Pose2D[] a, final double waitTime) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
-        //followerWrapper.getFollower().tele = telemetry; //TODO delete
+        followerWrapper.getFollower().tele = telemetry; //TODO delete
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             followerWrapper.updatePose(board.getAngle()); //Updates position
