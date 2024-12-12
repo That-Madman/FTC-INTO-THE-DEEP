@@ -6,44 +6,35 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp (group = "Tests")
 public class ManualHandOffTest extends OpMode {
-    Servo pick;
-    Servo swivel;
-
-    boolean closed;
-    boolean bHeld;
-    boolean yHeld;
-
-    byte sState = 1;
-
     boolean bigClosed;
     boolean tinyClosed;
     boolean rotState;
-    boolean xHeld;
-    boolean aHeld;
-    boolean dpadHeld;
+
+    boolean bHeld;
+    boolean yHeld;
+    boolean upHeld;
+    boolean leftHeld;
+    boolean rightHeld;
+    boolean downHeld;
 
     Servo tinyGrab;
     Servo bigGrab;
     Servo lRot;
     Servo rRot;
+    Servo mRot;
 
     Servo r1, r2;
-    Servo mRot;
     byte re;
-    boolean downHeld;
 
-    public void init () {
-        pick = hardwareMap.get(Servo.class, "pick");
-        swivel = hardwareMap.get(Servo.class, "swivel");
+    Servo pick;
+    Servo swivel;
 
-        setPick(false);
-        setSwivel(sState);
+    boolean closed;
 
-        r1 = hardwareMap.get(Servo.class, "reachy");
-        r2 = hardwareMap.get(Servo.class, "reachier");
+    byte sState = 1;
 
-        r2.setDirection(Servo.Direction.REVERSE);
-
+    @Override
+    public void init() {
         tinyGrab = hardwareMap.get(Servo.class, "tinyGrab");
         bigGrab = hardwareMap.get(Servo.class, "bigGrab");
         lRot = hardwareMap.get(Servo.class, "lRot");
@@ -54,18 +45,39 @@ public class ManualHandOffTest extends OpMode {
         setRot(false);
         setTinyGrab(false);
         setBigGrab(false);
+
+        r1 = hardwareMap.get(Servo.class, "reachy");
+        r2 = hardwareMap.get(Servo.class, "reachier");
+
+        r2.setDirection(Servo.Direction.REVERSE);
+
+        pick = hardwareMap.get(Servo.class, "pick");
+        swivel = hardwareMap.get(Servo.class, "swivel");
+
+        setPick(false);
+        setSwivel(sState);
     }
 
-    public void loop () {
-        if (gamepad1.a && !aHeld) {
+    @Override
+    public void loop() {
+        if (!upHeld && gamepad1.dpad_up) {
+            ++re;
+            re %= 3;
+        }
+
+        setReach(re);
+
+        upHeld = gamepad1.dpad_up;
+
+        if (gamepad1.dpad_left && !leftHeld) {
             tinyClosed ^= true;
         }
 
-        if (gamepad1.x && !xHeld) {
+        if (gamepad1.dpad_right && !rightHeld) {
             bigClosed ^= true;
         }
 
-        if (gamepad1.dpad_up && !dpadHeld) {
+        if (gamepad1.dpad_down && !downHeld) {
             rotState ^= true;
         }
 
@@ -73,17 +85,8 @@ public class ManualHandOffTest extends OpMode {
         setBigGrab(bigClosed);
         setRot(rotState);
 
-        aHeld = gamepad1.a;
-        xHeld = gamepad1.x;
-        dpadHeld = gamepad1.dpad_up;
-
-        if (!downHeld && gamepad1.dpad_down) {
-            ++re;
-            re %= 3;
-        }
-
-        setReach(re);
-
+        leftHeld = gamepad1.dpad_left;
+        rightHeld = gamepad1.dpad_right;
         downHeld = gamepad1.dpad_down;
 
         if (!bHeld && gamepad1.b) {
@@ -106,18 +109,18 @@ public class ManualHandOffTest extends OpMode {
     }
 
     void setBigGrab (boolean c) {
-        bigGrab.setPosition(c ? 0.25 : 1);
+        bigGrab.setPosition(c ? 1 : 0.5);
     }
 
     void setRot (boolean u) {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
-            mRot.setPosition(1);
+            mRot.setPosition(0);
         } else {
             lRot.setPosition(0);
             rRot.setPosition(0);
-            mRot.setPosition(0);
+            mRot.setPosition(1);
         }
     }
 

@@ -13,7 +13,6 @@ public class PlacerTest extends OpMode {
     boolean bHeld;
     boolean xHeld;
     boolean yHeld;
-    boolean aHeld;
 
     Servo tinyGrab;
     Servo bigGrab;
@@ -56,7 +55,6 @@ public class PlacerTest extends OpMode {
         bHeld = gamepad1.b;
         xHeld = gamepad1.x;
         yHeld = gamepad1.y;
-        aHeld = gamepad1.a;
     }
 
     void setTinyGrab (boolean c) {
@@ -71,10 +69,11 @@ public class PlacerTest extends OpMode {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
+            mRot.setPosition(0);
         } else {
             lRot.setPosition(0);
             rRot.setPosition(0);
+            mRot.setPosition(1);
         }
-        mRot.setPosition(0);
     }
 }
