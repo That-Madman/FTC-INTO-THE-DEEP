@@ -105,7 +105,7 @@ public class ManualHandOffTest extends OpMode {
     }
 
     void setTinyGrab (boolean c) {
-        tinyGrab.setPosition(c ? 1 : 0.25);
+        tinyGrab.setPosition(c ? 0.25 : 1);
     }
 
     void setBigGrab (boolean c) {
@@ -116,11 +116,11 @@ public class ManualHandOffTest extends OpMode {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
-            mRot.setPosition(0);
-        } else {
-            lRot.setPosition(0);
-            rRot.setPosition(0);
             mRot.setPosition(1);
+        } else {
+            lRot.setPosition(0.1);
+            rRot.setPosition(0.1);
+            mRot.setPosition(0);
         }
     }
 
@@ -132,8 +132,8 @@ public class ManualHandOffTest extends OpMode {
                 break;
 
             case 1:
-                r1.setPosition(0.5);
-                r2.setPosition(0.5);
+                r1.setPosition(0.6);
+                r2.setPosition(0.6);
                 break;
 
             case 2:

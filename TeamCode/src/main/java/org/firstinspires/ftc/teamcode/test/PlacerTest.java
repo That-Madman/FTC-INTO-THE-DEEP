@@ -69,11 +69,11 @@ public class PlacerTest extends OpMode {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
-            mRot.setPosition(0);
+            mRot.setPosition(1);
         } else {
             lRot.setPosition(0);
             rRot.setPosition(0);
-            mRot.setPosition(1);
+            mRot.setPosition(0);
         }
     }
 }
