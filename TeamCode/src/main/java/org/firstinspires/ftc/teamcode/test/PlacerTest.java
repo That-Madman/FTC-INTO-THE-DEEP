@@ -9,7 +9,6 @@ public class PlacerTest extends OpMode {
     boolean bigClosed;
     boolean tinyClosed;
     boolean rotState;
-    boolean mRotState;
 
     boolean bHeld;
     boolean xHeld;
@@ -50,10 +49,6 @@ public class PlacerTest extends OpMode {
             rotState ^= true;
         }
 
-        if (gamepad1.a && !aHeld) {
-            mRotState ^= true;
-        }
-
         setTinyGrab(tinyClosed);
         setBigGrab(bigClosed);
         setRot(rotState);
@@ -76,11 +71,10 @@ public class PlacerTest extends OpMode {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
-            mRot.setPosition(1);
         } else {
             lRot.setPosition(0);
             rRot.setPosition(0);
-            mRot.setPosition(0);
         }
+        mRot.setPosition(0);
     }
 }

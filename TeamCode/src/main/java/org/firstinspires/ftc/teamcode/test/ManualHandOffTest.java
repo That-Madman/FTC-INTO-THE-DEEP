@@ -28,6 +28,7 @@ public class ManualHandOffTest extends OpMode {
     Servo rRot;
 
     Servo r1, r2;
+    Servo mRot;
     byte re;
     boolean downHeld;
 
@@ -47,6 +48,7 @@ public class ManualHandOffTest extends OpMode {
         bigGrab = hardwareMap.get(Servo.class, "bigGrab");
         lRot = hardwareMap.get(Servo.class, "lRot");
         rRot = hardwareMap.get(Servo.class, "rRot");
+        mRot = hardwareMap.get(Servo.class, "mRot");
 
         lRot.setDirection(Servo.Direction.REVERSE);
         setRot(false);
@@ -104,16 +106,18 @@ public class ManualHandOffTest extends OpMode {
     }
 
     void setBigGrab (boolean c) {
-        bigGrab.setPosition(c ? 1 : 0.25);
+        bigGrab.setPosition(c ? 0.25 : 1);
     }
 
     void setRot (boolean u) {
         if (u) {
             lRot.setPosition(1);
             rRot.setPosition(1);
+            mRot.setPosition(1);
         } else {
             lRot.setPosition(0);
             rRot.setPosition(0);
+            mRot.setPosition(0);
         }
     }
 
