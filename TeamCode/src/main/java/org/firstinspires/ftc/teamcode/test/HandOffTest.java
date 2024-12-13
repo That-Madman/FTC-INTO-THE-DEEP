@@ -63,36 +63,36 @@ public class HandOffTest extends OpMode {
                 setTinyGrab(false);
 
                 setPick(false);
-                sleep(1000);
+                sleep(100);
 
                 setReach((byte) 1);
-                sleep(1000);
+                sleep(100);
 
                 setSwivel((byte) 0);
-                sleep(1000);
+                sleep(100);
 
                 setReach((byte) 0);
-                sleep(1000);
+                sleep(100);
 
                 setTinyGrab(true);
-                sleep(1000);
+                sleep(100);
 
                 setPick(true);
-                sleep(1000);
+                sleep(100);
 
                 setReach((byte) 1);
-                sleep(1000);
+                sleep(100);
 
                 setBigGrab(true);
-                sleep(1000);
+                sleep(100);
 
                 setRot(true);
 
-                sleep (5000);
+                sleep (1000);
                 setTinyGrab(false);
                 setBigGrab(false);
 
-                sleep(1000);
+                sleep(100);
 
                 setRot(false);
 
