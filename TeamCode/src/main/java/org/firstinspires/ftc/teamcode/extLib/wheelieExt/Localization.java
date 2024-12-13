@@ -94,7 +94,7 @@ public class Localization {
 
         // Update the current position
         currentPosition.x += globalForward * X_MULT;
-        currentPosition.y += globalStrafe * Y_MULT        ;
+        currentPosition.y += globalStrafe * Y_MULT;
         currentPosition.h = AngleUnit.normalizeRadians(deltaHeading + currentPosition.h);
 
         // Update previous encoder values

@@ -124,6 +124,7 @@ public class PathFollower {
         }
 
         double angleError = path.getPt(wayPoint+1).h-obj.h;
+        tele.addData("angle error", angleError);
         angleError = (angleError + Math.PI) % (2 * Math.PI) - Math.PI;
         tele.addData("angle error", angleError);
         //If robot is within its margin of error, move to next point
