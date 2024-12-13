@@ -82,28 +82,28 @@ public class MainTele extends OpMode {
             board.setTinyGrab(false);
 
             board.setPick(false);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setReach((byte) 1);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setSwivel((byte) 0);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setReach((byte) 0);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setTinyGrab(true);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setPick(true);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setReach((byte) 1);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setBigGrab(true);
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setRot(true);
 
@@ -118,7 +118,7 @@ public class MainTele extends OpMode {
             board.setTinyGrab(false);
             board.setBigGrab(false);
 
-            board.sleep(100, this);
+            board.sleep(150, this);
 
             board.setRot(false);
 
