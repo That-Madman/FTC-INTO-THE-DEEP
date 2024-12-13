@@ -35,7 +35,7 @@ public class Board {
             base[3] = hwMap.get(DcMotor.class, "bl");
 
             base[0].setDirection(DcMotorSimple.Direction.REVERSE);
-            base[1].setDirection(DcMotorSimple.Direction.FORWARD);
+            base[1].setDirection(DcMotorSimple.Direction.REVERSE);
             base[2].setDirection(DcMotorSimple.Direction.FORWARD);
             base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -69,8 +69,8 @@ public class Board {
             imu.initialize(
                     new IMU.Parameters(
                             new RevHubOrientationOnRobot(
-                                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                                    RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                                    RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
+                                    RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                             )
                     )
             );
