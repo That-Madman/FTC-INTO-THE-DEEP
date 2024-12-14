@@ -165,17 +165,17 @@ public class Left extends WheelOp {
         sleep(1000);
         followPath(pathnot12, 0);
         sleep(1000);
-        /*followPath(path13, 0);
-        sleep(2000);
+        followPath(path13, 0);
+        sleep(1000);
         followPath(path14, 0);
-        sleep(2000);
+        sleep(1000);
         followPath(path15, 0);
-        sleep(2000);
+        sleep(1000);
         followPath(path16, 0);
-        sleep(2000);
+        sleep(1000);
         followPath(path17, 0);
         sleep(10000);
-        followPath(path18, 0);*/
+        followPath(path18, 0);
 
         while(opModeIsActive()) {
             telemetry.addLine();
