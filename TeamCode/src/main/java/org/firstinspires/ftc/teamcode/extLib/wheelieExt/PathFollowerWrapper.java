@@ -84,7 +84,7 @@ public class PathFollowerWrapper {
 
         double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
         double y = diff.x * Math.sin (getPose ().h) + diff.y * Math.cos (getPose ().h);
-        double h = heading;
+        double h = diff.h;
 
         if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
             x = 0;
@@ -101,7 +101,7 @@ public class PathFollowerWrapper {
         }
 
         return new double[] {
-                x, y, -h //TODO fix heading control
+                x, y, -h
         };
     }
 
