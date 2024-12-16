@@ -35,7 +35,7 @@ public class PathFollowerWrapper {
     public double SPEED_PERCENT = 1;
 
     //The acceptable margin of error in inches and radians
-    public final double MAX_TRANSLATION_ERROR = 5.5, MAX_ROTATION_ERROR = Math.toRadians (5);
+    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
@@ -82,26 +82,19 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(heading-getPose().h)
         );
 
-        double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
-        double y = diff.x * Math.sin (getPose ().h) + diff.y * Math.cos (getPose ().h);
+        double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);
+        double y = diff.x * Math.sin (-getPose ().h) + diff.y * Math.cos (-getPose ().h);
         double h = diff.h;
 
-        if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
+        /*if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
             x = 0;
             y = 0;
         } else { //Minimizes the heading control
             h *= hP;
-        }
-
-        //Rescales the vector based on the distance/rotation
-        double distance = Math.hypot (x,y);
-        if(distance > 1){
-            x/= distance*2;
-            y/= distance*2;
-        }
+        }*/
 
         return new double[] {
-                x, y, -h
+                x, -y, -h
         };
     }
 
@@ -128,7 +121,7 @@ public class PathFollowerWrapper {
                 strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
 
         return new double[]{
-                forward, strafe, -h
+                forward, -strafe, -h
         };
     }
 
@@ -159,7 +152,7 @@ public class PathFollowerWrapper {
     }
 
     public Pose2D getPose () {
-        return localization.currentPosition;
+        return position;//return localization.currentPosition;
     }
     public String getPoseString () {
         return localization.currentPosition.x + ", " +
@@ -234,6 +227,7 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
+    public Pose2D position;
     public double[] follow(){
 
         if (follower != null) {
@@ -262,6 +256,10 @@ public class PathFollowerWrapper {
     /** Updates the localization of the robot */
     public void updatePose (double angle) {
         localization.update (angle);
+    }
+
+    public void updatePose(Pose2D p){
+        position=p;
     }
 
     public void resetPose(){

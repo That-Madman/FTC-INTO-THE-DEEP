@@ -14,7 +14,7 @@ public class Board {
     private final DcMotor[] drivebase = {null, null, null, null};
 
     private final IMU imu;
-    private SparkFunOTOS sparkfunOTOS;
+    private SparkFunOTOS sparkFunOTOS;
 
     public Board(HardwareMap hwMap) {
         drivebase[0] = hwMap.get(DcMotor.class, "fl");
@@ -35,7 +35,7 @@ public class Board {
         drivebase[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        sparkfunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
+        sparkFunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
         configureSensor();
 
         imu = hwMap.get(IMU.class, "imu");
@@ -82,14 +82,19 @@ public class Board {
         setPowers(flp, frp, blp, brp);
     }
     private void configureSensor() {
-        sparkfunOTOS.setLinearUnit(DistanceUnit.INCH);
-        sparkfunOTOS.setAngularUnit(AngleUnit.DEGREES);
-        sparkfunOTOS.setOffset(new SparkFunOTOS.Pose2D(0, 0, 0));
-        sparkfunOTOS.resetTracking();
+        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
+        sparkFunOTOS.setOffset(new SparkFunOTOS.Pose2D(3.5, 6, 0));
+        sparkFunOTOS.setLinearScalar(100./94. );
+        //sparkFunOTOS.setLinearScalar(100./98.5117);
+        sparkFunOTOS.setAngularScalar(2160.0/2175.0);
+        sparkFunOTOS.resetTracking();
+        sparkFunOTOS.setPosition(new SparkFunOTOS.Pose2D(0,0,0));
+        sparkFunOTOS.calibrateImu(255, false);
     }
 
     public SparkFunOTOS.Pose2D getCurrentPose() {
-        return sparkfunOTOS.getPosition();
+        return sparkFunOTOS.getPosition();
     }
 
     public void resetIMU() {
