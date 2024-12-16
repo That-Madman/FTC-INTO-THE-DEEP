@@ -120,10 +120,12 @@ public class HandOffTest extends OpMode {
             yHeld = gamepad1.y;
 
             if (gamepad1.dpad_up) {
+
+                setRot(false);
+                sleep(200);
                 setBigGrab(false);
                 setTinyGrab(false);
-                sleep(200);
-                setRot(false);
+
             }
         }
 
