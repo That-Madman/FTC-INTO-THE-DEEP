@@ -88,10 +88,6 @@ public class HandOffTest extends OpMode {
 
                 setRot(true);
 
-                sleep (1000);
-                setTinyGrab(false);
-                setBigGrab(false);
-
                 sleep(100);
 
                 setRot(false);
