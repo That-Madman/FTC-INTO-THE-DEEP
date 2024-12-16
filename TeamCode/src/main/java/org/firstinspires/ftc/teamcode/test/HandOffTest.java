@@ -90,8 +90,6 @@ public class HandOffTest extends OpMode {
                 sleep (1100);
 
 
-                setRot(false);
-
                 re = 1;
                 sState = 1;
                 closed = true;
@@ -120,6 +118,12 @@ public class HandOffTest extends OpMode {
             bHeld = gamepad1.b;
             xHeld = gamepad1.x;
             yHeld = gamepad1.y;
+
+            if (gamepad1.dpad_up) {
+                setBigGrab(false);
+                setTinyGrab(false);
+                setRot(false);
+            }
         }
 
     void setTinyGrab (boolean c) {
@@ -183,4 +187,5 @@ public class HandOffTest extends OpMode {
         resetRuntime();
         while (getRuntime() < (double) millis / 1000);
     }
+
 }
