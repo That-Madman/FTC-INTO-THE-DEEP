@@ -65,10 +65,15 @@ public class PreSetLiftTest extends OpMode {
         }
         dPadAlreadyPressed = gamepad1.dpad_up;
         dPadAlreadyPressed2 = gamepad2.dpad_down;
+
+        telemetry.addData("Dpad Total Value", dPadTotalState);
+        telemetry.addData("Dpad Used Value", dPadActuallyUsed);
+
     }
 
     public void setLift (int height) {
         v1.setTargetPosition(height);
         v2.setTargetPosition(height);
     }
+
 }
