@@ -31,8 +31,11 @@ public class UseSparkFunOTOS extends OpMode {
 
     @Override
     public void loop() {
-       // board.drive(gamepad1.right_stick_y,0, gamepad1.left_stick_x*.5);
-        board.setPowers(gamepad1.right_stick_y/2.0, gamepad1.right_stick_y/2.0, gamepad2.right_stick_y/2.0, gamepad2.right_stick_y/2.0);
+//        board.setPowers(gamepad1.right_stick_y/2.0, gamepad1.right_stick_y/2.0, gamepad2.right_stick_y/2.0, gamepad2.right_stick_y/2.0);
+        board.drive(
+                -gamepad1.left_stick_y,
+                gamepad1.left_stick_x,
+                gamepad1.right_stick_x);
 
         SparkFunOTOS.Pose2D pos = sparkFunOTOS.getPosition();
         telemetry.addData("X (inch)", pos.x);
