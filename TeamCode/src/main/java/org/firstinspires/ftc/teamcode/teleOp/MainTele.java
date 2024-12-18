@@ -127,6 +127,7 @@ public class MainTele extends OpMode {
             closed = true;
             rot = false;
             bigClosed = false;
+            height = 0;
         }
 
         if (!x1Held && gamepad1.x) {
