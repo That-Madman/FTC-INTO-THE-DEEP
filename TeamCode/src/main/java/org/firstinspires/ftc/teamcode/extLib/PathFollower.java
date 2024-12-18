@@ -6,7 +6,7 @@ import Wheelie.Path;
 import Wheelie.Pose2D;
 import Wheelie.PursuitMath;
 
-/**
+/*
  * BSD 3-Clause License
  *
  * Copyright (c) 2024, Franklin Academy Robotics
@@ -34,9 +34,9 @@ import Wheelie.PursuitMath;
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
-
-
+/**
  * The Path Following algorithm that takes a list of points and lookahead to determine how
  * the robot should move towards its destination
  *

@@ -259,7 +259,7 @@ public class PathFollowerWrapper {
     }
 
     public void updatePose(Pose2D p){
-        position=p;
+        position = p;
     }
 
     public void resetPose(){
