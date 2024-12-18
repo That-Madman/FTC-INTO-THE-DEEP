@@ -24,10 +24,10 @@ public class MainTele extends OpMode {
     private boolean y2Held;
     private boolean rB2Held;
 
-    byte sState = 1;
-    byte re;
+    private byte sState = 1;
+    private byte re;
 
-    Board board;
+    private Board board;
 
     @Override
     public void init () {
@@ -36,20 +36,38 @@ public class MainTele extends OpMode {
 
     @Override
     public void loop() {
-        if (driveFieldRel) {
-            board.driveFieldRelative(
-                    -gamepad1.left_stick_y,
-                    gamepad1.left_stick_x,
-                    gamepad1.right_stick_x
-            );
-            telemetry.addData("Driving", "Field Relative");
+        if (gamepad1.left_bumper) {
+            if (driveFieldRel) {
+                board.driveFieldRelative(
+                        -gamepad1.left_stick_y * 0.5,
+                        gamepad1.left_stick_x * 0.5,
+                        gamepad1.right_stick_x * 0.5
+                );
+                telemetry.addData("Driving", "Field Relative");
+            } else {
+                board.drive(
+                        -gamepad1.left_stick_y * 0.5,
+                        gamepad1.left_stick_x * 0.5,
+                        gamepad1.right_stick_x * 0.5
+                );
+                telemetry.addData("Driving", "Robot Relative");
+            }
         } else {
-            board.drive(
-                    -gamepad1.left_stick_y,
-                    gamepad1.left_stick_x,
-                    gamepad1.right_stick_x
-            );
-            telemetry.addData("Driving", "Robot Relative");
+            if (driveFieldRel) {
+                board.driveFieldRelative(
+                        -gamepad1.left_stick_y,
+                        gamepad1.left_stick_x,
+                        gamepad1.right_stick_x
+                );
+                telemetry.addData("Driving", "Field Relative");
+            } else {
+                board.drive(
+                        -gamepad1.left_stick_y,
+                        gamepad1.left_stick_x,
+                        gamepad1.right_stick_x
+                );
+                telemetry.addData("Driving", "Robot Relative");
+            }
         }
 
         height += (int) ((gamepad2.left_trigger - gamepad2.right_trigger) * 100);
@@ -127,6 +145,7 @@ public class MainTele extends OpMode {
             closed = true;
             rot = false;
             bigClosed = false;
+            height = 0;
         }
 
         if (!x1Held && gamepad1.x) {
