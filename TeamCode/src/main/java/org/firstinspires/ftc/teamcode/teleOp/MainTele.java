@@ -136,7 +136,7 @@ public class MainTele extends OpMode {
             board.setTinyGrab(false);
             board.setBigGrab(false);
 
-            board.sleep(150, this);
+            board.sleep(200, this);
 
             board.setRot(false);
 
