@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -11,16 +12,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Board {
-    private final DcMotor[] drivebase = {null, null, null, null};
+    private final DcMotorEx[] drivebase = {null, null, null, null};
 
     private final IMU imu;
     private SparkFunOTOS sparkFunOTOS;
 
     public Board(HardwareMap hwMap) {
-        drivebase[0] = hwMap.get(DcMotor.class, "fl");
-        drivebase[1] = hwMap.get(DcMotor.class, "fr");
-        drivebase[2] = hwMap.get(DcMotor.class, "br");
-        drivebase[3] = hwMap.get(DcMotor.class, "bl");
+        drivebase[0] = hwMap.get(DcMotorEx.class, "fl");
+        drivebase[1] = hwMap.get(DcMotorEx.class, "fr");
+        drivebase[2] = hwMap.get(DcMotorEx.class, "br");
+        drivebase[3] = hwMap.get(DcMotorEx.class, "bl");
 
         drivebase[0].setDirection(DcMotorSimple.Direction.REVERSE);
         drivebase[1].setDirection(DcMotorSimple.Direction.FORWARD);
@@ -116,5 +117,9 @@ public class Board {
 
     public int getDrivePosition(int index) {
         return drivebase[index].getCurrentPosition();
+    }
+
+    public double getVelocity(int index) {
+        return drivebase[index].getVelocity();
     }
 }
