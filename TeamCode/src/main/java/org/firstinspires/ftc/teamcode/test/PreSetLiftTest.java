@@ -11,7 +11,7 @@ public class PreSetLiftTest extends OpMode {
 
     private boolean dPadAlreadyPressed;
     private boolean dPadAlreadyPressed2;
-    private int dPadTotalState = -1;
+
 
     private DcMotorEx v1;
     private DcMotorEx v2;
@@ -38,6 +38,7 @@ public class PreSetLiftTest extends OpMode {
 
     @Override
     public void loop() {
+        int dPadTotalState = -1;
         int dPadActuallyUsed = dPadTotalState % 5;
 
         if (gamepad1.dpad_up && !dPadAlreadyPressed) {
