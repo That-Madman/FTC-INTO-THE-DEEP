@@ -82,7 +82,7 @@ public class Board {
         mRot = hwMap.get(Servo.class, "mRot");
 
         lRot.setDirection(Servo.Direction.REVERSE);
-        setRot(false);
+        setRot((byte) 0);
         setTinyGrab(false);
         setBigGrab(false);
 
@@ -138,15 +138,25 @@ public class Board {
         bigGrab.setPosition(c ? 1 : 0.5);
     }
 
-    public void setRot (boolean u) {
-        if (u) {
-            lRot.setPosition(1);
-            rRot.setPosition(1);
-            mRot.setPosition(1);
-        } else {
-            lRot.setPosition(0.1);
-            rRot.setPosition(0.1);
-            mRot.setPosition(0);
+    public void setRot (byte u) {
+        switch (u) {
+            case 1:
+                lRot.setPosition(1);
+                rRot.setPosition(1);
+                mRot.setPosition(1);
+                break;
+
+            case 0:
+                lRot.setPosition(0.1);
+                rRot.setPosition(0.1);
+                mRot.setPosition(0);
+                break;
+
+            case 2:
+                lRot.setPosition(0.8);
+                rRot.setPosition(0.8);
+                mRot.setPosition(1);
+                break;
         }
     }
 

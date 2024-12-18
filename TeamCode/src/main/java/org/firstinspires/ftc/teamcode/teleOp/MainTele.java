@@ -10,7 +10,7 @@ public class MainTele extends OpMode {
     private boolean driveFieldRel = true;
     private boolean resetImu;
     private boolean closed;
-    private boolean rot;
+    private byte rot;
     private boolean bigClosed;
     private int height;
 
@@ -95,7 +95,7 @@ public class MainTele extends OpMode {
         }
 
         if (!b1Held && gamepad1.b) {
-            board.setRot(false);
+            board.setRot((byte) 0);
             board.setBigGrab(false);
             board.setTinyGrab(false);
 
@@ -123,12 +123,12 @@ public class MainTele extends OpMode {
             board.setBigGrab(true);
             board.sleep(150, this);
 
-            board.setRot(true);
+            board.setRot((byte) 2);
 
             re = 1;
             sState = 1;
             closed = true;
-            rot = true;
+            rot = 2;
             bigClosed = true;
         }
 
@@ -138,12 +138,12 @@ public class MainTele extends OpMode {
 
             board.sleep(200, this);
 
-            board.setRot(false);
+            board.setRot((byte) 0);
 
             re = 1;
             sState = 1;
             closed = true;
-            rot = false;
+            rot = 0;
             bigClosed = false;
             height = 0;
         }
@@ -164,7 +164,7 @@ public class MainTele extends OpMode {
         }
 
         if (!rB2Held && gamepad2.right_bumper) {
-            rot ^= true;
+            rot = (byte) ((0 < rot) ? 0 : 1);
         }
 
         board.setReach(re);

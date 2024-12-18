@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 @TeleOp
 public class PreSetLiftTest extends OpMode {
 
@@ -78,5 +79,4 @@ public class PreSetLiftTest extends OpMode {
         v1.setTargetPosition(height);
         v2.setTargetPosition(height);
     }
-
 }
