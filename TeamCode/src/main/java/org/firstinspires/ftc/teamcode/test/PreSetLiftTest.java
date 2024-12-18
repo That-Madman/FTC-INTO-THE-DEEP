@@ -10,8 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class PreSetLiftTest extends OpMode {
 
     private boolean dPadAlreadyPressed;
+    private boolean dPadAlreadyPressed2;
     private int dPadTotalState = -1;
-    private int dPadActuallyUsed = dPadTotalState % 5;
+
     private DcMotorEx v1;
     private DcMotorEx v2;
 
@@ -31,18 +32,43 @@ public class PreSetLiftTest extends OpMode {
 
         v1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         v2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
     }
 
     @Override
     public void loop() {
+        int dPadActuallyUsed = dPadTotalState % 5;
+
         if (gamepad1.dpad_up && !dPadAlreadyPressed) {
             ++dPadTotalState;
-        }
-        if (gamepad1.dpad_up && !dPadAlreadyPressed){
-            if (dPadActuallyUsed == 0){
-
+            if (dPadActuallyUsed == 0) {
+                setLift(0);
+            }
+            else if (dPadActuallyUsed == 1) {
+                setLift(600);
+            }
+            else if (dPadActuallyUsed == 2) {
+                setLift(1200);
+            }
+            else if (dPadActuallyUsed == 3) {
+                setLift(1300);
+            }
+            else if (dPadActuallyUsed == 4) {
+                setLift(2600);
             }
         }
+
+        if (gamepad2.dpad_down && !dPadAlreadyPressed2) {
+            dPadTotalState = 0;
+            setLift(0);
+        }
         dPadAlreadyPressed = gamepad1.dpad_up;
+        dPadAlreadyPressed2 = gamepad2.dpad_down;
+    }
+
+    public void setLift (int height) {
+        v1.setTargetPosition(height);
+        v2.setTargetPosition(height);
     }
 }
