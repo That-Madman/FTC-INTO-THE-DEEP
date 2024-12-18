@@ -4,14 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class PreSetLiftTest extends OpMode {
 
     private boolean dPadAlreadyPressed;
     private boolean dPadAlreadyPressed2;
-
+    private int dPadTotalState = -1;
+    int dPadActuallyUsed;
 
     private DcMotorEx v1;
     private DcMotorEx v2;
@@ -38,25 +38,27 @@ public class PreSetLiftTest extends OpMode {
 
     @Override
     public void loop() {
-        int dPadTotalState = -1;
-        int dPadActuallyUsed = dPadTotalState % 5;
+        dPadActuallyUsed = dPadTotalState % 5;
 
         if (gamepad1.dpad_up && !dPadAlreadyPressed) {
             ++dPadTotalState;
-            if (dPadActuallyUsed == 0) {
-                setLift(0);
-            }
-            else if (dPadActuallyUsed == 1) {
-                setLift(600);
-            }
-            else if (dPadActuallyUsed == 2) {
-                setLift(1200);
-            }
-            else if (dPadActuallyUsed == 3) {
-                setLift(1300);
-            }
-            else if (dPadActuallyUsed == 4) {
-                setLift(2600);
+
+            switch (dPadActuallyUsed) {
+                case 0:
+                    setLift(0);
+                    break;
+                case 1:
+                    setLift(600);
+                    break;
+                case 2:
+                    setLift(1200);
+                    break;
+                case 3:
+                    setLift(1300);
+                    break;
+                case 4:
+                    setLift(2600);
+                    break;
             }
         }
 
