@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.extLib.Board;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
@@ -17,7 +18,7 @@ public class LocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         PathFollowerWrapper drive = new PathFollowerWrapper(hardwareMap, new Pose2D(0, 0, 0), 8);
-        board = new Board(hardwareMap);
+        board = new Board(hardwareMap, DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addLine("Initialized");
         /*telemetry.addLine(drive.getPoseString());

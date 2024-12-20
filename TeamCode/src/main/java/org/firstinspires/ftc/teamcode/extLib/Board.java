@@ -110,10 +110,10 @@ public class Board {
         drivebase[3].setPower(blp);
     }
     public void setVelocities(double fl, double fr, double bl, double br){
-        drivebase[0].setVelocity(fl*ticksPerRev);
-        drivebase[1].setVelocity(fr*ticksPerRev);
-        drivebase[2].setVelocity(bl*ticksPerRev);
-        drivebase[3].setVelocity(br*ticksPerRev);
+        drivebase[0].setVelocity(fl * ticksPerRev);
+        drivebase[1].setVelocity(fr * ticksPerRev);
+        drivebase[2].setVelocity(br * ticksPerRev);
+        drivebase[3].setVelocity(bl * ticksPerRev);
     }
 
     public void drive(double forward, double right, double rotate) {
@@ -135,8 +135,8 @@ public class Board {
     private void configureSensor() {
         sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
         sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
-        sparkFunOTOS.setOffset(new Pose2D(3.5, 6, 0));
-        sparkFunOTOS.setLinearScalar(100.0/93.6);
+        sparkFunOTOS.setOffset(new Pose2D(2, 6, 0));
+        sparkFunOTOS.setLinearScalar(100.0/97.74);
         sparkFunOTOS.setAngularScalar((Math.PI*10)/(Math.PI*10+.494));
         sparkFunOTOS.resetTracking();
         sparkFunOTOS.setPosition(new Pose2D(0,0,0));

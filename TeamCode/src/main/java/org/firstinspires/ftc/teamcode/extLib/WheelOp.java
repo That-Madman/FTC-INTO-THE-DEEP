@@ -17,7 +17,7 @@ public abstract class WheelOp extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        board = new Board (hardwareMap, DcMotor.RunMode.RUN_USING_ENCODER);
+        board = new Board (hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
@@ -45,7 +45,7 @@ public abstract class WheelOp extends LinearOpMode {
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             followerWrapper.updatePose(board.getCurrentPose()); //Updates position
             double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
-            board.drive(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
+            board.drive(vectorCom[0], -vectorCom[1], -vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +

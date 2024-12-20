@@ -30,8 +30,6 @@
 
 package org.firstinspires.ftc.teamcode.extLib;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import Wheelie.Path;
 import Wheelie.Pose2D;
 import Wheelie.PursuitMath;
@@ -47,8 +45,7 @@ public class PathFollower {
     public Pose2D startPt;
     public double look;
 
-    public Telemetry tele;
-   private int wayPoint;
+    private int wayPoint;
     private final double translationError;
     private final double headingError;
 
@@ -116,9 +113,7 @@ public class PathFollower {
         }
 
         double angleError = path.getPt(wayPoint+1).h-obj.h;
-        tele.addData("angle error", angleError);
         angleError = (angleError + Math.PI) % (2 * Math.PI) - Math.PI;
-        tele.addData("angle error", angleError);
 
         //If robot is within its margin of error, move to next point
         if(Math.abs(path.getPt(wayPoint + 1).h - obj.h) <= headingError &&

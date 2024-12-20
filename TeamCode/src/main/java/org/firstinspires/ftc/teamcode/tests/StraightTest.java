@@ -29,7 +29,7 @@ public class StraightTest extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        board = new Board (hardwareMap, DcMotor.RunMode.RUN_USING_ENCODER);
+        board = new Board (hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //sparkFunOTOS = hardwareMap.get(SparkFunOTOS.class, "otos");
         board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
@@ -54,13 +54,12 @@ public class StraightTest extends LinearOpMode {
     protected void followPath(Pose2D[] a) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
-        followerWrapper.getFollower().tele = telemetry;
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             Pose2D pos = board.getCurrentPose();
             followerWrapper.updatePose(pos); //Updates position
-            double[] vectorCom = followerWrapper.followPathPID(); //Gets the movement vector
-            board.driveVel(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
+            double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
+            board.drive(vectorCom[0], -vectorCom[1], -vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +
