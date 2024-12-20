@@ -14,6 +14,14 @@ public class MainTele extends OpMode {
     private boolean bigClosed;
     private int height;
 
+    private boolean dPadAlreadyPressed;
+    private boolean dPadAlreadyPressed2;
+    private boolean dPadAlreadyPressed3;
+    private boolean dPadAlreadyPressed4;
+    private int dPadTotalState = 0;
+    private int dPadActuallyUsed;
+    private boolean specimenMode;
+
     private boolean a1Held;
     private boolean b1Held;
     private boolean x1Held;
@@ -167,6 +175,41 @@ public class MainTele extends OpMode {
             rot = (byte) ((0 < rot) ? 0 : 1);
         }
 
+        dPadActuallyUsed = dPadTotalState % 3;
+
+
+        if (gamepad2.dpad_up && !dPadAlreadyPressed) {
+            ++dPadTotalState;
+        }
+        if (gamepad2.dpad_down && !dPadAlreadyPressed2){
+            dPadTotalState = 0;
+        }
+        if (gamepad2.dpad_left && !dPadAlreadyPressed3) {
+            dPadTotalState = 2;
+        }
+        if (gamepad2.dpad_up && !dPadAlreadyPressed) {
+        switch (dPadActuallyUsed) {
+            case 0:
+                height = 0;
+                break;
+            case 1:
+                height = 850;
+                break;
+            case 2:
+                height = 2700;
+                break;
+        }}
+        if (gamepad1.dpad_down && !dPadAlreadyPressed4) {
+            if (specimenMode = true) {
+                board.setRot((byte) 0);
+                specimenMode = false;
+            }
+            else {
+                board.setRot((byte) 1);
+                specimenMode = true;
+            }
+        }
+
         board.setReach(re);
         board.setSwivel(sState);
         board.setPick(closed);
@@ -179,11 +222,15 @@ public class MainTele extends OpMode {
         b1Held = gamepad1.b;
         x1Held = gamepad1.x;
         y1Held = gamepad1.y;
+        dPadAlreadyPressed4 = gamepad1.dpad_down;
 
         a2Held = gamepad2.a;
         b2Held = gamepad2.b;
         x2Held = gamepad2.x;
         y2Held = gamepad2.y;
         rB2Held = gamepad2.right_bumper;
+        dPadAlreadyPressed = gamepad2.dpad_up;
+        dPadAlreadyPressed2 = gamepad2.dpad_down;
+        dPadAlreadyPressed3 = gamepad2.dpad_left;
     }
 }
