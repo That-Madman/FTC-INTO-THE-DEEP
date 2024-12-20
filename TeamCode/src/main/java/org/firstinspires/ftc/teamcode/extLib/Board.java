@@ -74,7 +74,7 @@ public class Board {
         drivebase[3].setPower(blp);
     }
 
-    public void drive(double forward, double rotate, double right) {
+    public void drive(double forward, double right, double rotate) {
         final double flp = forward + right + rotate;
         final double frp = forward - right - rotate;
         final double blp = forward - right + rotate;
