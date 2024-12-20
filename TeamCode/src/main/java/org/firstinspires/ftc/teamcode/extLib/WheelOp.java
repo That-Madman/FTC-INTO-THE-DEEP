@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.extLib;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
@@ -16,7 +17,7 @@ public abstract class WheelOp extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        board = new Board (hardwareMap);
+        board = new Board (hardwareMap, DcMotor.RunMode.RUN_USING_ENCODER);
         board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
@@ -40,10 +41,9 @@ public abstract class WheelOp extends LinearOpMode {
     protected void followPath(Pose2D[] a, final double waitTime) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
-        followerWrapper.getFollower().tele = telemetry; //TODO delete
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
-            followerWrapper.updatePose(board.getAngle()); //Updates position
+            followerWrapper.updatePose(board.getCurrentPose()); //Updates position
             double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
 

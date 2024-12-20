@@ -36,7 +36,7 @@ public class RPMTest extends LinearOpMode {
         long millis = System.currentTimeMillis()/1000;
 
         while (opModeIsActive()) {
-            SparkFunOTOS.Pose2D currentPose = board.getCurrentPose();
+            Pose2D currentPose = board.getCurrentPose();
 
             telemetry.addLine("Current Pose from SparkFun OTO:");
             telemetry.addData("X Position", currentPose.x);
