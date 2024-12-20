@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import androidx.annotation.AnimatorRes;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.extLib.WheelOp;

@@ -79,7 +79,7 @@ public class PathFollowerWrapper {
         Pose2D diff = new Pose2D(
                 forward-getPose().x,
                 strafe-getPose().y,
-                AngleUnit.normalizeRadians(heading-getPose().h)
+                AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
         double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);

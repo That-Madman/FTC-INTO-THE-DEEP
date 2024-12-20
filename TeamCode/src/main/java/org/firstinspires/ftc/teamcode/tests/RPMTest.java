@@ -62,7 +62,7 @@ public class RPMTest extends LinearOpMode {
                         board.getDrivePosition(2),
                         board.getDrivePosition(3)
                 };
-                 millis = System.currentTimeMillis()/1000;
+                 millis = System.currentTimeMillis() / 1000;
             }
 
             telemetry.update();
