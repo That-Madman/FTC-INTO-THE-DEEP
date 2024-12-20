@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -11,16 +12,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Board {
-    private final DcMotor[] drivebase = {null, null, null, null};
+    private final DcMotorEx[] drivebase = {null, null, null, null};
 
     private final IMU imu;
-    private SparkFunOTOS sparkfunOTOS;
+    private SparkFunOTOS sparkFunOTOS;
 
     public Board(HardwareMap hwMap) {
-        drivebase[0] = hwMap.get(DcMotor.class, "fl");
-        drivebase[1] = hwMap.get(DcMotor.class, "fr");
-        drivebase[2] = hwMap.get(DcMotor.class, "br");
-        drivebase[3] = hwMap.get(DcMotor.class, "bl");
+        drivebase[0] = hwMap.get(DcMotorEx.class, "fl");
+        drivebase[1] = hwMap.get(DcMotorEx.class, "fr");
+        drivebase[2] = hwMap.get(DcMotorEx.class, "br");
+        drivebase[3] = hwMap.get(DcMotorEx.class, "bl");
 
         drivebase[0].setDirection(DcMotorSimple.Direction.REVERSE);
         drivebase[1].setDirection(DcMotorSimple.Direction.FORWARD);
@@ -35,7 +36,7 @@ public class Board {
         drivebase[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivebase[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        sparkfunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
+        sparkFunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
         configureSensor();
 
         imu = hwMap.get(IMU.class, "imu");
@@ -73,7 +74,7 @@ public class Board {
         drivebase[3].setPower(blp);
     }
 
-    public void drive(double forward, double right, double rotate) {
+    public void drive(double forward, double rotate, double right) {
         final double flp = forward + right + rotate;
         final double frp = forward - right - rotate;
         final double blp = forward - right + rotate;
@@ -82,14 +83,19 @@ public class Board {
         setPowers(flp, frp, blp, brp);
     }
     private void configureSensor() {
-        sparkfunOTOS.setLinearUnit(DistanceUnit.INCH);
-        sparkfunOTOS.setAngularUnit(AngleUnit.DEGREES);
-        sparkfunOTOS.setOffset(new SparkFunOTOS.Pose2D(0, 0, 0));
-        sparkfunOTOS.resetTracking();
+        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
+        sparkFunOTOS.setOffset(new SparkFunOTOS.Pose2D(3.5, 6, 0));
+        sparkFunOTOS.setLinearScalar(100./94. );
+        //sparkFunOTOS.setLinearScalar(100./98.5117);
+        sparkFunOTOS.setAngularScalar(2160.0/2175.0);
+        sparkFunOTOS.resetTracking();
+        sparkFunOTOS.setPosition(new SparkFunOTOS.Pose2D(0,0,0));
+        sparkFunOTOS.calibrateImu(255, false);
     }
 
     public SparkFunOTOS.Pose2D getCurrentPose() {
-        return sparkfunOTOS.getPosition();
+        return sparkFunOTOS.getPosition();
     }
 
     public void resetIMU() {
@@ -111,5 +117,9 @@ public class Board {
 
     public int getDrivePosition(int index) {
         return drivebase[index].getCurrentPosition();
+    }
+
+    public double getVelocity(int index) {
+        return drivebase[index].getVelocity();
     }
 }

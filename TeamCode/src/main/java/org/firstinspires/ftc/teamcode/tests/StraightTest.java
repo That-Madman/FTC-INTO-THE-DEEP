@@ -1,28 +1,43 @@
-package org.firstinspires.ftc.teamcode.extLib;
+package org.firstinspires.ftc.teamcode.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.extLib.Board;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.extLib.SparkFunOTOS;
 
 import java.util.Arrays;
 
 import Wheelie.Path;
 import Wheelie.Pose2D;
 
-public abstract class WheelOp extends LinearOpMode {
+@Autonomous
+public class StraightTest extends LinearOpMode {
     protected PathFollowerWrapper followerWrapper;
     protected Board board;
+    SparkFunOTOS sparkFunOTOS;
+
+    Pose2D[] points = new Pose2D[] {
+            new Pose2D(0,0,0),
+            new Pose2D(50, 0,0),
+            new Pose2D(80, 0,0)
+    };
 
     @Override
     public void runOpMode () {
         board = new Board (hardwareMap);
+        sparkFunOTOS = hardwareMap.get(SparkFunOTOS.class, "otos");
         board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
+        configureOTOS();
+
         waitForStart();
 
-        run();
+        followPath(points);
 
         while(opModeIsActive()){
             telemetry.addLine("Path is complete");
@@ -35,16 +50,15 @@ public abstract class WheelOp extends LinearOpMode {
         }
     }
 
-    public abstract void run ();
-
-    protected void followPath(Pose2D[] a, final double waitTime) {
+    protected void followPath(Pose2D[] a) {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
         followerWrapper.getFollower().tele = telemetry; //TODO delete
 
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
-            followerWrapper.updatePose(board.getAngle()); //Updates position
-            double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
+            Pose2D pos = sparkFunOTOS.getPosition();
+            followerWrapper.updatePose(pos); //Updates position
+            double[] vectorCom = followerWrapper.followPathPID(); //Gets the movement vector
             board.drive(vectorCom[0], vectorCom[1], vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",
@@ -69,5 +83,17 @@ public abstract class WheelOp extends LinearOpMode {
 
             telemetry.update();
         }
+    }
+
+
+    private void configureOTOS(){
+        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
+        sparkFunOTOS.setOffset(new Pose2D(3.5, 6, 0));
+        sparkFunOTOS.setLinearScalar(100./92.5117);
+        sparkFunOTOS.setAngularScalar(Math.toRadians(2160.0)/Math.toRadians(2175.0));
+        sparkFunOTOS.resetTracking();
+        sparkFunOTOS.setPosition(new Pose2D(0,0,0));
+        sparkFunOTOS.calibrateImu(255, false);
     }
 }
