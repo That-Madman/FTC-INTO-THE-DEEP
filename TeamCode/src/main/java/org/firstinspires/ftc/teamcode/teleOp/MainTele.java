@@ -26,8 +26,8 @@ public class MainTele extends OpMode {
     private boolean x2Held;
     private boolean y2Held;
     private boolean rB2Held;
-    private boolean dPadAlreadyPressed;
-    private boolean dPadAlreadyPressed2;
+    private boolean up2Held;
+    private boolean down2Held;
     private boolean left2Held;
     private boolean down1Held;
 
@@ -174,10 +174,10 @@ public class MainTele extends OpMode {
             rot = (byte) ((0 < rot) ? 0 : 1);
         }
 
-        if (gamepad2.dpad_up && !dPadAlreadyPressed) {
+        if (gamepad2.dpad_up && !up2Held) {
             ++dPadState;
         }
-        if (gamepad2.dpad_down && !dPadAlreadyPressed2){
+        if (gamepad2.dpad_down && !down2Held){
             dPadState = 0;
         }
         if (gamepad2.dpad_left && !left2Held) {
@@ -186,7 +186,7 @@ public class MainTele extends OpMode {
 
         dPadState %= 3;
 
-        if (gamepad2.dpad_up && !dPadAlreadyPressed) {
+        if (gamepad2.dpad_up && !up2Held) {
         switch (dPadState) {
             case 0:
                 height = 0;
@@ -223,8 +223,8 @@ public class MainTele extends OpMode {
         x2Held = gamepad2.x;
         y2Held = gamepad2.y;
         rB2Held = gamepad2.right_bumper;
-        dPadAlreadyPressed = gamepad2.dpad_up;
-        dPadAlreadyPressed2 = gamepad2.dpad_down;
+        up2Held = gamepad2.dpad_up;
+        down2Held = gamepad2.dpad_down;
         left2Held = gamepad2.dpad_left;
     }
 }
