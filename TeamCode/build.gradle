@@ -20,7 +20,11 @@ android {
     androidResources {
         noCompress 'tflite'
     }
-
+    repositories {
+        maven {
+            url = 'https://maven.brott.dev/'
+        }
+    }
     packagingOptions {
         jniLibs {
             pickFirsts += ['**/*.so']
@@ -32,4 +36,9 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+
+    implementation "com.acmerobotics.roadrunner:ftc:0.1.14"
+    implementation "com.acmerobotics.roadrunner:core:1.0.0"
+    implementation "com.acmerobotics.roadrunner:actions:1.0.0"
+    implementation "com.acmerobotics.dashboard:dashboard:0.4.16"
 }
