@@ -14,12 +14,7 @@ public class MainTele extends OpMode {
     private boolean bigClosed;
     private int height;
 
-    private boolean dPadAlreadyPressed;
-    private boolean dPadAlreadyPressed2;
-    private boolean dPadAlreadyPressed3;
-    private boolean dPadAlreadyPressed4;
-    private int dPadTotalState = 0;
-    private int dPadActuallyUsed;
+    private int dPadState;
     private boolean specimenMode;
 
     private boolean a1Held;
@@ -31,6 +26,10 @@ public class MainTele extends OpMode {
     private boolean x2Held;
     private boolean y2Held;
     private boolean rB2Held;
+    private boolean dPadAlreadyPressed;
+    private boolean dPadAlreadyPressed2;
+    private boolean left2Held;
+    private boolean down1Held;
 
     private byte sState = 1;
     private byte re;
@@ -175,20 +174,20 @@ public class MainTele extends OpMode {
             rot = (byte) ((0 < rot) ? 0 : 1);
         }
 
-        dPadActuallyUsed = dPadTotalState % 3;
-
-
         if (gamepad2.dpad_up && !dPadAlreadyPressed) {
-            ++dPadTotalState;
+            ++dPadState;
         }
         if (gamepad2.dpad_down && !dPadAlreadyPressed2){
-            dPadTotalState = 0;
+            dPadState = 0;
         }
-        if (gamepad2.dpad_left && !dPadAlreadyPressed3) {
-            dPadTotalState = 2;
+        if (gamepad2.dpad_left && !left2Held) {
+            dPadState = 2;
         }
+
+        dPadState %= 3;
+
         if (gamepad2.dpad_up && !dPadAlreadyPressed) {
-        switch (dPadActuallyUsed) {
+        switch (dPadState) {
             case 0:
                 height = 0;
                 break;
@@ -199,15 +198,10 @@ public class MainTele extends OpMode {
                 height = 2700;
                 break;
         }}
-        if (gamepad1.dpad_down && !dPadAlreadyPressed4) {
-            if (specimenMode = true) {
-                board.setRot((byte) 0);
-                specimenMode = false;
-            }
-            else {
-                board.setRot((byte) 1);
-                specimenMode = true;
-            }
+
+        if (gamepad1.dpad_down && !down1Held) {
+            board.setRot((byte) ((specimenMode) ? 0 : 1));
+            specimenMode ^= true;
         }
 
         board.setReach(re);
@@ -222,7 +216,7 @@ public class MainTele extends OpMode {
         b1Held = gamepad1.b;
         x1Held = gamepad1.x;
         y1Held = gamepad1.y;
-        dPadAlreadyPressed4 = gamepad1.dpad_down;
+        down1Held = gamepad1.dpad_down;
 
         a2Held = gamepad2.a;
         b2Held = gamepad2.b;
@@ -231,6 +225,6 @@ public class MainTele extends OpMode {
         rB2Held = gamepad2.right_bumper;
         dPadAlreadyPressed = gamepad2.dpad_up;
         dPadAlreadyPressed2 = gamepad2.dpad_down;
-        dPadAlreadyPressed3 = gamepad2.dpad_left;
+        left2Held = gamepad2.dpad_left;
     }
 }

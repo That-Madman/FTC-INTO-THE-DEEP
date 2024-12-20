@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp
+@TeleOp (group = "Tests")
 public class PreSetLiftTest extends OpMode {
 
     private boolean dPadAlreadyPressed;

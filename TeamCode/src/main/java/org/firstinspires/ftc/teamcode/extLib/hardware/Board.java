@@ -222,8 +222,4 @@ public class Board {
 
         drive(newForward, newRight, rotate);
     }
-
-    public int getDrivePosition(int index){
-        return base[index].getCurrentPosition();
-    }
 }
