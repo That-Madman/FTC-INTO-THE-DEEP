@@ -28,7 +28,7 @@ public class LocalizationTest extends LinearOpMode {
         board.resetIMU();
 
         while (opModeIsActive()) {
-            SparkFunOTOS.Pose2D currentPose = board.getCurrentPose();
+            Pose2D currentPose = board.getCurrentPose();
 
             telemetry.addLine("Current Pose from SparkFun OTO:");
             telemetry.addData("X Position", currentPose.x);

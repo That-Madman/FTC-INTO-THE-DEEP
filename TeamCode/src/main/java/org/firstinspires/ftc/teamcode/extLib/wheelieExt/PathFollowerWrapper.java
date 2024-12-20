@@ -28,7 +28,7 @@ public class PathFollowerWrapper {
 
     private final double mP = 1.0/25.0, mI = 0, mD = 0.004,
             hP = 1. / Math.toRadians(45), hI = 0.0001, hD = .005,
-            mMaxI = 0.001, hMaxI = 0.05;
+            mMaxI = 0.001, hMaxI = 0.005;
     private boolean xi, yi, hi;
 
     //The max speed of the motors
@@ -79,7 +79,7 @@ public class PathFollowerWrapper {
         Pose2D diff = new Pose2D(
                 forward-getPose().x,
                 strafe-getPose().y,
-                AngleUnit.normalizeRadians(heading-getPose().h)
+                AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
         double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);
@@ -94,7 +94,7 @@ public class PathFollowerWrapper {
         }*/
 
         return new double[] {
-                x, -y, h
+                x, -y, -h
         };
     }
 
@@ -121,7 +121,7 @@ public class PathFollowerWrapper {
                 strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
 
         return new double[]{
-                forward, -strafe, h
+                forward, -strafe, -h
         };
     }
 
