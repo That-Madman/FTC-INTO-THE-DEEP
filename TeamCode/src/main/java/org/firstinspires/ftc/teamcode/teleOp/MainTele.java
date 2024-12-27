@@ -176,28 +176,27 @@ public class MainTele extends OpMode {
 
         if (gamepad2.dpad_up && !up2Held) {
             ++dPadState;
-        }
-        if (gamepad2.dpad_down && !down2Held){
+
+            dPadState %= 3;
+
+            switch (dPadState) {
+                case 0:
+                    height = 0;
+                    break;
+                case 1:
+                    height = 850;
+                    break;
+                case 2:
+                    height = 2700;
+                    break;
+            }
+        } else if (gamepad2.dpad_down && !down2Held){
             dPadState = 0;
-        }
-        if (gamepad2.dpad_left && !left2Held) {
+            height = 0;
+        } else if (gamepad2.dpad_left && !left2Held) {
             dPadState = 2;
+            height = 2700;
         }
-
-        dPadState %= 3;
-
-        if (gamepad2.dpad_up && !up2Held) {
-        switch (dPadState) {
-            case 0:
-                height = 0;
-                break;
-            case 1:
-                height = 850;
-                break;
-            case 2:
-                height = 2700;
-                break;
-        }}
 
         if (gamepad1.dpad_down && !down1Held) {
             board.setRot((byte) ((specimenMode) ? 0 : 1));
