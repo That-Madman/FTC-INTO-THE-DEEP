@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -17,6 +18,8 @@ public class Board {
     private final IMU imu;
 
     private final DcMotorEx v1, v2;
+
+    private final TouchSensor v1t, v2t;
 
     Servo tinyGrab;
     Servo bigGrab;
@@ -96,10 +99,32 @@ public class Board {
 
         setPick(false);
         setSwivel((byte) 1);
+
+        //TODO: ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME
+        v1t = null;
+        v2t = null;
     }
 
     public double getAngle() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+    }
+
+    public int getLiftPos (boolean rl) {
+        return (rl ? v1 : v2).getCurrentPosition();
+    }
+
+    public void resetLift (boolean rl) {
+        if (rl) {
+            v1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        } else {
+            v2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+    }
+
+    public boolean getLiftTouched (boolean rl) {
+        return !(rl ? v1t : v2t).isPressed();
     }
 
     public void resetImu () {
