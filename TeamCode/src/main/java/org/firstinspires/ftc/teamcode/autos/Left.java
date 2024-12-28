@@ -9,12 +9,12 @@ import Wheelie.Pose2D;
 public class Left extends WheelOp {
     private Pose2D[] path1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(15, -4, 0),
-            new Pose2D(25, -4, 0)
+            new Pose2D(15, 4, 0),
+            new Pose2D(22, 4, 0)
     };
 
     private Pose2D[] path2 = new Pose2D[]{
-            new Pose2D(25, -4, 0),
+            new Pose2D(22, -4, 0),
             new Pose2D(15, -4, 0),
             new Pose2D(3, 0, 0)
     };
@@ -22,72 +22,72 @@ public class Left extends WheelOp {
     private Pose2D[] path3 = new Pose2D[]{
             new Pose2D(3, 0, 0),
             new Pose2D(3, -12, 0),
-            new Pose2D(3, -26, 0)
+            new Pose2D(3, -24, 0)
     };
 
     private Pose2D[] path4 = new Pose2D[]{
-            new Pose2D(3, -26,  0),
-            new Pose2D(36, -26,  0),
-            new Pose2D(54, -26,  0)
+            new Pose2D(3, -24,  0),
+            new Pose2D(36, -24,  0),
+            new Pose2D(50, -24,  0)
 
     };
 
     private Pose2D[] turn1 = new Pose2D[] {
-            new Pose2D(54, -26, 0),
-            new Pose2D(54, -26, Math.toRadians(90)),
-            new Pose2D(54, -26, Math.toRadians(180))
+            new Pose2D(50, -24, 0),
+            new Pose2D(50, -24, Math.toRadians(90)),
+            new Pose2D(50, -24, Math.toRadians(180))
     };
 
     private Pose2D[] path5 = new Pose2D[]{
-            new Pose2D(54,-26,Math.toRadians(180)),
-            new Pose2D(54,-32,Math.toRadians(180)),
-            new Pose2D(54,-43,Math.toRadians(180))
+            new Pose2D(50,-24,Math.toRadians(180)),
+            new Pose2D(50,-29,Math.toRadians(180)),
+            new Pose2D(50,-30,Math.toRadians(180))
     };
 
     private Pose2D[] path6 = new Pose2D[] {
-            new Pose2D(54, -43, Math.toRadians(180)),
-            new Pose2D(25, -43, Math.toRadians(180)),
-            new Pose2D(2, -43, Math.toRadians(180))
+            new Pose2D(50, -30, Math.toRadians(180)),
+            new Pose2D(25, -30, Math.toRadians(180)),
+            new Pose2D(0, -30, Math.toRadians(180))
     };
 
     private Pose2D[] path7 = new Pose2D[] {
-            new Pose2D(2, -43, Math.toRadians(180)),
-            new Pose2D(25, -43, Math.toRadians(180)),
-            new Pose2D(54, -43, Math.toRadians(180))
+            new Pose2D(0, -30, Math.toRadians(180)),
+            new Pose2D(25, -30, Math.toRadians(180)),
+            new Pose2D(54, -30, Math.toRadians(180))
     };
 
     private Pose2D[] pathnot7 = new Pose2D[] {
-            new Pose2D(54, -43, Math.toRadians(180)),
-            new Pose2D(54, -43, Math.toRadians(180)),
-            new Pose2D(54, -43, Math.toRadians(180))
+            new Pose2D(54, -30, Math.toRadians(180)),
+            new Pose2D(54, -34, Math.toRadians(180)),
+            new Pose2D(54, -36, Math.toRadians(180))
     };
 
     private Pose2D[] path8 = new Pose2D[] {
-            new Pose2D(54, -43, Math.toRadians(180)),
-            new Pose2D(54, -48, Math.toRadians(180)),
-            new Pose2D(54, -52, Math.toRadians(180))
+            new Pose2D(54, -36, Math.toRadians(180)),
+            new Pose2D(54, -36, Math.toRadians(180)),
+            new Pose2D(54, -36, Math.toRadians(180))
     };
 
     private Pose2D[] path9 = new Pose2D[] {
-            new Pose2D(54, -52, Math.toRadians(180)),
-            new Pose2D(25, -52, Math.toRadians(180)),
-            new Pose2D(5, -52, Math.toRadians(180))
+            new Pose2D(54, -39, Math.toRadians(180)),
+            new Pose2D(25, -39, Math.toRadians(180)),
+            new Pose2D(2, -39, Math.toRadians(180))
     };
 
     private Pose2D[] path10 = new Pose2D[] {
-            new Pose2D(5, -52, Math.toRadians(180)),
-            new Pose2D(15, -52, Math.toRadians(180)),
-            new Pose2D(20, -52, Math.toRadians(180))
+            new Pose2D(2, -39, Math.toRadians(180)),
+            new Pose2D(15, -39, Math.toRadians(180)),
+            new Pose2D(20, -39, Math.toRadians(180))
     };
     //skip
     private Pose2D[] path11 = new Pose2D[]{
-            new Pose2D(20,-50, Math.toRadians(180)),
-            new Pose2D(20, -50, Math.toRadians(90)),
-            new Pose2D(20, -50, 0)
+            new Pose2D(20,-39, Math.toRadians(180)),
+            new Pose2D(20, -39, Math.toRadians(90)),
+            new Pose2D(20, -39, 0)
     };
 
     private Pose2D[] path12 = new Pose2D[]{
-            new Pose2D(20, -52, Math.toRadians(180)),
+            new Pose2D(20, -39, Math.toRadians(180)),
             new Pose2D(12, -20, Math.toRadians(180)),
             new Pose2D(8, 6, Math.toRadians(180))
     };
@@ -101,11 +101,11 @@ public class Left extends WheelOp {
     private Pose2D[] path13 = new Pose2D[]{
             new Pose2D(8, 6, 0),
             new Pose2D(16, 6, 0),
-            new Pose2D(32, 6, 0)
+            new Pose2D(25, 6, 0)
     };
 
     private Pose2D[] path14 = new Pose2D[] {
-            new Pose2D(32, 6, 0),
+            new Pose2D(25, 6, 0),
             new Pose2D(16, 6, 0),
             new Pose2D(8, 6, 0)
     };
@@ -113,25 +113,25 @@ public class Left extends WheelOp {
     private Pose2D[] path15 = new Pose2D[] {
             new Pose2D(8, 6,0),
             new Pose2D(8, -26, 0),
-            new Pose2D(8, -52, 0)
+            new Pose2D(8, -39, 0)
     };
 
     private Pose2D[] path16 = new Pose2D[] {
-            new Pose2D(8, -52,0),
-            new Pose2D(30, -52, 0),
-            new Pose2D(56, -52, 0)
+            new Pose2D(8,-39, 0),
+            new Pose2D(20, -39, 0),
+            new Pose2D(40, -39, 0)
     };
 
     private Pose2D[] path17 = new Pose2D[] {
-            new Pose2D(8, -52,0),
-            new Pose2D(8, -52, Math.toRadians(90)),
-            new Pose2D(8, -52, Math.toRadians(180))
+            new Pose2D(40, -39, 0),
+            new Pose2D(40, -39, Math.toRadians(45)),
+            new Pose2D(40, -39, Math.toRadians(90))
     };
 
     private Pose2D[] path18 = new Pose2D[] {
-            new Pose2D(56, -52, Math.toRadians(180)),
-            new Pose2D(56, -36, Math.toRadians(180)),
-            new Pose2D(56, -27, Math.toRadians(180))
+            new Pose2D(40, -39, Math.toRadians(90)),
+            new Pose2D(30,-39, Math.toRadians(90)),
+            new Pose2D(25, -39, Math.toRadians(90))
     };
     @Override
     public void run() {
@@ -175,7 +175,7 @@ public class Left extends WheelOp {
         sleep(1000);
         followPath(path17, 0);
         sleep(10000);
-        followPath(path18, 0);
+        //followPath(path18, 0);
 
         while(opModeIsActive()) {
             telemetry.addLine();
