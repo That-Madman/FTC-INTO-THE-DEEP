@@ -12,7 +12,7 @@ public class Right extends WheelOp {
         new Pose2D(0, 0, 0),
         new Pose2D(0, 0, Math.toRadians(45)),
         new Pose2D(0, 0, Math.toRadians(90)),
-        new Pose2D(0, 0, Math.toRadians(180))
+        //new Pose2D(0, 0, Math.toRadians(180))
     };
 
     private Pose2D[] p2 = new Pose2D[] {
@@ -24,8 +24,8 @@ public class Right extends WheelOp {
     @Override
     public void run () {
         followPath(p, 0);
-        sleep(1000);
-        followPath(p2, 0);
+        sleep(5000);
+        //followPath(p2, 0);
     }
 
 }

@@ -26,9 +26,9 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/25.0, mI = 0, mD = 0.006,
-            hP = 1. / Math.toRadians(135), hI = 0.1, hD = .1,
-            mMaxI = 0.001, hMaxI = 0.005;
+    private final double  mP = 0.0, mI = 0, mD = 0.0, //mP = 1.0/25.0, mI = 0, mD = 0.006,
+            hP = 1. / Math.toRadians(135), hI = 0.1, hD = 0.0, //hI 0.1 hD .1
+            mMaxI = 0.002, hMaxI = 0.05;
     private boolean xi, yi, hi;
 
     //The max speed of the motors
@@ -255,7 +255,7 @@ public class PathFollowerWrapper {
 
     /** Updates the localization of the robot */
     public void updatePose (double angle) {
-        localization.update (angle);
+        //localization.update (angle);
     }
 
     public void updatePose(Pose2D p){

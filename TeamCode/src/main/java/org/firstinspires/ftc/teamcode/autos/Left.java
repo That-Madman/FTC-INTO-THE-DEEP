@@ -131,7 +131,7 @@ public class Left extends WheelOp {
     private Pose2D[] path18 = new Pose2D[] {
             new Pose2D(40, -40, Math.toRadians(90)),
             new Pose2D(40,-45, Math.toRadians(90)),
-            new Pose2D(40, -48, Math.toRadians(90))
+            new Pose2D(40, -50, Math.toRadians(90))
     };
 
     private Pose2D[] path19 = new Pose2D[] {
@@ -183,7 +183,7 @@ public class Left extends WheelOp {
         sleep(10000);
         followPath(path18, 0);
         sleep(1000);
-        followPath(path19, 0);
+        //followPath(path19, 0);
 
         while(opModeIsActive()) {
             telemetry.addLine();
