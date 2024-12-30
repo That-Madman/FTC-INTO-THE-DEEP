@@ -58,13 +58,12 @@ public class Board {
             v2.setDirection(DcMotorSimple.Direction.FORWARD);
 
             v1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            v1.setPower(1);
-            v1.setTargetPosition(0);
-            v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             v2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            v1.setPower(1);
             v2.setPower(1);
+            v1.setTargetPosition(0);
             v2.setTargetPosition(0);
+            v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             imu = hwMap.get(IMU.class, "imu");
