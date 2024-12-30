@@ -12,6 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class DriveTest extends OpMode {
     private boolean driveFieldRel = true;
 
+    private boolean bHeld;
+
     private final DcMotor[] base = {null, null, null, null};
 
     private IMU imu;
@@ -25,8 +27,8 @@ public class DriveTest extends OpMode {
         base[3] = hardwareMap.get(DcMotor.class, "bl");
 
         base[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        base[1].setDirection(DcMotorSimple.Direction.REVERSE);
-        base[2].setDirection(DcMotorSimple.Direction.FORWARD);
+        base[1].setDirection(DcMotorSimple.Direction.FORWARD);
+        base[2].setDirection(DcMotorSimple.Direction.REVERSE);
         base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
         base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -38,6 +40,7 @@ public class DriveTest extends OpMode {
         base[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         base[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        imu = hardwareMap.get(IMU.class, "imu");
     }
 
     @Override
@@ -75,6 +78,9 @@ public class DriveTest extends OpMode {
                 );
                 telemetry.addData("Driving", "Robot Relative");
             }
+
+            driveFieldRel = gamepad1.b && !bHeld;
+            bHeld = gamepad1.b;
         }
     }
 

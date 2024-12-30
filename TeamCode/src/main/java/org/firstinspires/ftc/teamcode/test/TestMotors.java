@@ -21,8 +21,8 @@ public class TestMotors extends OpMode {
         base[3] = hardwareMap.get(DcMotor.class, "bl");
 
         base[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        base[1].setDirection(DcMotorSimple.Direction.REVERSE);
-        base[2].setDirection(DcMotorSimple.Direction.FORWARD);
+        base[1].setDirection(DcMotorSimple.Direction.FORWARD);
+        base[2].setDirection(DcMotorSimple.Direction.REVERSE);
         base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
         base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

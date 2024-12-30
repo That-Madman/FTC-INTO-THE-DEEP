@@ -38,8 +38,8 @@ public class Board {
             base[3] = hwMap.get(DcMotor.class, "bl");
 
             base[0].setDirection(DcMotorSimple.Direction.REVERSE);
-            base[1].setDirection(DcMotorSimple.Direction.REVERSE);
-            base[2].setDirection(DcMotorSimple.Direction.FORWARD);
+            base[1].setDirection(DcMotorSimple.Direction.FORWARD);
+            base[2].setDirection(DcMotorSimple.Direction.REVERSE);
             base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
             base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -168,7 +168,7 @@ public class Board {
             case 1:
                 lRot.setPosition(1);
                 rRot.setPosition(1);
-                mRot.setPosition(1);
+                mRot.setPosition(0);
                 break;
 
             case 0:
