@@ -127,6 +127,11 @@ public class Board {
         return !(rl ? v1t : v2t).isPressed();
     }
 
+    public void setLiftDampen (float damp) {
+            v1.setPower(damp);
+            v2.setPower(damp);
+    }
+
     public void resetImu () {
         imu.resetYaw();
     }
