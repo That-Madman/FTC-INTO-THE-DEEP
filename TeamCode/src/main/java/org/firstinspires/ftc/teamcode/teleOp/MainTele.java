@@ -163,7 +163,8 @@ public class MainTele extends OpMode {
 
         if (!x2Held && gamepad2.x) {
             ++sState;
-            sState %= 3;
+            sState %= 2;
+            ++sState;
         }
 
         if (!y2Held && gamepad2.y) {
