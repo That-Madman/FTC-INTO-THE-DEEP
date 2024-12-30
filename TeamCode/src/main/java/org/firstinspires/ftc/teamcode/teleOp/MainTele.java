@@ -29,9 +29,9 @@ public class MainTele extends OpMode {
     private boolean up2Held;
     private boolean down2Held;
     private boolean left2Held;
-    private boolean down1Held;
 
-    private byte sState = 1;
+    private byte sState = 0;
+
     private byte re;
 
     private Board board;
@@ -181,27 +181,29 @@ public class MainTele extends OpMode {
 
             switch (dPadState) {
                 case 0:
+                    board.setLiftDampen(0.3f);
                     height = 0;
                     break;
                 case 1:
+                    board.setLiftDampen(0.7f);
                     height = 850;
                     break;
                 case 2:
+                    board.setLiftDampen(0.7f);
                     height = 2700;
                     break;
             }
         } else if (gamepad2.dpad_down && !down2Held){
+            board.setLiftDampen(0.3f);
             dPadState = 0;
             height = 0;
         } else if (gamepad2.dpad_left && !left2Held) {
+            board.setLiftDampen(0.7f);
             dPadState = 2;
-            height = 2700;
+            height = 2650;
         }
 
-        if (gamepad1.dpad_down && !down1Held) {
-            board.setRot((byte) ((specimenMode) ? 0 : 1));
-            specimenMode ^= true;
-        }
+
 
         board.setReach(re);
         board.setSwivel(sState);
@@ -215,7 +217,7 @@ public class MainTele extends OpMode {
         b1Held = gamepad1.b;
         x1Held = gamepad1.x;
         y1Held = gamepad1.y;
-        down1Held = gamepad1.dpad_down;
+
 
         a2Held = gamepad2.a;
         b2Held = gamepad2.b;
