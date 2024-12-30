@@ -192,13 +192,13 @@ public class Board {
     public void setSwivel (byte s) {
         switch (s) {
             case 0:
-                swivel.setPosition(0);
+                swivel.setPosition(0.2);
                 break;
             case 1:
                 swivel.setPosition(0.5);
                 break;
             case 2:
-                swivel.setPosition(0.7);
+                swivel.setPosition(1);
                 break;
         }
     }
