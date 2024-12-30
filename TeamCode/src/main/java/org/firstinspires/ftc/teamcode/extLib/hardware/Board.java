@@ -169,21 +169,29 @@ public class Board {
 
     public void setRot (byte u) {
         switch (u) {
-            case 1:
-                lRot.setPosition(1);
-                rRot.setPosition(1);
-                mRot.setPosition(0);
-                break;
-
             case 0:
                 lRot.setPosition(0.1);
                 rRot.setPosition(0.1);
                 mRot.setPosition(0);
                 break;
-
+            case 1:
+                lRot.setPosition(1);
+                rRot.setPosition(1);
+                mRot.setPosition(0);
+                break;
             case 2:
                 lRot.setPosition(0.8);
                 rRot.setPosition(0.8);
+                mRot.setPosition(1);
+                break;
+            case 3:
+                lRot.setPosition(0.5);
+                rRot.setPosition(0.5);
+                mRot.setPosition(1);
+                break;
+            case 4:
+                lRot.setPosition(0);
+                rRot.setPosition(0);
                 mRot.setPosition(1);
                 break;
         }
