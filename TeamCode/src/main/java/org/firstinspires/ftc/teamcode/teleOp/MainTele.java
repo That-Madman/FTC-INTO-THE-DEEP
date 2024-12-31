@@ -174,7 +174,7 @@ public class MainTele extends OpMode {
         }
 
         if (!lB2Held && gamepad2.left_bumper) {
-            rot = (byte) ((4 < rot) ? 4 : 5);
+            rot = (byte) ((3 < rot) ? 3 : 4);
         }
 
         if (gamepad2.dpad_up && !up2Held) {
