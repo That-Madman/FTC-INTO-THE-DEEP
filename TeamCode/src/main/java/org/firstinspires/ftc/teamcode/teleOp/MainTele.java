@@ -234,6 +234,9 @@ public class MainTele extends OpMode {
         y1Held = gamepad1.y;
         y2Held = gamepad2.y;
 
+        telemetry.addLine("dbg:");
         telemetry.addData("Rot state", rot);
+        telemetry.addData("V1 enc", board.getLiftPos(true));
+        telemetry.addData("V2 enc", board.getLiftPos(false));
     }
 }
