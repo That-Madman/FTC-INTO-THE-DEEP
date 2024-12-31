@@ -188,8 +188,8 @@ public class Board {
                 mRot.setPosition(0);
                 break;
             case 3:
-                lRot.setPosition(0);
-                rRot.setPosition(0);
+                lRot.setPosition(0.3);
+                rRot.setPosition(0.3);
                 mRot.setPosition(1);
                 break;
         }
