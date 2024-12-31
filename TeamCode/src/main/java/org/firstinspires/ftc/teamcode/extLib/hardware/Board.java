@@ -13,23 +13,21 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class Board {
+    Servo bigGrab;
+    Servo lRot;
+    Servo mRot;
+    Servo pick;
+    Servo r1, r2;
+    Servo rRot;
+    Servo swivel;
+    Servo tinyGrab;
+
+    private final DcMotorEx v1, v2;
     private final DcMotor[] base = {null, null, null, null};
 
     private final IMU imu;
 
-    private final DcMotorEx v1, v2;
-
     private final TouchSensor v1t, v2t;
-
-    Servo tinyGrab;
-    Servo bigGrab;
-    Servo lRot;
-    Servo rRot;
-    Servo mRot;
-    Servo pick;
-    Servo swivel;
-
-    Servo r1, r2;
 
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
@@ -249,14 +247,9 @@ public class Board {
     }
 
     public void driveFieldRelative(double forward, double right, double rotate) {
-        double theta = Math.atan2(forward, right);
         final double r = Math.hypot(forward, right);
+        final double theta = AngleUnit.normalizeRadians(Math.atan2(forward, right) - getAngle());
 
-        theta = AngleUnit.normalizeRadians(theta - getAngle());
-
-        final double newForward = r * Math.sin(theta);
-        final double newRight = r * Math.cos(theta);
-
-        drive(newForward, newRight, rotate);
+        drive(r * Math.sin(theta), r * Math.cos(theta), rotate);
     }
 }

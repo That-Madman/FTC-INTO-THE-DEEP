@@ -7,34 +7,33 @@ import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
 @TeleOp(name = "The one you use")
 public class MainTele extends OpMode {
+    private Board board;
+
+    private boolean bigClosed;
+    private boolean closed;
     private boolean driveFieldRel = true;
     private boolean resetImu;
-    private boolean closed;
-    private byte rot;
-    private boolean bigClosed;
-    private int height;
-
-    private int dPadState;
-    private boolean specimenMode;
-
-    private boolean a1Held;
-    private boolean b1Held;
-    private boolean x1Held;
-    private boolean y1Held;
-    private boolean a2Held;
-    private boolean b2Held;
-    private boolean x2Held;
-    private boolean y2Held;
-    private boolean rB2Held;
-    private boolean up2Held;
-    private boolean down2Held;
-    private boolean left2Held;
-
-    private byte sState = 0;
+    private boolean specimenMode; //TODO: DO WE STILL NEED THIS?
 
     private byte re;
+    private byte rot;
+    private int dPadState;
+    private int height;
 
-    private Board board;
+    private boolean a1Held;
+    private boolean a2Held;
+    private boolean b1Held;
+    private boolean b2Held;
+    private boolean down2Held;
+    private boolean lB2Held;
+    private boolean left2Held;
+    private boolean rB2Held;
+    private boolean up2Held;
+    private boolean x1Held;
+    private boolean x2Held;
+    private boolean y1Held;
+    private boolean y2Held;
+    private byte sState = 0;
 
     @Override
     public void init () {
@@ -175,6 +174,10 @@ public class MainTele extends OpMode {
             rot = (byte) ((0 < rot) ? 0 : 1);
         }
 
+        if (!lB2Held && gamepad2.left_bumper) {
+            rot = (byte) ((4 < rot) ? 4 : 5);
+        }
+
         if (gamepad2.dpad_up && !up2Held) {
             ++dPadState;
 
@@ -216,18 +219,17 @@ public class MainTele extends OpMode {
         board.setBigGrab(bigClosed);
 
         a1Held = gamepad1.a;
-        b1Held = gamepad1.b;
-        x1Held = gamepad1.x;
-        y1Held = gamepad1.y;
-
-
         a2Held = gamepad2.a;
+        b1Held = gamepad1.b;
         b2Held = gamepad2.b;
-        x2Held = gamepad2.x;
-        y2Held = gamepad2.y;
+        down2Held = gamepad2.dpad_down;
+        lB2Held = gamepad2.left_bumper;
+        left2Held = gamepad2.dpad_left;
         rB2Held = gamepad2.right_bumper;
         up2Held = gamepad2.dpad_up;
-        down2Held = gamepad2.dpad_down;
-        left2Held = gamepad2.dpad_left;
+        x1Held = gamepad1.x;
+        x2Held = gamepad2.x;
+        y1Held = gamepad1.y;
+        y2Held = gamepad2.y;
     }
 }
