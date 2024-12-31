@@ -33,7 +33,7 @@ public class MainTele extends OpMode {
     private boolean x2Held;
     private boolean y1Held;
     private boolean y2Held;
-    private byte sState = 0;
+    private byte sState = 1;
 
     @Override
     public void init () {
