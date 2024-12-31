@@ -15,9 +15,12 @@ public class MainTele extends OpMode {
     private boolean resetImu;
     private boolean specimenMode; //TODO: DO WE STILL NEED THIS?
 
-    private byte re;
+
+    private byte re = 1;
     private byte rot;
-    private int dPadState;
+    private byte sState = 1;
+    private byte dPadState;
+
     private int height;
 
     private boolean a1Held;
@@ -33,7 +36,6 @@ public class MainTele extends OpMode {
     private boolean x2Held;
     private boolean y1Held;
     private boolean y2Held;
-    private byte sState = 1;
 
     @Override
     public void init () {
