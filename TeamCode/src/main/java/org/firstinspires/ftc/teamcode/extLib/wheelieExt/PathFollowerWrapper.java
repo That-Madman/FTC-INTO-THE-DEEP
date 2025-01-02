@@ -26,8 +26,8 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/25.0, mI = 0, mD = 0.006,
-            hP = 1. / Math.toRadians(45), hI = 0, hD = 0.05, //hI 0.1 hD .1
+    private final double mP = 1.0/25.0, mI = 0, mD = 0,    //0.006
+            hP = 1. / Math.toRadians(45), hI = 0, hD = 10,
             mMaxI = 0.002, hMaxI = 0.05;
     private boolean xi, yi, hi;
 
@@ -84,8 +84,8 @@ public class PathFollowerWrapper {
 
 
 
-        double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
-        double y = diff.x * Math.sin (getPose ().h) + diff.y * Math.cos (getPose ().h);
+        double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);
+        double y = diff.x * Math.sin (-getPose ().h) + diff.y * Math.cos (-getPose ().h);
         double h = diff.h;
 
         return new double[] {
@@ -109,8 +109,8 @@ public class PathFollowerWrapper {
 
         double h = hPID.pidCalc (diff.h, 0, time); //changed diff.h from move.h and changed 0 from getPose().h
 
-        double forward = x * Math.cos (getPose ().h) - y * Math.sin (getPose ().h),
-                strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
+        double forward = x * Math.cos (-getPose ().h) - y * Math.sin (-getPose ().h),
+                strafe = x * Math.sin (-getPose ().h) + y * Math.cos (-getPose ().h);
 
         if(Math.hypot(diff.x, diff.y) <= MAX_TRANSLATION_ERROR){
             forward = 0;

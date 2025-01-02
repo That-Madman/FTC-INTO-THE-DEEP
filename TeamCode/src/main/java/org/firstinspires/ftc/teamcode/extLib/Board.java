@@ -136,7 +136,7 @@ public class Board {
         sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
         sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
         sparkFunOTOS.setOffset(new Pose2D(-2.0, 0, 0));
-        sparkFunOTOS.setLinearScalar(100.0/83.5);
+        sparkFunOTOS.setLinearScalar(100.0/68.7);
         sparkFunOTOS.setAngularScalar((Math.PI*20)/(Math.PI*20+.494));
         sparkFunOTOS.resetTracking();
         sparkFunOTOS.setPosition(new Pose2D(0,0,0));
