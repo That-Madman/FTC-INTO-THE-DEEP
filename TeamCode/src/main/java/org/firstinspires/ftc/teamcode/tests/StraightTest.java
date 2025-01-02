@@ -34,8 +34,6 @@ public class StraightTest extends LinearOpMode {
         board.resetIMU();
         followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
 
-        configureOTOS();
-
         waitForStart();
 
         followPath(points);
@@ -58,7 +56,7 @@ public class StraightTest extends LinearOpMode {
         while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             Pose2D pos = board.getCurrentPose();
             followerWrapper.updatePose(pos); //Updates position
-            double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
+            double[] vectorCom = followerWrapper.followPathPID(); //Gets the movement vector
             board.drive(vectorCom[0], -vectorCom[1], -vectorCom[2]); //Uses vector to power motors
 
             telemetry.addData("Position",

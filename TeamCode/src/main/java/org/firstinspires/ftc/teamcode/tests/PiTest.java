@@ -25,9 +25,9 @@ public class PiTest extends WheelOp {
     },
 
     moreRotate = new Pose2D[] {
-            new Pose2D(0, 0, 180),
-            new Pose2D(0,0, 90),
-            new Pose2D(0,0,0)
+            new Pose2D(0, 0, Math.toRadians(180)),
+            new Pose2D(0,0, Math.toRadians(90)),
+            new Pose2D(0,0,Math.toRadians(0))
     };
 
     @Override

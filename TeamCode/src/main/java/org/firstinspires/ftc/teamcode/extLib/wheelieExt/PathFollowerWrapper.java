@@ -26,8 +26,8 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double  mP = 0.0, mI = 0, mD = 0.0, //mP = 1.0/25.0, mI = 0, mD = 0.006,
-            hP = 1. / Math.toRadians(135), hI = 0.1, hD = 0.0, //hI 0.1 hD .1
+    private final double mP = 1.0/25.0, mI = 0, mD = 0.006,
+            hP = 1. / Math.toRadians(45), hI = 0, hD = 0.05, //hI 0.1 hD .1
             mMaxI = 0.002, hMaxI = 0.05;
     private boolean xi, yi, hi;
 
@@ -82,19 +82,14 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
-        double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);
-        double y = diff.x * Math.sin (-getPose ().h) + diff.y * Math.cos (-getPose ().h);
+
+
+        double x = diff.x * Math.cos (getPose ().h) - diff.y * Math.sin (getPose ().h);
+        double y = diff.x * Math.sin (getPose ().h) + diff.y * Math.cos (getPose ().h);
         double h = diff.h;
 
-        /*if (Math.hypot (x,y) < MAX_TRANSLATION_ERROR) { //Stops translational movement, focus on heading
-            x = 0;
-            y = 0;
-        } else { //Minimizes the heading control
-            h *= hP;
-        }*/
-
         return new double[] {
-                x, y, h
+                x*mP, y*mP, h*hP
         };
     }
 
@@ -108,9 +103,6 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(move.h-getPose().h)
         );
 
-        //double x = 0;// move.x * Math.cos (getPose ().h) - move.y * Math.sin (getPose ().h);
-        //double y = 0;//move.x * Math.sin (getPose ().h) + move.y * Math.cos (getPose ().h);
-
         //Calculates the PID values based on error
         double x = xPID.pidCalc (move.x, getPose().x, time),
             y = yPID.pidCalc(move.y, getPose().y, time);
@@ -119,6 +111,11 @@ public class PathFollowerWrapper {
 
         double forward = x * Math.cos (getPose ().h) - y * Math.sin (getPose ().h),
                 strafe = x * Math.sin (getPose ().h) + y * Math.cos (getPose ().h);
+
+        if(Math.hypot(diff.x, diff.y) <= MAX_TRANSLATION_ERROR){
+            forward = 0;
+            strafe = 0;
+        }
 
         return new double[]{
                 forward, strafe, h

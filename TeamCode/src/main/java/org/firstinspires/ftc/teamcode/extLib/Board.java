@@ -135,8 +135,8 @@ public class Board {
     private void configureSensor() {
         sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
         sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
-        sparkFunOTOS.setOffset(new Pose2D(1.25, 5.25, 0));
-        sparkFunOTOS.setLinearScalar(100.0/97.74);
+        sparkFunOTOS.setOffset(new Pose2D(-2.0, 0, 0));
+        sparkFunOTOS.setLinearScalar(100.0/83.5);
         sparkFunOTOS.setAngularScalar((Math.PI*20)/(Math.PI*20+.494));
         sparkFunOTOS.resetTracking();
         sparkFunOTOS.setPosition(new Pose2D(0,0,0));
