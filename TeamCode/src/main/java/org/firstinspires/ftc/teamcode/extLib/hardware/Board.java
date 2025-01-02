@@ -57,8 +57,8 @@ public class Board {
 
             v1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             v2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            v1.setPower(1);
-            v2.setPower(1);
+            v1.setPower(0.7);
+            v2.setPower(0.7);
             v1.setTargetPosition(0);
             v2.setTargetPosition(0);
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);

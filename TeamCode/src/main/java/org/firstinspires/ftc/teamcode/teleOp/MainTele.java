@@ -186,24 +186,19 @@ public class MainTele extends OpMode {
 
             switch (dPadState) {
                 case 0:
-                    board.setLiftDampen(0.3f);
                     height = 0;
                     break;
                 case 1:
-                    board.setLiftDampen(0.7f);
                     height = 850;
                     break;
                 case 2:
-                    board.setLiftDampen(0.7f);
                     height = 2700;
                     break;
             }
         } else if (gamepad2.dpad_down && !down2Held){
-            board.setLiftDampen(0.3f);
             dPadState = 0;
             height = 0;
         } else if (gamepad2.dpad_left && !left2Held) {
-            board.setLiftDampen(0.7f);
             dPadState = 2;
             height = 2650;
         }
