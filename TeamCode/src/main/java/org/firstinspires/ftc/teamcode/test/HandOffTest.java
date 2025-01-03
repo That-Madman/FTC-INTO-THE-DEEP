@@ -123,8 +123,6 @@ public class HandOffTest extends OpMode {
                 setBigGrab(false);
                 setTinyGrab(false);
                 setRot(false);
-
-
             }
         }
 
@@ -156,8 +154,8 @@ public class HandOffTest extends OpMode {
                 break;
 
             case 1:
-                r1.setPosition(0.4);
-                r2.setPosition(0.4);
+                r1.setPosition(0.5);
+                r2.setPosition(0.5);
                 break;
 
             case 2:
