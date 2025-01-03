@@ -11,7 +11,7 @@ public class TestMotors extends OpMode {
 
     boolean upHeld, downHeld;
 
-    byte index = 0;
+    byte index;
 
     @Override
     public void init () {
