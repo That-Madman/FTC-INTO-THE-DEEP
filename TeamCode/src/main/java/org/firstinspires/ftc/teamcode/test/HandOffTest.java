@@ -156,8 +156,8 @@ public class HandOffTest extends OpMode {
                 break;
 
             case 1:
-                r1.setPosition(0.5);
-                r2.setPosition(0.5);
+                r1.setPosition(0.4);
+                r2.setPosition(0.4);
                 break;
 
             case 2:
