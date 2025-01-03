@@ -1,5 +1,4 @@
 repositories {
-    maven {url "https://jitpack.io"}
     mavenCentral()
     google() // Needed for androidx
 }
@@ -13,6 +12,6 @@ dependencies {
     implementation 'org.firstinspires.ftc:Hardware:10.1.1'
     implementation 'org.firstinspires.ftc:FtcCommon:10.1.1'
     implementation 'org.firstinspires.ftc:Vision:10.1.1'
-    implementation 'androidx.appcompat:appcompat:1.2.0' // Why was this changed!
-    implementation 'com.github.That-Madman:Wheelie-Java:master-SNAPSHOT'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }
+
