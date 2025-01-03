@@ -96,4 +96,19 @@ public class Board {
 
         drive(r * Math.sin(theta), r * Math.cos(theta), rotate);
     }
+    public void drive(double forward, double right, double rotate, double dampen) {
+        final double flp = (forward + right + rotate) * dampen;
+        final double frp = (forward - right - rotate) * dampen;
+        final double blp = (forward - right + rotate) * dampen;
+        final double brp = (forward + right - rotate) * dampen;
+
+        setPowers(flp, frp, blp, brp);
+    }
+
+    public void driveFieldRelative(double forward, double right, double rotate, double dampen) {
+        final double r = Math.hypot(forward, right);
+        final double theta = AngleUnit.normalizeRadians(Math.atan2(forward, right) - getDeg());
+
+        drive(r * Math.sin(theta), r * Math.cos(theta), rotate, dampen);
+    }
 }
