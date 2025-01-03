@@ -106,6 +106,9 @@ public class PathFollower {
 
         //Finds a point for robot to approach
         Pose2D target = PursuitMath.waypointCalc (obj, look, path.getPt(wayPoint), path.getPt(wayPoint + 1));
+        if(approachingLast() && Math.abs(Math.hypot(getLastPoint().x-obj.x, getLastPoint().y-obj.y))<look){
+            target = getLastPoint();
+        }
 
         //Moves straight to next point if math returns NaN values (circle and line do not intersect)
         if (target.x != target.x) {

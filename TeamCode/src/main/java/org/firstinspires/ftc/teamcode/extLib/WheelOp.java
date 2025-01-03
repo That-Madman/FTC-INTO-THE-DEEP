@@ -14,18 +14,20 @@ import Wheelie.Pose2D;
 public abstract class WheelOp extends LinearOpMode {
     protected PathFollowerWrapper followerWrapper;
     protected Board board;
+    protected Pose2D startPose = new Pose2D(0,0,0);
 
     @Override
     public void runOpMode () {
         board = new Board (hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         board.resetIMU();
-        followerWrapper = new PathFollowerWrapper(hardwareMap, new Pose2D(0,0), 8);
+        followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
 
         waitForStart();
 
         run();
 
         while(opModeIsActive()){
+            followerWrapper.updatePose(board.getCurrentPose()); //Updates position
             telemetry.addLine("Path is complete");
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +

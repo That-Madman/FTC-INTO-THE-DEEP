@@ -15,21 +15,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import  org.firstinspires.ftc.teamcode.extLib.PathFollower;
 
 public class PathFollowerWrapper {
-    private final Localization localization;
 
     private PathFollower follower;
     private double lookAhead;
 
-    //TODO Set start time and cap I
     private final PID xPID;
     private final PID yPID;
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/25.0, mI = 0, mD = 0,    //0.006
-            hP = 1. / Math.toRadians(45), hI = 0, hD = 10,
-            mMaxI = 0.002, hMaxI = 0.05;
-    private boolean xi, yi, hi;
+    private final double mP = 1.0/36.0, mI = 0.025, mD = 0.006,    //0.006
+            hP = 1. / Math.toRadians(65), hI = 0.025, hD = 0.05,
+            mMaxI = 0.025, hMaxI = 0.05;
 
     //The max speed of the motors
     public double SPEED_PERCENT = 1;
@@ -39,7 +36,7 @@ public class PathFollowerWrapper {
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
-        localization = new Localization (hw, startPose);
+        position = startPose;
         lookAhead = look;
 
         xPID = new PID (mP,mI,mD);
@@ -52,7 +49,7 @@ public class PathFollowerWrapper {
     }
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look, double maxSpeed) {
-        localization = new Localization (hw, startPose);
+        position = startPose;
         lookAhead=look;
 
         SPEED_PERCENT = maxSpeed;
@@ -82,14 +79,28 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
+        double movementAngle = -getPose().h + diff.h;
 
-
-        double x = diff.x * Math.cos (-getPose ().h) - diff.y * Math.sin (-getPose ().h);
-        double y = diff.x * Math.sin (-getPose ().h) + diff.y * Math.cos (-getPose ().h);
+        double x = diff.x * Math.cos (movementAngle) - diff.y * Math.sin (movementAngle);
+        double y = diff.x * Math.sin (movementAngle) + diff.y * Math.cos (movementAngle);
         double h = diff.h;
 
+        if(Math.hypot(diff.x, diff.y) <= MAX_TRANSLATION_ERROR)
+            x = y = 0;
+
+        x*=mP;
+        y*=mP;
+        h*=hP;
+        if(Math.abs(x)+Math.abs(y)+Math.abs(h) < 1){
+            double m = Math.max(Math.abs(x), Math.abs(y)),
+                    max = Math.max(m, Math.abs(h));
+            x/=max;
+            y/=max;
+            h/=max;
+        }
+
         return new double[] {
-                x*mP, y*mP, h*hP
+                x,y,h
         };
     }
 
@@ -107,18 +118,19 @@ public class PathFollowerWrapper {
         double x = xPID.pidCalc (move.x, getPose().x, time),
             y = yPID.pidCalc(move.y, getPose().y, time);
 
-        double h = hPID.pidCalc (diff.h, 0, time); //changed diff.h from move.h and changed 0 from getPose().h
+        double h = hPID.pidCalc (diff.h, 0, time);
 
-        double forward = x * Math.cos (-getPose ().h) - y * Math.sin (-getPose ().h),
-                strafe = x * Math.sin (-getPose ().h) + y * Math.cos (-getPose ().h);
+
+        double movementAngle = -getPose().h + diff.h;
+        double forward = x * Math.cos (movementAngle) - y * Math.sin (movementAngle),
+                strafe = x * Math.sin (movementAngle) + y * Math.cos (movementAngle);
 
         if(Math.hypot(diff.x, diff.y) <= MAX_TRANSLATION_ERROR){
-            forward = 0;
-            strafe = 0;
+            forward = strafe = 0;
         }
 
         return new double[]{
-                forward, strafe, h
+            forward, strafe, h
         };
     }
 
@@ -126,9 +138,6 @@ public class PathFollowerWrapper {
         xPID.resetI ();
         yPID.resetI ();
         hPID.resetI ();
-        xi = false;
-        yi = false;
-        hi = false;
     }
 
     /** Checks if the target pose is within error margin */
@@ -149,23 +158,7 @@ public class PathFollowerWrapper {
     }
 
     public Pose2D getPose () {
-        return position;//return localization.currentPosition;
-    }
-    public String getPoseString () {
-        return localization.currentPosition.x + ", " +
-                localization.currentPosition.y + ", " +
-                localization.currentPosition.h;
-    }
-
-    public Localization getLocalization(){
-        return localization;
-    }
-
-    public int getHoriOdom () {
-        return localization.getHori ();
-    }
-    public int getVertOdom () {
-        return localization.getVert ();
+        return position;
     }
 
     private Pose2D m;
@@ -237,8 +230,11 @@ public class PathFollowerWrapper {
             }
 
             //Calculates the movement vector
+
             m = follower.followPath (getPose());
-            if(!follower.approachingLast()) {
+            if(!follower.approachingLast()
+                    || Math.hypot(getPose().x-follower.getLastPoint().x,
+                    getPose().y-follower.getLastPoint().y) > 10) {
                 //Reshapes vector based on PID values
                 return moveTo(m.x, m.y, m.h);
             } else {
@@ -259,18 +255,10 @@ public class PathFollowerWrapper {
         position = p;
     }
 
-    public void resetPose(){
-        localization.resetPose();
-    }
-    public void resetPose(Pose2D a){
-        localization.resetPose(a);
-    }
-
     @NonNull
     @Override
     public String toString () {
         return "MecDrivebase {" +
-                ", localization=" + localization +
                 ", mxPID=" + xPID +
                 ", myPID=" + yPID +
                 ", hPID=" + hPID +

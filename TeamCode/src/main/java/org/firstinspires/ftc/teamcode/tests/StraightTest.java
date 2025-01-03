@@ -39,6 +39,7 @@ public class StraightTest extends LinearOpMode {
         followPath(points);
 
         while(opModeIsActive()){
+            followerWrapper.updatePose(board.getCurrentPose()); //Updates position
             telemetry.addLine("Path is complete");
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +
