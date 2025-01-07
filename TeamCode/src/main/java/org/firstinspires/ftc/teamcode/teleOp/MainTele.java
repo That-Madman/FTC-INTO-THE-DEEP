@@ -204,8 +204,25 @@ public class MainTele extends OpMode {
         }
 
         //TODO: THESE HAVE TO BE USED EVENTUALLY
-//        if (board.getLiftTouched(true)) board.resetLift(true);
-//        if (board.getLiftTouched(false)) board.resetLift(false);
+        if (board.getLiftTouched(true)) {
+            board.resetLift(true);
+
+            if (0 == height) {
+                board.setLiftDampen(0);
+            } else {
+                board.setLiftDampen(0.7f);
+            }
+        }
+
+        if (board.getLiftTouched(false)) {
+            board.resetLift(false);
+
+            if (0 == height) {
+                board.setLiftDampen(0);
+            } else {
+                board.setLiftDampen(0.7f);
+            }
+        }
 
         board.setReach(re);
         board.setSwivel(sState);

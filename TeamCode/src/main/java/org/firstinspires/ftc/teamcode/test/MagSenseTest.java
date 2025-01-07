@@ -16,7 +16,7 @@ public class MagSenseTest extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addData("v1t", !v1t.isPressed());
-        telemetry.addData("v2t", !v2t.isPressed());
+        telemetry.addData("v1t", v1t.isPressed());
+        telemetry.addData("v2t", v2t.isPressed());
     }
 }
