@@ -203,7 +203,6 @@ public class MainTele extends OpMode {
             height = 2650;
         }
 
-        //TODO: THESE HAVE TO BE USED EVENTUALLY
         if (board.getLiftTouched(true)) {
             board.resetLift(true);
 
