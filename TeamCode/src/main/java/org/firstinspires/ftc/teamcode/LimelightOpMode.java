@@ -11,7 +11,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
 @TeleOp
 public class LimelightOpMode extends OpMode{
+    int tag;
+    byte index;
+    boolean aAlreadyPressed;
+
+
+    private void GoAfterTag(int tag) {
+        limelight3A.pipelineSwitch(tag -10);
+    }
     Limelight3A limelight3A;
+
     @Override
     public void init() {
         limelight3A = hardwareMap.get(Limelight3A.class, "lime");
@@ -22,16 +31,44 @@ public class LimelightOpMode extends OpMode{
     }
     @Override
     public void loop() {
+        if (gamepad1.a && !aAlreadyPressed){
+            ++index;
+            index %= 6;
+        }
+        switch(index) {
+            case 0:
+                GoAfterTag(11);
+                tag = 11;
+                break;
+            case 1:
+                GoAfterTag(12);
+                tag = 12;
+                break;
+            case 2:
+                GoAfterTag(13);
+                tag = 13;
+                break;
+            case 3:
+                GoAfterTag(14);
+                tag = 14;
+                break;
+            case 4:
+                GoAfterTag(15);
+                tag = 15;
+                break;
+            case 5:
+                GoAfterTag(16);
+                tag = 16;
+                break;
+        }
+
         LLResult llResult = limelight3A.getLatestResult();
         if(llResult != null && llResult.isValid()) {
-            telemetry.addData("Tx", llResult.getTx());
-            telemetry.addData("Ty", llResult.getTy());
-            telemetry.addData("Ta", llResult.getTa());
-            telemetry.addData("Corner Coords", llResult.getColorResults());
-
+            telemetry.addData("I see AprilTag ", tag);
         }
         else{
-            telemetry.addLine("WHERE ARE THEY? WHERE ARE THE SAMPLES? AAAAAAAASAaAAAAAAAAAAAAAAAAAAAAAAAA");
+            telemetry.addLine("I do not see any AprilTags");
         }
+        aAlreadyPressed = gamepad1.a;
     }
 }
