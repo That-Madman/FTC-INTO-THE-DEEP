@@ -13,8 +13,6 @@ public class MainTele extends OpMode {
     private boolean closed;
     private boolean driveFieldRel = true;
     private boolean resetImu;
-    private boolean specimenMode; //TODO: DO WE STILL NEED THIS?
-
 
     private byte re = 1;
     private byte rot;
@@ -222,6 +220,12 @@ public class MainTele extends OpMode {
             } else {
                 board.setLiftDampen(0.7f);
             }
+        }
+
+        // Rumbles in last 15 seconds
+        if (getRuntime() >= 105) {
+            gamepad1.rumble(1500);
+            gamepad2.rumble(1500);
         }
 
         board.setReach(re);
