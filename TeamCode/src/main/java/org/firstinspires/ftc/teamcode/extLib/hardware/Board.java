@@ -97,9 +97,8 @@ public class Board {
         setPick(false);
         setSwivel((byte) 1);
 
-        //TODO: ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME ASSIGN ME
-        v1t = null;
-        v2t = null;
+        v1t = hwMap.get(TouchSensor.class, "v1t");
+        v2t = hwMap.get(TouchSensor.class, "v2t");
     }
 
     public double getAngle() {
@@ -121,7 +120,7 @@ public class Board {
     }
 
     public boolean getLiftTouched (boolean rl) {
-        return !(rl ? v1t : v2t).isPressed();
+        return (rl ? v1t : v2t).isPressed();
     }
 
     public void setLiftDampen (float damp) {

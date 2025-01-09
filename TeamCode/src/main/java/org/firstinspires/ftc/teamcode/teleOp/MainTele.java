@@ -208,6 +208,7 @@ public class MainTele extends OpMode {
 
             if (0 == height) {
                 board.setLiftDampen(0);
+                telemetry.addLine("v1 sleeping");
             } else {
                 board.setLiftDampen(0.7f);
             }
@@ -218,6 +219,7 @@ public class MainTele extends OpMode {
 
             if (0 == height) {
                 board.setLiftDampen(0);
+                telemetry.addLine("v2 sleeping");
             } else {
                 board.setLiftDampen(0.7f);
             }
@@ -249,5 +251,8 @@ public class MainTele extends OpMode {
         telemetry.addData("Rot state", rot);
         telemetry.addData("V1 enc", board.getLiftPos(true));
         telemetry.addData("V2 enc", board.getLiftPos(false));
+
+        telemetry.addData("v1t is", board.getLiftTouched(true));
+        telemetry.addData("v2t is", board.getLiftTouched(false));
     }
 }
