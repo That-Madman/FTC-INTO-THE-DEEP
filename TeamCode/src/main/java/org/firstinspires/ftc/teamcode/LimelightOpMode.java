@@ -30,6 +30,7 @@ public class LimelightOpMode extends OpMode{
             ++index;
             index %= 6;
         }
+        telemetry.addData("Index", index);
         switch(index) {
             case 0:
                 GoAfterTag(11);
@@ -65,5 +66,6 @@ public class LimelightOpMode extends OpMode{
             telemetry.addLine("I do not see any AprilTags");
         }
         aAlreadyPressed = gamepad1.a;
+
     }
 }
