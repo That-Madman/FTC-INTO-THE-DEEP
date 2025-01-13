@@ -64,6 +64,10 @@ public class LimelightOpMode extends OpMode{
         }
         else{
             telemetry.addLine("I do not see any AprilTags");
+            telemetry.addData("ta", llResult.getTa());
+            //with some manual testing we can use Ta to figure out distance to the robot
+            telemetry.addData("tx", llResult.getTx());
+            telemetry.addData("ty", llResult.getTy());
         }
         aAlreadyPressed = gamepad1.a;
 
