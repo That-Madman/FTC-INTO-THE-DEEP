@@ -15,6 +15,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class Board {
    private final DcMotor[] base = {null, null, null, null};
 
+   private DcMotorEx rightArm = null, leftArm = null;
+   private DcMotorEx armExtent;
+
     private final IMU imu;
 
     public Board (HardwareMap hwMap) {
@@ -22,6 +25,15 @@ public class Board {
             base[1] = hwMap.get(DcMotor.class, "fr");
             base[2] = hwMap.get(DcMotor.class, "br");
             base[3] = hwMap.get(DcMotor.class, "bl");
+
+            leftArm = hwMap.get(DcMotorEx.class, "lElbow");
+            rightArm = hwMap.get(DcMotorEx.class, "rElbow");
+            armExtent = hwMap.get(DcMotorEx.class, "armGoOut");
+            leftArm.setDirection(DcMotorSimple.Direction.FORWARD);
+            rightArm.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            armExtent.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             base[0].setDirection(DcMotorSimple.Direction.REVERSE);
             base[1].setDirection(DcMotorSimple.Direction.FORWARD);
@@ -60,7 +72,7 @@ public class Board {
    public void sleep (long millis, OpMode op) { //TODO: IS THIS STILL NEEDED?
         op.resetRuntime();
         while (op.getRuntime() < (double) millis / 1000);
-    }
+   }
 
     public void setPowers(double flp, double frp, double blp, double brp) {
         double maxSpeed = 1;
@@ -95,5 +107,14 @@ public class Board {
         final double theta = AngleUnit.normalizeRadians(Math.atan2(forward, right) - getDeg());
 
         drive(r * Math.sin(theta), r * Math.cos(theta), rotate);
+    }
+
+    public void powerArm(double power){
+        leftArm.setPower(power);
+        rightArm.setPower(power);
+    }
+
+    public void moveArm(double power){
+        armExtent.setPower(power);
     }
 }
