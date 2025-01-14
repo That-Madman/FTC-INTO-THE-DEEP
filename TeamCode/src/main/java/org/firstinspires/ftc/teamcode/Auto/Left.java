@@ -40,20 +40,20 @@ public class Left extends WheelOp {
         board.setSweep(0.5);
         board.setSpoolPos(SpoolStates.LIFTEDABIT);
 
-        followLoop(path1, 5);
+        followLoop(path1);
 
         board.spoolTo(SpoolStates.BUCKETHIGH);
 
-        followLoop(path2, 5);
+        followLoop(path2);
 
         board.setSweep(-0.5);
         sleep(1000);
         board.setSweep(0);
 
-        followLoop(path3, 5);
+        followLoop(path3);
 
         board.setSpoolPos(SpoolStates.CHAMBERLOW + 100);
 
-        followLoop(path4, 5);
+        followLoop(path4);
     }
 }

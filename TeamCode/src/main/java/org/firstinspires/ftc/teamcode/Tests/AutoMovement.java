@@ -19,7 +19,7 @@ public class AutoMovement extends LinearOpMode {
     private PathFollowerWrapper followerWrapper;
     private Board board;
 
-    private Pose2D start = new Pose2D(0,0,0);
+    private final Pose2D start = new Pose2D(0,0,0);
 
     private Pose2D[] toSub = new Pose2D[] {
             new Pose2D(0,0,0),
