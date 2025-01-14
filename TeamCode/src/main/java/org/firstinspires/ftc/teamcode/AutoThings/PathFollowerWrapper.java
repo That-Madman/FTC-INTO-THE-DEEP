@@ -60,7 +60,7 @@ public class PathFollowerWrapper {
 
     /** Initializes a new path to follow */
     public void setPath(Pose2D startPose, Path path){
-        follower = new PathFollower(startPose, lookAhead, path);
+        follower = new PathFollower(startPose, lookAhead, path, 2,2 );
         PIDtimer.reset();
     }
 
