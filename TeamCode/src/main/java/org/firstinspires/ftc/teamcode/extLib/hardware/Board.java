@@ -11,6 +11,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import org.firstinspires.ftc.teamcode.AutoSystems.SparkFunOTOS;
+
+import Wheelie.Pose2D;
 
 public class Board {
     Servo bigGrab;
@@ -28,6 +33,8 @@ public class Board {
     private final IMU imu;
 
     private final TouchSensor v1t, v2t;
+
+    private final SparkFunOTOS sparkFunOTOS;
 
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
@@ -75,6 +82,9 @@ public class Board {
                     )
             );
 
+        sparkFunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
+        configureSensor();
+
         tinyGrab = hwMap.get(Servo.class, "tinyGrab");
         bigGrab = hwMap.get(Servo.class, "bigGrab");
         lRot = hwMap.get(Servo.class, "lRot");
@@ -99,6 +109,22 @@ public class Board {
 
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");
+    }
+
+    private void configureSensor() {
+        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
+        sparkFunOTOS.setOffset(new Pose2D(0, 0, 0));
+        sparkFunOTOS.setLinearScalar(100./92.5117);// 94.6856 94.977 89.9187 95.3855 88.688
+        //sparkFunOTOS.setLinearScalar(100./95.016);
+        sparkFunOTOS.setAngularScalar((Math.PI*20)/(Math.PI*20+.494));
+        sparkFunOTOS.resetTracking();
+        sparkFunOTOS.setPosition(new Pose2D(0,0,0));
+        sparkFunOTOS.calibrateImu(255, false);
+    }
+
+    public Pose2D getCurrentPose() {
+        return sparkFunOTOS.getPosition();
     }
 
     public double getAngle() {
