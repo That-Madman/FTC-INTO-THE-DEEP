@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.tests;
 
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.AutoSystems.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
 import Wheelie.Pose2D;
