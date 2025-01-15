@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.tests;
+package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-import org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.extLib.autos.systems.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
 import java.util.Arrays;

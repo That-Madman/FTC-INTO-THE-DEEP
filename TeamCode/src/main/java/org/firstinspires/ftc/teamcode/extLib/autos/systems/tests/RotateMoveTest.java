@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.tests;
+package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.extLib.autos.AutoSystems.WheelOp;
+import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
 
 import Wheelie.Pose2D;
 
