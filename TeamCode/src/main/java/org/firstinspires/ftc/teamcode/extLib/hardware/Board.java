@@ -13,8 +13,6 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import org.firstinspires.ftc.teamcode.AutoSystems.SparkFunOTOS;
-
 import Wheelie.Pose2D;
 
 public class Board {

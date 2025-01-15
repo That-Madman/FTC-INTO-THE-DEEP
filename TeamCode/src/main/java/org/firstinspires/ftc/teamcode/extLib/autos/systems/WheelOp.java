@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.Autos;
+package org.firstinspires.ftc.teamcode.extLib.autos.systems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.AutoSystems.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
 import java.util.Arrays;
