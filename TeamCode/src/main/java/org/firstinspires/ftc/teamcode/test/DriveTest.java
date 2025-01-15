@@ -28,7 +28,7 @@ public class DriveTest extends OpMode {
 
         base[0].setDirection(DcMotorSimple.Direction.REVERSE);
         base[1].setDirection(DcMotorSimple.Direction.FORWARD);
-        base[2].setDirection(DcMotorSimple.Direction.REVERSE);
+        base[2].setDirection(DcMotorSimple.Direction.FORWARD);
         base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
         base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

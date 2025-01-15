@@ -9,16 +9,49 @@ import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 public class MainTele extends OpMode {
     private Board board;
 
-    @Override
-    public void init() {
+    private boolean driveRel;
+
+    private byte posResetTimes;
+
+    // Button holding trackers
+    private boolean a1Held;
+    private boolean y1Held;
+
+    public void init () {
         board = new Board(hardwareMap);
     }
 
-    @Override
-    public void loop() {
-        board.drive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+    public void loop () {
+        if (gamepad1.a && !a1Held) {
+            driveRel ^= true;
+        }
 
-        board.powerArm(gamepad1.left_trigger - gamepad1.right_trigger);
-        board.moveArm(gamepad1.dpad_up ? 1 : gamepad1.dpad_down ? -1 : 0);
+        if (driveRel) {
+            board.drive(
+                    -gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x,
+                    (gamepad1.left_bumper) ? 0.5 : 1
+            );
+        } else {
+            board.driveFieldRelative(
+                    -gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x,
+                    (gamepad1.left_bumper) ? 0.5 : 1
+            );
+        }
+
+        if (gamepad1.y && !y1Held) {
+            board.resetImu();
+            ++posResetTimes;
+        }
+
+        a1Held = gamepad1.a;
+        y1Held = gamepad1.y;
+
+        // DEBUG TELEMETRY
+        telemetry.addData("Driving", (driveRel) ? "Robot Relative" : "Field Relative");
+        telemetry.addData("IMU Reset times", posResetTimes);
     }
 }
