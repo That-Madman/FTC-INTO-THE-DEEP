@@ -19,7 +19,7 @@ public class StraightTest extends LinearOpMode {
 
     Pose2D[] points = new Pose2D[] {
             new Pose2D(0,0,0),
-            new Pose2D(50, 0,0),
+            new Pose2D(30, 0,0),
             new Pose2D(102, 0,0)
     };
 

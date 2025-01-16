@@ -19,6 +19,9 @@ public abstract class WheelOp extends LinearOpMode {
         board = new Board (hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
 
+        telemetry.addLine("Initialized");
+        telemetry.update();
+
         waitForStart();
 
         run();
