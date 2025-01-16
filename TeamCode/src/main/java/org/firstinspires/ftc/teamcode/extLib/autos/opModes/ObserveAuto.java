@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.extLib.autos.opModes;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
@@ -9,13 +10,11 @@ import Wheelie.Pose2D;
 public class ObserveAuto extends WheelOp {
     private Pose2D[] path1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(15, 4, 0),
             new Pose2D(22, 4, 0)
     };
 
     private Pose2D[] path2 = new Pose2D[]{
             new Pose2D(22, -4, 0),
-            new Pose2D(15, -4, 0),
             new Pose2D(3, 0, 0)
     };
 
@@ -27,7 +26,7 @@ public class ObserveAuto extends WheelOp {
 
     private Pose2D[] turn1 = new Pose2D[] {
             new Pose2D(50, -24, 0),
-            new Pose2D(50, -24, Math.toRadians(90)),
+            //new Pose2D(50, -24, Math.toRadians(90)),
             new Pose2D(50, -24, Math.toRadians(180))
     };
 
@@ -93,8 +92,8 @@ public class ObserveAuto extends WheelOp {
     @Override
     public void run() {
         followPath(path1);
-        sleep(1000);
-        followPath(path2);
+        sleep(2500);
+        /*followPath(path2);
         sleep(1000);
         followPath(path3);
         sleep(1000);
@@ -122,6 +121,6 @@ public class ObserveAuto extends WheelOp {
 
         while(opModeIsActive()) {
             telemetry.addLine();
-        }
+        }*/
     }
 }

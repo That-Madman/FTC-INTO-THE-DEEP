@@ -21,9 +21,10 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/48.0, mI = 0, mD = 0.5,    //0.006
-            hP = 1. / Math.toRadians(65), hI = 0.025, hD = 0.05,
+    private final double mP = 1.0/36, mI = 0, mD = .2,    //0.006
+            hP = 1. / Math.toRadians(135), hI = 0.025, hD = 0.05,
             mMaxI = 0.025, hMaxI = 0.05;
+    private Pose2D maintainPoint;
 
     //The max speed of the motors
     public double SPEED_PERCENT = 1;
@@ -76,7 +77,7 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
-        double movementAngle = -getPose().h + diff.h;
+        double movementAngle = diff.h;
 
         double x = diff.x * Math.cos (movementAngle) - diff.y * Math.sin (movementAngle);
         double y = diff.x * Math.sin (movementAngle) + diff.y * Math.cos (movementAngle);
@@ -118,7 +119,7 @@ public class PathFollowerWrapper {
         double h = hPID.pidCalc (diff.h, 0, time);
 
 
-        double movementAngle = -getPose().h + diff.h;
+        double movementAngle = diff.h;
         double forward = x * Math.cos (movementAngle) - y * Math.sin (movementAngle),
                 strafe = x * Math.sin (movementAngle) + y * Math.cos (movementAngle);
 
@@ -214,12 +215,13 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
-    public Pose2D position;
+    private Pose2D position;
     public double[] follow(){
 
         if (follower != null) {
             //Checks if target is reached
             if (targetReached (follower.getLastPoint())) {
+                maintainPoint = follower.getLastPoint();
                 concludePath ();
 
                 //Don't move, at target
@@ -243,9 +245,8 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
-    /** Updates the localization of the robot */
-    public void updatePose (double angle) {
-        //localization.update (angle);
+    public double[] maintainPos(){
+        return moveToPID(maintainPoint, pidTimer.time());
     }
 
     public void updatePose(Pose2D p){

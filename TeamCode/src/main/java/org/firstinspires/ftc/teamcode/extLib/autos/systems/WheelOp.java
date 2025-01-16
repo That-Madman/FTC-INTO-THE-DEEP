@@ -72,4 +72,8 @@ public abstract class WheelOp extends LinearOpMode {
             telemetry.update();
         }
     }
+    protected void maintain(){
+        double[] vector = followerWrapper.maintainPos();
+        board.drive(vector[0], -vector[1], -vector[2]);
+    }
 }
