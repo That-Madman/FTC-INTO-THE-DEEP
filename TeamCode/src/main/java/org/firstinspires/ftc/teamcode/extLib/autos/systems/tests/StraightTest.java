@@ -23,6 +23,11 @@ public class StraightTest extends WheelOp {
     };
 
     @Override
+    public void onStart() {
+
+    }
+
+    @Override
     public void run () {
         followPath(points);
 

@@ -20,6 +20,11 @@ public class RotateMoveTest extends WheelOp {
             };
 
     @Override
+    public void onStart() {
+
+    }
+
+    @Override
     public void run() {
         followPath(path1);
         followPath(path2);
