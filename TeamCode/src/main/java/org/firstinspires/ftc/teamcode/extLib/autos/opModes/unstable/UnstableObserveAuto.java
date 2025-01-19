@@ -90,6 +90,12 @@ public class UnstableObserveAuto extends WheelOp {
             new Pose2D(10,-39, Math.toRadians(90)),
             new Pose2D(-4, -39, Math.toRadians(90))
     };
+
+    @Override
+    public void onStart() {
+
+    }
+
     @Override
     public void run() {
         followPath(path1);

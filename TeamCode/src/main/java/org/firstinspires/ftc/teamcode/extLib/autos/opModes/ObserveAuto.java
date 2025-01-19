@@ -11,7 +11,7 @@ public class ObserveAuto extends WheelOp {
 
     private Pose2D[] forward = new Pose2D[]{
             new Pose2D(0,0,0),
-            new Pose2D(19, 04,0)
+            new Pose2D(19, 4,0)
     };
 
     private Pose2D[] backup = new Pose2D[]{
@@ -35,54 +35,24 @@ public class ObserveAuto extends WheelOp {
             new Pose2D(0, -27, 0)
     };
 
-    private Pose2D[] path7 = new Pose2D[] {
-            new Pose2D(0, -27, 0),
-            new Pose2D(25, -27, 0),
-            new Pose2D(36, -27, 0)
+    private Pose2D[] readyPush3 = new Pose2D[] {
+            new Pose2D(0, -36, 0),
+            new Pose2D(25, -36, 0),
+            new Pose2D(36, -36, 0)
     };
 
-    private Pose2D[] path9 = new Pose2D[] {
-            new Pose2D(36, -27, 0),
-            new Pose2D(2, -27, 0)
+    private Pose2D[] push2 = new Pose2D[] {
+            new Pose2D(36, -36, 0),
+            new Pose2D(2, -36, 0)
     };
 
     //Everything above works
     //Stops at observation second time
 
-    private Pose2D[] path10 = new Pose2D[] {
-            new Pose2D(2, -39, Math.toRadians(180)),
-            new Pose2D(15, -39, Math.toRadians(180)),
-            new Pose2D(20, -39, Math.toRadians(180))
-    };
-
-    private Pose2D[] path12 = new Pose2D[]{
-            new Pose2D(20, -39, Math.toRadians(180)),
-            new Pose2D(12, -20, Math.toRadians(90)),
-            new Pose2D(8, 6, 0)
-    };
-
-    private Pose2D[] path13 = new Pose2D[]{
-            new Pose2D(8, 6, 0),
-            new Pose2D(16, 6, 0),
-            new Pose2D(25, 6, 0)
-    };
-
-    private Pose2D[] path14 = new Pose2D[] {
-            new Pose2D(25, 6, 0),
-            new Pose2D(16, -26, 0),
-            new Pose2D(8, -39, 0)
-    };
-
-    private Pose2D[] path16 = new Pose2D[] {
-            new Pose2D(8,-39, 0),
-            new Pose2D(20, -39, Math.toRadians(45)),
-            new Pose2D(40, -39, Math.toRadians(90))
-    };
-
-    private Pose2D[] path18 = new Pose2D[] {
-            new Pose2D(40, -39, Math.toRadians(90)),
-            new Pose2D(10,-39, Math.toRadians(90)),
-            new Pose2D(-4, -39, Math.toRadians(90))
+    private Pose2D[] strafeToScore = new Pose2D[]{
+            new Pose2D(2, -27, 0),
+            new Pose2D(2, 4, 0),
+            new Pose2D(19, 4, 0)
     };
 
     @Override
@@ -93,53 +63,30 @@ public class ObserveAuto extends WheelOp {
 
     @Override
     public void run() {
+        // Moves to place preload
         followPath(forward);
-        sleep(1000);
+        moveUntilTouch();
 
         //TODO: activate servos for preload
 
-       followPath(backup);
-        sleep(1000);
+        // Backs up
+        followPath(backup);
 
-         followPath(readyPush1);
-        sleep(1000);
-
+        // pushes the first spiked sample
+        followPath(readyPush1);
         followPath(readyPush2);
-        sleep(1000);
-
         followPath(push1);
-        sleep(1000);
 
-        followPath(path7);
-        sleep(1000);
+        // Pushes the second spiked
+        followPath(readyPush3);
+        followPath(push2);
 
-        followPath(path9);
-        sleep(1000);
+        // Picks up and scores human player specimen
+        //TODO: activate servos for pick up
+        followPath(strafeToScore);
+        moveUntilTouch();
+        //TODO: activate servos for scoring
 
-        /*followPath(turn1);
-        sleep(1000);
-        followPath(path5);
-        sleep(1000);
-        followPath(path6);
-        sleep(1000);
-        followPath(path7);
-        sleep(1000);
-        followPath(path9);
-        sleep(1000);
-        followPath(path10);
-        sleep(1000);
-        followPath(path12);
-        sleep(1000);
-        followPath(path13);
-        sleep(1000);
-        followPath(path14);
-        sleep(1000);
-        followPath(path16);
-        sleep(1000);
-        followPath(path18);
-
-        while(opModeIsActive()) {
-            telemetry.addLine();
-        }*/
+        // Either park or go for second specimen
     }
 }
