@@ -23,6 +23,7 @@ public abstract class WheelOp extends LinearOpMode {
         telemetry.update();
 
         onStart();
+        board.overrideCurrentPose(startPose);
 
         waitForStart();
 
