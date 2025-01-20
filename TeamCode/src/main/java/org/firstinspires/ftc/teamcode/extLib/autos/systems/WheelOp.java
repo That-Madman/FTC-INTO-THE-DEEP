@@ -82,7 +82,7 @@ public abstract class WheelOp extends LinearOpMode {
     }
 
     protected void moveUntilTouch() {
-        while (board.getTouched()) {
+        while (!board.getTouched()) {
             followerWrapper.updatePose(board.getCurrentPose());
             double[] vec = followerWrapper.maintainPos();
 
