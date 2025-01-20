@@ -18,8 +18,7 @@ public class UnstableObserveAuto extends WheelOp {
 
     @Override
     public void run() {
-        followPath(path1);
-        sleep(1000);
+        moveUntilTouch();
 
         while(opModeIsActive()) {
             telemetry.addLine();
