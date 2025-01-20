@@ -206,9 +206,6 @@ public class Board {
         sparkFunOTOS.calibrateImu(255, false);
     }
 
-    public void overrideCurrentPose (Pose2D pose) {
-        sparkFunOTOS.setPosition(pose);
-    }
     public Pose2D getCurrentPose() {
         return sparkFunOTOS.getPosition();
     }
