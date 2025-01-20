@@ -108,6 +108,8 @@ public class Board {
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");
     }
+
+    @Deprecated
     public Board (HardwareMap hwMap, Pose2D startPose) {
             base[0] = hwMap.get(DcMotor.class, "fl");
             base[1] = hwMap.get(DcMotor.class, "fr");
