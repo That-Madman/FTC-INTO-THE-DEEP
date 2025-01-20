@@ -32,6 +32,8 @@ public class Board {
 
     private final TouchSensor v1t, v2t;
 
+    private final TouchSensor t1, t2;
+
     private final SparkFunOTOS sparkFunOTOS;
 
     public Board (HardwareMap hwMap) {
@@ -107,6 +109,9 @@ public class Board {
 
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");
+
+        t1 = hwMap.get(TouchSensor.class, "t1");
+        t2 = hwMap.get(TouchSensor.class, "t2");
     }
 
     @Deprecated
@@ -183,6 +188,9 @@ public class Board {
 
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");
+
+        t1 = hwMap.get(TouchSensor.class, "t1");
+        t2 = hwMap.get(TouchSensor.class, "t2");
     }
 
     private void configureSensor() {
@@ -307,6 +315,10 @@ public class Board {
 
     public void setPick (boolean c) {
         pick.setPosition(c ? 0.5 : 1);
+    }
+
+    public boolean getTouched () {
+        return t1.isPressed() && t2.isPressed();
     }
 
     public void setSwivel (byte s) {
