@@ -16,11 +16,13 @@ public abstract class WheelOp extends LinearOpMode {
 
     @Override
     public void runOpMode () {
-        board = new Board (hardwareMap);
+        board = new Board (hardwareMap, startPose);
         followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
 
         telemetry.addLine("Initialized");
         telemetry.update();
+
+        onStart();
 
         waitForStart();
 
@@ -37,6 +39,8 @@ public abstract class WheelOp extends LinearOpMode {
             telemetry.update();
         }
     }
+
+    public abstract void onStart();
 
     public abstract void run ();
 
@@ -71,5 +75,21 @@ public abstract class WheelOp extends LinearOpMode {
 
             telemetry.update();
         }
+    }
+    protected void maintain(){
+        double[] vector = followerWrapper.maintainPos();
+        board.drive(vector[0], -vector[1], -vector[2]);
+    }
+
+    protected void moveUntilTouch(){
+        //TODO: Fill in with touch sensor and movement logic
+        // add update pose, telemetry
+    }
+
+
+    @Deprecated
+    protected void setStartPose(){
+        board = new Board(hardwareMap, startPose);
+        followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
     }
 }

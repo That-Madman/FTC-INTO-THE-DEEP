@@ -25,12 +25,12 @@ public class LocalizationTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            Pose2D currentPose = board.getCurrentPose();
+            Pose2D current = board.getCurrentPose();
 
             telemetry.addLine("Current Pose from SparkFun OTO:");
-            telemetry.addData("X Position", currentPose.x);
-            telemetry.addData("Y Position", currentPose.y);
-            telemetry.addData("Heading", currentPose.h);
+            telemetry.addData("X Position", current.x);
+            telemetry.addData("Y Position", current.y);
+            telemetry.addData("Heading", current.h);
 
             telemetry.update();
         }

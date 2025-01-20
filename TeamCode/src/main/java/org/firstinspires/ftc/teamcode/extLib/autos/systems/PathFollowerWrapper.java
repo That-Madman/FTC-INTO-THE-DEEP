@@ -21,15 +21,16 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/48.0, mI = 0, mD = 0.5,    //0.006
-            hP = 1. / Math.toRadians(65), hI = 0.025, hD = 0.05,
-            mMaxI = 0.025, hMaxI = 0.05;
+    private final double mP = 1.0/48., mI = 0.001, mD = .005,    //0.006
+            hP = 1. / Math.toRadians(135), hI = 0.025, hD = 0.05,
+            mMaxI = 0.15, hMaxI = 0.05;
+    private Pose2D maintainPoint;
 
     //The max speed of the motors
-    public double SPEED_PERCENT = 1;
+    public double SPEED_PERCENT = .5;
 
     //The acceptable margin of error in inches and radians
-    public final double MAX_TRANSLATION_ERROR = 1, MAX_ROTATION_ERROR = Math.toRadians (5);
+    public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
@@ -76,7 +77,7 @@ public class PathFollowerWrapper {
                 AngleUnit.normalizeRadians(heading - getPose().h)
         );
 
-        double movementAngle = -getPose().h + diff.h;
+        double movementAngle = getPose().h; //diff.h;
 
         double x = diff.x * Math.cos (movementAngle) - diff.y * Math.sin (movementAngle);
         double y = diff.x * Math.sin (movementAngle) + diff.y * Math.cos (movementAngle);
@@ -88,12 +89,13 @@ public class PathFollowerWrapper {
         x*=mP;
         y*=mP;
         h*=hP;
-        if(Math.abs(x)+Math.abs(y)+Math.abs(h) < 1){
+        double total = Math.abs(x)+Math.abs(y)+Math.abs(h);
+        if(total > SPEED_PERCENT || total < SPEED_PERCENT){
             double m = Math.max(Math.abs(x), Math.abs(y)),
                     max = Math.max(m, Math.abs(h));
-            x/=max;
-            y/=max;
-            h/=max;
+            x*= SPEED_PERCENT/max;
+            y*= SPEED_PERCENT/max;
+            h*= SPEED_PERCENT/max;
         }
 
         return new double[] {
@@ -117,8 +119,7 @@ public class PathFollowerWrapper {
 
         double h = hPID.pidCalc (diff.h, 0, time);
 
-
-        double movementAngle = -getPose().h + diff.h;
+        double movementAngle = getPose().h;//diff.h;
         double forward = x * Math.cos (movementAngle) - y * Math.sin (movementAngle),
                 strafe = x * Math.sin (movementAngle) + y * Math.cos (movementAngle);
 
@@ -214,12 +215,13 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
-    public Pose2D position;
+    private Pose2D position;
     public double[] follow(){
 
         if (follower != null) {
             //Checks if target is reached
             if (targetReached (follower.getLastPoint())) {
+                maintainPoint = follower.getLastPoint();
                 concludePath ();
 
                 //Don't move, at target
@@ -228,14 +230,14 @@ public class PathFollowerWrapper {
 
             //Calculates the movement vector
 
-            m = follower.followPath (getPose());
             if(!follower.approachingLast()
                     || Math.hypot(getPose().x-follower.getLastPoint().x,
                     getPose().y-follower.getLastPoint().y) > 10) {
                 //Reshapes vector based on PID values
+                m = follower.followPath (getPose());
                 return moveTo(m.x, m.y, m.h);
             } else {
-                return moveToPID (m, pidTimer.time());
+                return moveToPID (follower.getLastPoint(), pidTimer.time());
             }
         }
 
@@ -243,9 +245,8 @@ public class PathFollowerWrapper {
         return new double[] {0,0,0};
     }
 
-    /** Updates the localization of the robot */
-    public void updatePose (double angle) {
-        //localization.update (angle);
+    public double[] maintainPos(){
+        return moveToPID(maintainPoint, pidTimer.time());
     }
 
     public void updatePose(Pose2D p){
