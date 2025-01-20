@@ -12,11 +12,11 @@ import Wheelie.Pose2D;
 public abstract class WheelOp extends LinearOpMode {
     protected PathFollowerWrapper followerWrapper;
     protected Board board;
-    protected Pose2D startPose = new Pose2D(0,0);
+    protected Pose2D startPose = new Pose2D(0,0,0);
 
     @Override
     public void runOpMode () {
-        board = new Board (hardwareMap);
+        board = new Board (hardwareMap, startPose);
         followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
 
         telemetry.addLine("Initialized");
@@ -81,12 +81,15 @@ public abstract class WheelOp extends LinearOpMode {
         board.drive(vector[0], -vector[1], -vector[2]);
     }
 
-    protected void moveUntilTouch() {
-        while (!board.getTouched()) {
-            followerWrapper.updatePose(board.getCurrentPose());
-            double[] vec = followerWrapper.maintainPos();
+    protected void moveUntilTouch(){
+        //TODO: Fill in with touch sensor and movement logic
+        // add update pose, telemetry
+    }
 
-            board.drive (1, -vec[1], -vec[2]);
-        }
+
+    @Deprecated
+    protected void setStartPose(){
+        board = new Board(hardwareMap, startPose);
+        followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
     }
 }

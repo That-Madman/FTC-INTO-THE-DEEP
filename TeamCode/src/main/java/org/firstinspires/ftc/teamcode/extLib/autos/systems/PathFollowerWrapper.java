@@ -34,7 +34,7 @@ public class PathFollowerWrapper {
 
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look) {
-        maintainPoint = position = startPose;
+        position = startPose;
         lookAhead = look;
 
         xPID = new PID (mP,mI,mD);
@@ -47,7 +47,7 @@ public class PathFollowerWrapper {
     }
 
     public PathFollowerWrapper (HardwareMap hw, Pose2D startPose, double look, double maxSpeed) {
-        maintainPoint = position = startPose;
+        position = startPose;
         lookAhead=look;
 
         SPEED_PERCENT = maxSpeed;
@@ -216,7 +216,7 @@ public class PathFollowerWrapper {
     }
 
     private Pose2D position;
-    public double[] follow() {
+    public double[] follow(){
 
         if (follower != null) {
             //Checks if target is reached
