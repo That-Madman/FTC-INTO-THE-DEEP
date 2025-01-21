@@ -21,11 +21,12 @@ public class Board {
     Servo mRot;
     Servo pick;
     Servo r1, r2;
+    Servo s1, s2;
     Servo rRot;
     Servo swivel;
     Servo tinyGrab;
 
-    private final DcMotorEx v1, v2, s1, s2;
+    private final DcMotorEx v1, v2;
     private final DcMotor[] base = {null, null, null, null};
 
     private final IMU imu;
@@ -71,20 +72,11 @@ public class Board {
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            s1 = hwMap.get(DcMotorEx.class, "s1");
-            s2 = hwMap.get(DcMotorEx.class, "s2");
+            s1 = hwMap.get(Servo.class, "s1");
+            s2 = hwMap.get(Servo.class, "s2");
 
-            s1.setDirection(DcMotorSimple.Direction.REVERSE);
-            s2.setDirection(DcMotorSimple.Direction.FORWARD);
+            s1.setDirection(Servo.Direction.REVERSE);
 
-            s1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            s2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            s1.setPower(0.7);
-            s2.setPower(0.7);
-            s1.setTargetPosition(0);
-            s2.setTargetPosition(0);
-            s1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            s2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             imu = hwMap.get(IMU.class, "imu");
 
@@ -163,9 +155,9 @@ public class Board {
         }
     }
 
-    public void setAscentScrews (int pos) {
-        s1.setTargetPosition(pos);
-        s2.setTargetPosition(pos);
+    public void setAscentScrews (double pos) {
+        s1.setPosition(pos);
+        s2.setPosition(pos);
     }
 
     public boolean getLiftTouched (boolean rl) {
