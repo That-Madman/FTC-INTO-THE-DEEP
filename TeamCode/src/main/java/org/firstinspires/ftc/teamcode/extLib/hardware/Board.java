@@ -25,7 +25,7 @@ public class Board {
     Servo swivel;
     Servo tinyGrab;
 
-    private final DcMotorEx v1, v2;
+    private final DcMotorEx v1, v2, s1, s2;
     private final DcMotor[] base = {null, null, null, null};
 
     private final IMU imu;
@@ -71,6 +71,21 @@ public class Board {
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            s1 = hwMap.get(DcMotorEx.class, "s1");
+            s2 = hwMap.get(DcMotorEx.class, "s2");
+
+            s1.setDirection(DcMotorSimple.Direction.REVERSE);
+            s2.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            s1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            s2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            s1.setPower(0.7);
+            s2.setPower(0.7);
+            s1.setTargetPosition(0);
+            s2.setTargetPosition(0);
+            s1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            s2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             imu = hwMap.get(IMU.class, "imu");
 
             imu.initialize(
@@ -114,105 +129,15 @@ public class Board {
         t2 = hwMap.get(TouchSensor.class, "t2");
     }
 
-    @Deprecated
-    public Board (HardwareMap hwMap, Pose2D startPose) {
-            base[0] = hwMap.get(DcMotor.class, "fl");
-            base[1] = hwMap.get(DcMotor.class, "fr");
-            base[2] = hwMap.get(DcMotor.class, "br");
-            base[3] = hwMap.get(DcMotor.class, "bl");
-
-            base[0].setDirection(DcMotorSimple.Direction.REVERSE);
-            base[1].setDirection(DcMotorSimple.Direction.FORWARD);
-            base[2].setDirection(DcMotorSimple.Direction.REVERSE);
-            base[3].setDirection(DcMotorSimple.Direction.REVERSE);
-
-            base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            base[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            base[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            base[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            base[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            base[2].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            base[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            base[3].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-            v1 = hwMap.get(DcMotorEx.class, "v1");
-            v2 = hwMap.get(DcMotorEx.class, "v2");
-
-            v1.setDirection(DcMotorSimple.Direction.REVERSE);
-            v2.setDirection(DcMotorSimple.Direction.FORWARD);
-
-            v1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            v2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            v1.setPower(0.7);
-            v2.setPower(0.7);
-            v1.setTargetPosition(0);
-            v2.setTargetPosition(0);
-            v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            imu = hwMap.get(IMU.class, "imu");
-
-            imu.initialize(
-                    new IMU.Parameters(
-                            new RevHubOrientationOnRobot(
-                                    RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
-                                    RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
-                            )
-                    )
-            );
-
-        sparkFunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
-        configureSensor(startPose);
-
-        tinyGrab = hwMap.get(Servo.class, "tinyGrab");
-        bigGrab = hwMap.get(Servo.class, "bigGrab");
-        lRot = hwMap.get(Servo.class, "lRot");
-        rRot = hwMap.get(Servo.class, "rRot");
-        mRot = hwMap.get(Servo.class, "mRot");
-
-        lRot.setDirection(Servo.Direction.REVERSE);
-        setRot((byte) 0);
-        setTinyGrab(false);
-        setBigGrab(false);
-
-        r1 = hwMap.get(Servo.class, "reachy");
-        r2 = hwMap.get(Servo.class, "reachier");
-
-        r2.setDirection(Servo.Direction.REVERSE);
-
-        pick = hwMap.get(Servo.class, "pick");
-        swivel = hwMap.get(Servo.class, "swivel");
-
-        setPick(false);
-        setSwivel((byte) 1);
-
-        v1t = hwMap.get(TouchSensor.class, "v1t");
-        v2t = hwMap.get(TouchSensor.class, "v2t");
-
-        t1 = hwMap.get(TouchSensor.class, "t1");
-        t2 = hwMap.get(TouchSensor.class, "t2");
-    }
-
     private void configureSensor() {
         sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
         sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
         sparkFunOTOS.setOffset(new Pose2D(0, 0, 0));
         sparkFunOTOS.setLinearScalar(1.0);// 95.9381, 98.1368, 98.281, 99.903
         //sparkFunOTOS.setLinearScalar(100./95.016);
-        sparkFunOTOS.setAngularScalar((Math.PI*20)/(Math.PI*20+.494));
+        sparkFunOTOS.setAngularScalar((Math.PI * 20) / (Math.PI * 20 + 0.494));
         sparkFunOTOS.resetTracking();
         sparkFunOTOS.setPosition(new Pose2D(0,0,0));
-        sparkFunOTOS.calibrateImu(255, false);
-    }
-    private void configureSensor(Pose2D startPose) {
-        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
-        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
-        sparkFunOTOS.setOffset(new Pose2D(0, 0, 0));
-        sparkFunOTOS.setLinearScalar(1.0);// 95.9381, 98.1368, 98.281, 99.903
-        //sparkFunOTOS.setLinearScalar(100./95.016);
-        sparkFunOTOS.setAngularScalar((Math.PI*20)/(Math.PI*20+.494));
-        sparkFunOTOS.resetTracking();
-        sparkFunOTOS.setPosition(new Pose2D(startPose.x, startPose.y, startPose.h));
         sparkFunOTOS.calibrateImu(255, false);
     }
 

@@ -90,7 +90,6 @@ import Wheelie.Pose2D;
 
     @Deprecated
     protected void setStartPose() {
-        board = new Board(hardwareMap, startPose);
         followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
     }
 }
