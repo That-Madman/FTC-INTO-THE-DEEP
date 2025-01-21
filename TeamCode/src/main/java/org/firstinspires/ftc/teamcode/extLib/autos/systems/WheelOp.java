@@ -85,6 +85,7 @@ import Wheelie.Pose2D;
             final double[] vector = followerWrapper.maintainPos();
             board.drive(1, -vector[1], -vector[2]);
         }
+        board.drive(0,0,0);
     }
 
 
