@@ -163,6 +163,11 @@ public class Board {
         }
     }
 
+    public void setAscentScrews (int pos) {
+        s1.setTargetPosition(pos);
+        s2.setTargetPosition(pos);
+    }
+
     public boolean getLiftTouched (boolean rl) {
         return (rl ? v1t : v2t).isPressed();
     }
