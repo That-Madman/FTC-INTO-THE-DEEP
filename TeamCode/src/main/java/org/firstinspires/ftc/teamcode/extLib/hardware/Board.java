@@ -72,10 +72,12 @@ public class Board {
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            /*
             s1 = hwMap.get(Servo.class, "s1");
             s2 = hwMap.get(Servo.class, "s2");
 
             s1.setDirection(Servo.Direction.REVERSE);
+             */
 
 
             imu = hwMap.get(IMU.class, "imu");
