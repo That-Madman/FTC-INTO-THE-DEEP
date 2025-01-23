@@ -95,6 +95,7 @@ public class UnstableObserveAuto extends WheelOp {
     @Override
     public void onInit() {
         board.setBigGrab(true);
+        board.setTinyGrab(true);
     }
 
     @Override
