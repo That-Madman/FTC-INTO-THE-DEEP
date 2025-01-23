@@ -11,7 +11,7 @@ public class ObserveAuto extends WheelOp {
 
     private Pose2D[] forward = new Pose2D[]{
             new Pose2D(0,0,0),
-            new Pose2D(19, 4,0)
+            new Pose2D(19, 8,0)
     };
 
     private Pose2D[] backup = new Pose2D[]{
@@ -36,12 +36,13 @@ public class ObserveAuto extends WheelOp {
     };
 
     private Pose2D[] readyPush3 = new Pose2D[] {
-            new Pose2D(0, -36, 0),
-            new Pose2D(25, -36, 0),
-            new Pose2D(36, -36, 0)
+            new Pose2D(0, -27, 0),
+            new Pose2D(25, -27, 0),
+            new Pose2D(36, -27, 0)
     };
 
     private Pose2D[] push2 = new Pose2D[] {
+            new Pose2D(36, -27, 0),
             new Pose2D(36, -36, 0),
             new Pose2D(2, -36, 0)
     };
@@ -51,8 +52,8 @@ public class ObserveAuto extends WheelOp {
 
     private Pose2D[] strafeToScore = new Pose2D[]{
             new Pose2D(2, -27, 0),
-            new Pose2D(2, 4, 0),
-            new Pose2D(19, 4, 0)
+            new Pose2D(2, 8, 0),
+            new Pose2D(19, 8, 0)
     };
 
     @Override
@@ -66,19 +67,25 @@ public class ObserveAuto extends WheelOp {
         // Moves to place preload
         followPath(forward);
         moveUntilTouch();
+        sleep(1000);
 
         //TODO: activate servos for preload
 
         // Backs up
         followPath(backup);
+        sleep(1000);
 
         // pushes the first spiked sample
         followPath(readyPush1);
+        sleep(1000);
         followPath(readyPush2);
+        sleep(1000);
         followPath(push1);
 
         // Pushes the second spiked
+        sleep(1000);
         followPath(readyPush3);
+        sleep(1000);
         followPath(push2);
 
         // Picks up and scores human player specimen
