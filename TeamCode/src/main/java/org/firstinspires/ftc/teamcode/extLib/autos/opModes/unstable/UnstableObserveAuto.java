@@ -101,6 +101,7 @@ public class UnstableObserveAuto extends WheelOp {
     @Override
     public void run () {
         board.setRot((byte) 4);
+        board.setLift(850);
 
         followPath(path1);
         sleep(1000);
