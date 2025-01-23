@@ -98,10 +98,4 @@ import Wheelie.Pose2D;
         }
         board.drive(0,0,0);
     }
-
-
-    @Deprecated
-    protected void setStartPose() {
-        followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
-    }
 }
