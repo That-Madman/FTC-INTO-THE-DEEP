@@ -80,10 +80,10 @@ import Wheelie.Pose2D;
     }
 
     protected void moveUntilTouch() {
-        while (board.getTouched()) {
+        while (!board.getTouched() && opModeIsActive()) {
             followerWrapper.updatePose(board.getCurrentPose());
             final double[] vector = followerWrapper.maintainPos();
-            board.drive(1, -vector[1], -vector[2]);
+            board.drive(.5, -vector[1], -vector[2]);
         }
     }
 

@@ -21,13 +21,14 @@ public class PathFollowerWrapper {
     private final PID hPID;
     private final ElapsedTime pidTimer;
 
-    private final double mP = 1.0/48., mI = 0.001, mD = .005,    //0.006
+    // P needs to be between 1/72 & 1/100
+    private final double mP = 1.0/100., mI = 0.001, mD = 5,    //0.006
             hP = 1. / Math.toRadians(135), hI = 0.025, hD = 0.05,
             mMaxI = 0.15, hMaxI = 0.05;
     private Pose2D maintainPoint;
 
     //The max speed of the motors
-    public double SPEED_PERCENT = .5;
+    public double SPEED_PERCENT = .85;
 
     //The acceptable margin of error in inches and radians
     public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
