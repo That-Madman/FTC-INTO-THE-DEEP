@@ -20,7 +20,7 @@ public class RotateMoveTest extends WheelOp {
             };
 
     @Override
-    public void onStart() {
+    public void onInit() {
 
     }
 

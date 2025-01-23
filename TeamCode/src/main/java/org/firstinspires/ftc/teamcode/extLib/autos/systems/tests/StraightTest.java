@@ -23,7 +23,7 @@ public class StraightTest extends WheelOp {
     };
 
     @Override
-    public void onStart() {
+    public void onInit() {
 
     }
 

@@ -56,7 +56,7 @@ public class ObserveAuto extends WheelOp {
     };
 
     @Override
-    public void onStart() {
+    public void onInit() {
         //startPose = new Pose2D(0,0, Math.PI);
         //setStartPose();
     }

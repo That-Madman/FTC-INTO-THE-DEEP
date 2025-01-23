@@ -22,7 +22,7 @@ import Wheelie.Pose2D;
         telemetry.addLine("Initialized");
         telemetry.update();
 
-        onStart();
+        onInit();
 
         waitForStart();
 
@@ -40,7 +40,7 @@ import Wheelie.Pose2D;
         }
     }
 
-    public abstract void onStart();
+    public abstract void onInit ();
 
     public abstract void run ();
 
@@ -86,6 +86,13 @@ import Wheelie.Pose2D;
             followerWrapper.updatePose(board.getCurrentPose());
             final double[] vector = followerWrapper.maintainPos();
             board.drive(1, -vector[1], -vector[2]);
+
+            telemetry.addData("Position",
+                    followerWrapper.getPose().x + ", " +
+                            followerWrapper.getPose().y + ", " +
+                            followerWrapper.getPose().h);
+
+            telemetry.update();
         }
         board.drive(0,0,0);
     }

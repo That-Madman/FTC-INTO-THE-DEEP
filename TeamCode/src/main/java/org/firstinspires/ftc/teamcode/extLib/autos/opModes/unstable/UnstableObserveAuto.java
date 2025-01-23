@@ -92,7 +92,7 @@ public class UnstableObserveAuto extends WheelOp {
     };
 
     @Override
-    public void onStart() {
+    public void onInit() {
 
     }
 
