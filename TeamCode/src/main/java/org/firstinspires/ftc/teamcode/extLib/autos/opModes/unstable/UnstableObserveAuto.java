@@ -93,14 +93,22 @@ public class UnstableObserveAuto extends WheelOp {
 
     @Override
     public void onInit() {
-
+        board.setBigGrab(true);
     }
 
     @Override
-    public void run() {
+    public void run () {
+        board.setRot((byte) 4);
+
         followPath(path1);
         sleep(1000);
+
         moveUntilTouch();
+
+        board.setRot((byte) 3);
+        sleep (500);
+
+        board.setBigGrab(false);
 
         while(opModeIsActive()) {
             telemetry.addLine();
