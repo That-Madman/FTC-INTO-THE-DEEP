@@ -110,6 +110,7 @@ public class UnstableObserveAuto extends WheelOp {
         board.setRot((byte) 3);
         sleep (500);
 
+        board.setTinyGrab(false);
         board.setBigGrab(false);
 
         while(opModeIsActive()) {
