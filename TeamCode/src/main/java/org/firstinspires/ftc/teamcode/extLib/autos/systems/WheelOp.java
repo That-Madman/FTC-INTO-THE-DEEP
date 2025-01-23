@@ -8,7 +8,9 @@ import java.util.Arrays;
 
 import Wheelie.Path;
 import Wheelie.Pose2D;
- public abstract class WheelOp extends LinearOpMode { protected PathFollowerWrapper followerWrapper;
+
+ public abstract class WheelOp extends LinearOpMode {
+    protected PathFollowerWrapper followerWrapper;
     protected Board board;
     protected Pose2D startPose = new Pose2D(0,0,0);
 
@@ -85,6 +87,7 @@ import Wheelie.Pose2D;
             final double[] vector = followerWrapper.maintainPos();
             board.drive(.5, -vector[1], -vector[2]);
         }
+        board.drive(0,0,0);
     }
 
 
