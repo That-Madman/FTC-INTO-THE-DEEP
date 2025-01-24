@@ -114,6 +114,10 @@ public class UnstableObserveAuto extends WheelOp {
         board.setTinyGrab(false);
         board.setBigGrab(false);
 
+        board.setLift(0);
+
+        followPath(path2);
+
         while(opModeIsActive()) {
             telemetry.addLine();
         }
