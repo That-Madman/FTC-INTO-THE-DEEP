@@ -85,5 +85,9 @@ public class ObserveAuto extends WheelOp {
         followPath(readyPush2);
 
         followPath(push1);
+
+        followPath(readyPush3);
+
+        followPath(push2);
     }
 }
