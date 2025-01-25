@@ -22,17 +22,17 @@ public class ObserveAuto extends WheelOp {
     private Pose2D[] readyPush1 = new Pose2D[]{
             new Pose2D(3, 0, 0),
             new Pose2D(3, -25, 0),
-            new Pose2D(36, -25, 0)
+            new Pose2D(47, -25, 0)
     };
 
     private Pose2D[] readyPush2 = new Pose2D[]{
-            new Pose2D(36,-25,0),
-            new Pose2D(36,-28,0)
+            new Pose2D(47,-25,0),
+            new Pose2D(47,-28,0)
     };
 
     private Pose2D[] push1 = new Pose2D[] {
-            new Pose2D(39, -29, 0),
-            new Pose2D(0, -29, 0)
+            new Pose2D(47, -38, 0),
+            new Pose2D(0, -38, 0)
     };
 
     private Pose2D[] readyPush3 = new Pose2D[] {
