@@ -116,11 +116,14 @@ public class UnstableObserveAuto extends WheelOp {
 
         board.setLift(0);
 
+        board.drive(0,0,0);
+
         followPath(path2);
 
-        followPath(path3);
-
-        followPath(turn1);
+        //TODO: TEMP STOP
+        while(opModeIsActive()) {
+            telemetry.addLine();
+        }
 
         followPath(path5);
 
