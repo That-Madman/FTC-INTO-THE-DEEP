@@ -58,42 +58,29 @@ public class ObserveAuto extends WheelOp {
 
     @Override
     public void onInit() {
-        //startPose = new Pose2D(0,0, Math.PI);
-        //setStartPose();
+        board.setBigGrab(true);
+        board.setTinyGrab(true);
     }
 
     @Override
     public void run() {
-        // Moves to place preload
-        followPath(forward);
+        board.setRot((byte) 4);
+        board.setLift(850);
+
+       followPath(forward);
         moveUntilTouch();
+
+        board.setRot((byte) 3);
         sleep(1000);
 
-        //TODO: activate servos for preload
+        board.setTinyGrab(false);
+        board.setBigGrab(false);
 
-        // Backs up
+        board.setLift(0);
+        board.drive(0,0,0);
+
         followPath(backup);
-        sleep(1000);
 
-        // pushes the first spiked sample
         followPath(readyPush1);
-        sleep(1000);
-        followPath(readyPush2);
-        sleep(1000);
-        followPath(push1);
-
-        // Pushes the second spiked
-        sleep(1000);
-        followPath(readyPush3);
-        sleep(1000);
-        followPath(push2);
-
-        // Picks up and scores human player specimen
-        //TODO: activate servos for pick up
-        followPath(strafeToScore);
-        moveUntilTouch();
-        //TODO: activate servos for scoring
-
-        // Either park or go for second specimen
     }
 }
