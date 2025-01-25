@@ -120,12 +120,12 @@ public class UnstableObserveAuto extends WheelOp {
 
         followPath(path2);
 
+        followPath(path5);
+
         //TODO: TEMP STOP
         while(opModeIsActive()) {
             telemetry.addLine();
         }
-
-        followPath(path5);
 
         followPath(path6);
 
