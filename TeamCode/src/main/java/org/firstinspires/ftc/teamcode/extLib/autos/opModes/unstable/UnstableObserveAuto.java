@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.extLib.autos.opModes.unstable;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
 
 import Wheelie.Pose2D;
 
 @Autonomous (group = "UNSTABLE")
+@Disabled
 public class UnstableObserveAuto extends WheelOp {
     final private Pose2D[] path1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
