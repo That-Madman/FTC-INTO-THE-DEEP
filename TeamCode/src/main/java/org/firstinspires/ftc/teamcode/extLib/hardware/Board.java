@@ -17,7 +17,7 @@ public class Board {
 
    private DcMotorEx lFulcrum, rFulcrum, extent;
    private final int fulMin = 15, fulMax = 800;
-    public static final int subExt = 4000, netExt = 5400, defaultExt = 15;
+    public static final int subExt = 4000, netExt = -5400, defaultExt = 15;
 
    private Servo wristClaw, claw;
 
@@ -37,9 +37,7 @@ public class Board {
         extent = hwMap.get(DcMotorEx.class, "extension");
         extent.setDirection(DcMotorSimple.Direction.REVERSE);
         extent.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extent.setTargetPosition(defaultExt);
         extent.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        extent.setPower(1);
 
         claw = hwMap.get(Servo.class, "claw");
         wristClaw = hwMap.get(Servo.class, "wrist");
@@ -51,7 +49,7 @@ public class Board {
 
         base[0].setDirection(DcMotorSimple.Direction.REVERSE);
         base[1].setDirection(DcMotorSimple.Direction.FORWARD);
-        base[2].setDirection(DcMotorSimple.Direction.REVERSE);
+        base[2].setDirection(DcMotorSimple.Direction.FORWARD);
         base[3].setDirection(DcMotorSimple.Direction.REVERSE);
 
         base[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -164,6 +162,12 @@ public class Board {
     }
 
     public void powerExtent(double power){
+        if(extent.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
+            extent.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        if(power < 0 && extent.getCurrentPosition() >= -15 ||
+            power > 0 && extent.getCurrentPosition() <= netExt)
+            power = 0;
         extent.setPower(power);
     }
 
@@ -171,6 +175,10 @@ public class Board {
         extent.setTargetPosition(ticks);
         extent.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extent.setPower(1);
+    }
+
+    public boolean runningToTarget(){
+        return extent.getMode() == DcMotor.RunMode.RUN_TO_POSITION;
     }
 
     public int getTarget(){
@@ -183,6 +191,10 @@ public class Board {
 
     public int getExtentPosition(){
         return extent.getCurrentPosition();
+    }
+
+    public double getExPower(){
+        return extent.getPower();
     }
 
     public void setWristPosition(double pos){
