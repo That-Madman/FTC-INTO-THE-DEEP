@@ -9,51 +9,52 @@ import Wheelie.Pose2D;
 @Autonomous
 public class ObserveAuto extends WheelOp {
 
-    private Pose2D[] forward = new Pose2D[]{
+    final private Pose2D[] forward = new Pose2D[]{
             new Pose2D(0,0,0),
             new Pose2D(19, 8,0)
     };
 
-    private Pose2D[] backup = new Pose2D[]{
+    final private Pose2D[] backup = new Pose2D[]{
             new Pose2D(19, 4, 0),
             new Pose2D(3, 0, 0)
     };
 
-    private Pose2D[] readyPush1 = new Pose2D[]{
+    final private Pose2D[] readyPush1 = new Pose2D[]{
             new Pose2D(3, 0, 0),
             new Pose2D(3, -27, 0),
             new Pose2D(47, -27, 0)
     };
 
-    private Pose2D[] readyPush2 = new Pose2D[]{
+    final private Pose2D[] readyPush2 = new Pose2D[]{
             new Pose2D(47,-27,0),
             new Pose2D(50,-37,0)
     };
 
-    private Pose2D[] push1 = new Pose2D[] {
+    final private Pose2D[] push1 = new Pose2D[] {
             new Pose2D(50, -35, 0),
             new Pose2D(3, -35, 0)
     };
 
-    private Pose2D[] readyPush3 = new Pose2D[] {
+    final private Pose2D[] readyPush3 = new Pose2D[] {
             new Pose2D(0, -35, 0),
             new Pose2D(25, -35, 0),
             new Pose2D(50, -35, 0)
     };
 
-    private Pose2D[] push2 = new Pose2D[] {
+    final private Pose2D[] push2 = new Pose2D[] {
             new Pose2D(50, -35, 0),
             new Pose2D(50, -42, 0),
             new Pose2D(3, -42, 0)
     };
 
-    //Everything above works
-    //Stops at observation second time
+    final private Pose2D[] readyStrafeToScore1 = new Pose2D[] {
+            new Pose2D(6, -42, 0),
+            new Pose2D(6, -28, 0)
+    };
 
-    private Pose2D[] strafeToScore = new Pose2D[]{
-            new Pose2D(2, -27, 0),
-            new Pose2D(2, 8, 0),
-            new Pose2D(19, 8, 0)
+    final private Pose2D[] strafeToScore1 = new Pose2D [] {
+            new Pose2D(5, -28, 0),
+            new Pose2D(3, -28, 0)
     };
 
     @Override
@@ -89,5 +90,17 @@ public class ObserveAuto extends WheelOp {
         followPath(readyPush3);
 
         followPath(push2);
+        // Safe up to here
+
+        followPath(readyStrafeToScore1);
+
+        board.setRot((byte) 1);
+
+        followPath(strafeToScore1);
+
+        board.setTinyGrab(true);
+        board.setBigGrab(true);
+
+        board.setRot((byte) 4);
     }
 }
