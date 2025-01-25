@@ -54,7 +54,7 @@ public class ObserveAuto extends WheelOp {
 
     final private Pose2D[] strafeToScore1 = new Pose2D [] {
             new Pose2D(5, -28, 0),
-            new Pose2D(3, -28, 0)
+            new Pose2D(1, -28, 0)
     };
 
     @Override
