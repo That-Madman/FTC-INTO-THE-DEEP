@@ -79,7 +79,7 @@ public class MainTele extends OpMode {
         height += (int) ((gamepad2.left_trigger - gamepad2.right_trigger) * 10);
 
         height = Math.max(height, 0);
-        height = Math.min(height, 2650);
+        height = Math.min(height, 2600);
 
         board.setLift(height);
 
