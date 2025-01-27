@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -25,6 +26,7 @@ public class Board {
     Servo rRot;
     Servo swivel;
     Servo tinyGrab;
+    ColorRangeSensor Csensor;
 
     private final DcMotorEx v1, v2;
     private final DcMotor[] base = {null, null, null, null};
@@ -121,6 +123,8 @@ public class Board {
 
         t1 = hwMap.get(TouchSensor.class, "t1");
         t2 = hwMap.get(TouchSensor.class, "t2");
+
+        Csensor = hwMap.get(ColorRangeSensor.class, "Csensor");
     }
 
     private void configureSensor() {
@@ -258,6 +262,22 @@ public class Board {
         }
     }
 
+    /** Use the numbers 0-2 to select which color you want the color sensor to search for
+     * @param target 0: Yellow, Blue 1:, Red: 2
+     */
+    public boolean SearchForColor(byte target) {
+        switch(target) {
+            case 0:
+                return (Csensor.red() + Csensor.green()) / 2 > Csensor.blue() * 2;
+            case 1:
+                return Csensor.blue() > Csensor.red() + Csensor.green();
+            case 2:
+                return Csensor.red() * 1.5 > Csensor.blue() + Csensor.green();
+            default:
+                return false;
+        }
+    }
+
     public void sleep (long millis, OpMode op) {
         op.resetRuntime();
         while (op.getRuntime() < (double) millis / 1000);
@@ -298,3 +318,16 @@ public class Board {
         drive(r * Math.sin(theta), r * Math.cos(theta), rotate);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
