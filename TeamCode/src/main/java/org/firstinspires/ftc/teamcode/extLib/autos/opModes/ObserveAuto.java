@@ -9,23 +9,23 @@ import Wheelie.Pose2D;
 @Autonomous
 public class ObserveAuto extends WheelOp {
 
-    final private Pose2D[] forward = new Pose2D[]{
+    final private Pose2D[] forward = new Pose2D[] {
             new Pose2D(0,0,0),
             new Pose2D(19, 8,0)
     };
 
-    final private Pose2D[] backup = new Pose2D[]{
+    final private Pose2D[] backup = new Pose2D[] {
             new Pose2D(19, 4, 0),
             new Pose2D(3, 0, 0)
     };
 
-    final private Pose2D[] readyPush1 = new Pose2D[]{
+    final private Pose2D[] readyPush1 = new Pose2D[] {
             new Pose2D(3, 0, 0),
             new Pose2D(3, -27, 0),
             new Pose2D(47, -27, 0)
     };
 
-    final private Pose2D[] readyPush2 = new Pose2D[]{
+    final private Pose2D[] readyPush2 = new Pose2D[] {
             new Pose2D(47,-27,0),
             new Pose2D(50,-37,0)
     };

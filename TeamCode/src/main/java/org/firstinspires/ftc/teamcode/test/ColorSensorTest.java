@@ -7,9 +7,6 @@ import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 
 @TeleOp(group = "Tests")
 public class ColorSensorTest extends OpMode {
-    private int index;
-    private boolean aAlreadyPressed;
-
     ColorRangeSensor sensor;
 
     @Override
