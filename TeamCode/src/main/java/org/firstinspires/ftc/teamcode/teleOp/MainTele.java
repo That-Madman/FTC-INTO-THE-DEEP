@@ -45,16 +45,16 @@ public class MainTele extends OpMode {
         if (gamepad1.left_bumper) {
             if (driveFieldRel) {
                 board.driveFieldRelative(
-                        -gamepad1.left_stick_y * 0.5,
-                        gamepad1.left_stick_x * 0.5,
-                        gamepad1.right_stick_x * 0.5
+                        -gamepad1.left_stick_y * 0.25,
+                        gamepad1.left_stick_x * 0.25,
+                        gamepad1.right_stick_x * 0.25
                 );
                 telemetry.addData("Driving", "Field Relative");
             } else {
                 board.drive(
-                        -gamepad1.left_stick_y * 0.5,
-                        gamepad1.left_stick_x * 0.5,
-                        gamepad1.right_stick_x * 0.5
+                        -gamepad1.left_stick_y * 0.25,
+                        gamepad1.left_stick_x * 0.25,
+                        gamepad1.right_stick_x * 0.25
                 );
                 telemetry.addData("Driving", "Robot Relative");
             }
@@ -142,7 +142,7 @@ public class MainTele extends OpMode {
             board.setTinyGrab(false);
             board.setBigGrab(false);
 
-            board.sleep(200, this);
+            board.sleep(500, this);
 
             board.setRot((byte) 0);
 
