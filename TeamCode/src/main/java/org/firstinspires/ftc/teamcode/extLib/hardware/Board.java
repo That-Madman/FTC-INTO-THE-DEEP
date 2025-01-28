@@ -27,6 +27,7 @@ public class Board {
     Servo swivel;
     Servo tinyGrab;
     ColorRangeSensor cSensor;
+    ColorRangeSensor cSensor2;
 
     private final DcMotorEx v1, v2;
     private final DcMotor[] base = {null, null, null, null};
@@ -125,6 +126,7 @@ public class Board {
         t2 = hwMap.get(TouchSensor.class, "t2");
 
         cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
+        cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
     }
 
     private void configureSensor() {
@@ -268,11 +270,11 @@ public class Board {
     public boolean SearchForColor(byte target) {
         switch(target) {
             case 0:
-                return (cSensor.red() + cSensor.green()) / 2 > cSensor.blue() * 2;
+                return ((cSensor.red() + cSensor.green()) / 2 > cSensor.blue() * 2) && ((cSensor2.red() + cSensor2.green()) / 2 > cSensor2.blue() * 2);
             case 1:
-                return cSensor.blue() > cSensor.red() + cSensor.green();
+                return (cSensor.blue() > cSensor.red() + cSensor.green()) && (cSensor2.blue() > cSensor2.red() + cSensor2.green());
             case 2:
-                return cSensor.red() * 1.5 > cSensor.blue() + cSensor.green();
+                return (cSensor.red() * 1.5 > cSensor.blue() + cSensor.green()) && (cSensor2.red() * 1.5 > cSensor2.blue() + cSensor2.green());
             default:
                 return false;
         }
