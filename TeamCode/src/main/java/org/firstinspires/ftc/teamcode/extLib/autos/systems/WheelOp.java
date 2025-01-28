@@ -22,6 +22,8 @@ import Wheelie.Pose2D;
         telemetry.addLine("Initialized");
         telemetry.update();
 
+        preSetup();
+
         onInit();
 
         waitForStart();
@@ -39,6 +41,8 @@ import Wheelie.Pose2D;
             telemetry.update();
         }
     }
+
+    public void preSetup() {}
 
     public abstract void onInit ();
 

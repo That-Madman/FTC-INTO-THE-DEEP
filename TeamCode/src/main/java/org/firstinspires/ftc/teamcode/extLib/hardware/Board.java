@@ -124,7 +124,7 @@ public class Board {
         t1 = hwMap.get(TouchSensor.class, "t1");
         t2 = hwMap.get(TouchSensor.class, "t2");
 
-        cSensor = hwMap.get(ColorRangeSensor.class, "Csensor");
+        cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
     }
 
     private void configureSensor() {
