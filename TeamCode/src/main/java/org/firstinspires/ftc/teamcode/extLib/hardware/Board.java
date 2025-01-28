@@ -137,26 +137,18 @@ public class Board {
     }
 
     public void powerArm(double power){
-        if(braking && power != 0){
-            braking = false;
-            lFulcrum.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rFulcrum.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        } else if(!braking && power == 0 ||
-                getArmPosition() <= fulMin && power < 0 || getArmPosition() >= fulMax && power > 0){
-            brakeArm();
-        } else if (!braking){
-            lFulcrum.setPower(power);
-            rFulcrum.setPower(power);
-        }
+        lFulcrum.setPower(power);
+        rFulcrum.setPower(power);
     }
 
     public boolean braking;
     public void brakeArm(){
         if(!braking){
             lFulcrum.setTargetPosition(lFulcrum.getCurrentPosition());
-            rFulcrum.setTargetPosition(rFulcrum.getCurrentPosition());
+            //rFulcrum.setTargetPosition(rFulcrum.getCurrentPosition());
             lFulcrum.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rFulcrum.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //rFulcrum.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lFulcrum.setPower(1);
             braking = true;
         }
     }
@@ -165,9 +157,9 @@ public class Board {
         if(extent.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
             extent.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        if(power < 0 && extent.getCurrentPosition() >= -15 ||
+        /*if(power < 0 && extent.getCurrentPosition() >= -15 ||
             power > 0 && extent.getCurrentPosition() <= netExt)
-            power = 0;
+            power = 0;*/
         extent.setPower(power);
     }
 
