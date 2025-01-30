@@ -42,7 +42,7 @@ public class MainTele extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.left_bumper) {
+        if (gamepad1.left_trigger == 1) {
             if (driveFieldRel) {
                 board.driveFieldRelative(
                         -gamepad1.left_stick_y * 0.25,
