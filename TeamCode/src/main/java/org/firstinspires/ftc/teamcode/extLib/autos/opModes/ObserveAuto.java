@@ -21,44 +21,44 @@ public class ObserveAuto extends WheelOp {
 
     final private Pose2D[] readyPush1 = new Pose2D[] {
             new Pose2D(3, 0),
-            new Pose2D(3, -27),
-            new Pose2D(47, -27)
+            new Pose2D(3, -17),
+            new Pose2D(47, -17)
     };
 
     final private Pose2D[] readyPush2 = new Pose2D[] {
-            new Pose2D(47,-27),
-            new Pose2D(50,-37)
+            new Pose2D(47,-17),
+            new Pose2D(50,-27)
     };
 
     final private Pose2D[] push1 = new Pose2D[] {
-            new Pose2D(50, -35),
-            new Pose2D(3, -35)
+            new Pose2D(50, -25),
+            new Pose2D(3, -25)
     };
 
     final private Pose2D[] readyPush3 = new Pose2D[] {
-            new Pose2D(0, -40),
-            new Pose2D(25, -40),
-            new Pose2D(50, -40)
+            new Pose2D(0, -30),
+            new Pose2D(25, -30),
+            new Pose2D(50, -30)
     };
 
     final private Pose2D[] push2 = new Pose2D[] {
-            new Pose2D(50, -35),
-            new Pose2D(50, -42),
-            new Pose2D(3, -42)
+            new Pose2D(50, -25),
+            new Pose2D(50, -32),
+            new Pose2D(3, -32)
     };
 
     final private Pose2D[] readyStrafeToScore1 = new Pose2D[] {
-            new Pose2D(6, -42),
-            new Pose2D(6, -28)
+            new Pose2D(6, -32),
+            new Pose2D(6, -18)
     };
 
     final private Pose2D[] strafeToScore1 = new Pose2D [] {
-            new Pose2D(5, -28),
-            new Pose2D(1, -28)
+            new Pose2D(5, -18),
+            new Pose2D(1, -18)
     };
 
     final private Pose2D[] toSubmersible = new Pose2D[] {
-            new Pose2D(6, -28),
+            new Pose2D(6, -18),
             new Pose2D(6, 4),
             new Pose2D(19, 4)
     };
