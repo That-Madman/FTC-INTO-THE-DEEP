@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib.hardware;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -22,7 +23,7 @@ public class Board {
     Servo mRot;
     Servo pick;
     Servo r1, r2;
-    Servo s1, s2;
+    CRServo s1, s2;
     Servo rRot;
     Servo swivel;
     Servo tinyGrab;
@@ -76,8 +77,8 @@ public class Board {
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             /* TODO: EVENTUALLY UNCOMMENT THIS
-            s1 = hwMap.get(Servo.class, "s1");
-            s2 = hwMap.get(Servo.class, "s2");
+            s1 = hwMap.get(CRServo.class, "s1");
+            s2 = hwMap.get(CRServo.class, "s2");
 
             s1.setDirection(Servo.Direction.REVERSE);
              */
@@ -125,8 +126,17 @@ public class Board {
         t1 = hwMap.get(TouchSensor.class, "t1");
         t2 = hwMap.get(TouchSensor.class, "t2");
 
+        /* TODO: UNCOMMENT WHEN NEEDED
         cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
         cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
+         */
+    }
+
+    private void driveEncInit () {
+        for (DcMotor m : base) {
+            m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
     }
 
     private void configureSensor() {
@@ -162,9 +172,9 @@ public class Board {
         }
     }
 
-    public void setAscentScrews (double pos) {
-        s1.setPosition(pos);
-        s2.setPosition(pos);
+    public void setAscentScrews (double pow) {
+        s1.setPower(pow);
+        s2.setPower(pow);
     }
 
     public boolean getLiftTouched (boolean rl) {
@@ -220,8 +230,8 @@ public class Board {
                 mRot.setPosition(0);
                 break;
             case 1:
-                lRot.setPosition(0.955);
-                rRot.setPosition(0.955);
+                lRot.setPosition(0.9);
+                rRot.setPosition(0.9);
                 mRot.setPosition(0);
                 break;
             case 2:
