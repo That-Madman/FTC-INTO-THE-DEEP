@@ -37,7 +37,7 @@ public class NetSide1 extends WheepOp {
 
     @Override
     public void onInit() {
-        board.setClawPosition(1.0);
+        board.setClawPosition(0.0);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class NetSide1 extends WheepOp {
         //scoring preset sample
         board.setArmPosition(500); //change to up position when coded
         board.flipWrist();
-        board.setClawPosition(0.0);
+        board.setClawPosition(1.0);
         while (Math.abs(Board.netExt - board.getExtentPosition()) > 20) {
             maintain();
             double power = exPID.pidCalc(Board.netExt, board.getExtentPosition());
@@ -58,7 +58,7 @@ public class NetSide1 extends WheepOp {
         sleep(2000);
         //now put it all back so it can move without falling over
         board.flipWrist();
-        board.setClawPosition(1.0);
+        board.setClawPosition(0.0);
         board.setExtentTarget(0);
         board.setArmPosition(0); //change to down position when coded
         followPath(park1);
