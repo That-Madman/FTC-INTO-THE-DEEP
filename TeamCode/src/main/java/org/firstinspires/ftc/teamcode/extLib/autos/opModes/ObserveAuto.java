@@ -36,9 +36,9 @@ public class ObserveAuto extends WheelOp {
     };
 
     final private Pose2D[] readyPush3 = new Pose2D[] {
-            new Pose2D(0, -35),
-            new Pose2D(25, -35),
-            new Pose2D(50, -35)
+            new Pose2D(0, -40),
+            new Pose2D(25, -40),
+            new Pose2D(50, -40)
     };
 
     final private Pose2D[] push2 = new Pose2D[] {
@@ -120,6 +120,8 @@ public class ObserveAuto extends WheelOp {
 
         board.setTinyGrab(false);
         board.setBigGrab(false);
+
+        sleep(500);
 
         board.setLift(0);
         board.drive(0, 0, 0);
