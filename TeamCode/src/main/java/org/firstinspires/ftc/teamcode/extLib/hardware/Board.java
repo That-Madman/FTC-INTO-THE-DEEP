@@ -10,18 +10,26 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import Wheelie.PID;
+import Wheelie.Pose2D;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.extLib.SparkFunOTOS;
+
+import Wheelie.Pose2D;
 
 public class Board {
    private final DcMotor[] base = {null, null, null, null};
 
    private DcMotorEx lFulcrum, rFulcrum, extent;
    private final int fulMin = 15, fulMax = 800;
-    public static final int subExt = 4000, netExt = -5400, defaultExt = 15;
+   public static final int subExt = 4000, netExt = -5400, defaultExt = 15;
 
    private Servo wristClaw, claw;
 
     private final IMU imu;
+    private SparkFunOTOS sparkFunOTOS;
 
     public Board (HardwareMap hwMap) {
         rFulcrum = hwMap.get(DcMotorEx.class, "rightArm");
@@ -63,6 +71,8 @@ public class Board {
 
         imu = hwMap.get(IMU.class, "imu");
 
+        sparkFunOTOS = hwMap.get(SparkFunOTOS.class, "otos");
+        configureSensor();
         imu.initialize(
                 new IMU.Parameters(
                         new RevHubOrientationOnRobot(
@@ -72,6 +82,23 @@ public class Board {
                 )
         );
    }
+
+
+    private void configureSensor() {
+
+        sparkFunOTOS.setLinearUnit(DistanceUnit.INCH);
+        sparkFunOTOS.setAngularUnit(AngleUnit.RADIANS);
+        sparkFunOTOS.setOffset(new Pose2D(0, 0, 0));
+        sparkFunOTOS.setLinearScalar(1.0);
+        sparkFunOTOS.setAngularScalar((Math.PI * 20) / (Math.PI * 20 + 0.494));
+        sparkFunOTOS.resetTracking();
+        sparkFunOTOS.setPosition(new Pose2D(0,0,0));
+        sparkFunOTOS.calibrateImu(255, false);
+    }
+
+    public Pose2D getCurrentPose() {
+        return sparkFunOTOS.getPosition();
+    }
 
     public void resetImu () {
         imu.resetYaw();
@@ -152,6 +179,18 @@ public class Board {
             braking = true;
         }
     }
+
+    public void setArmPosition(int targetPosition) {
+        lFulcrum.setTargetPosition(targetPosition);
+        rFulcrum.setTargetPosition(targetPosition);
+
+        lFulcrum.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rFulcrum.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        lFulcrum.setPower(1.0);
+        rFulcrum.setPower(1.0);
+    }
+
 
     public void powerExtent(double power){
         if(extent.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
