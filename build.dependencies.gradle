@@ -1,18 +1,17 @@
 repositories {
-    maven {url "https://jitpack.io"}
     mavenCentral()
     google() // Needed for androidx
 }
 
 dependencies {
-    implementation 'org.firstinspires.ftc:Inspection:10.1.1'
-    implementation 'org.firstinspires.ftc:Blocks:10.1.1'
-    implementation 'org.firstinspires.ftc:RobotCore:10.1.1'
-    implementation 'org.firstinspires.ftc:RobotServer:10.1.1'
-    implementation 'org.firstinspires.ftc:OnBotJava:10.1.1'
-    implementation 'org.firstinspires.ftc:Hardware:10.1.1'
-    implementation 'org.firstinspires.ftc:FtcCommon:10.1.1'
-    implementation 'org.firstinspires.ftc:Vision:10.1.1'
-    implementation 'androidx.appcompat:appcompat:1.2.0' // Why was this changed!
+    implementation 'org.firstinspires.ftc:Inspection:10.2.0'
+    implementation 'org.firstinspires.ftc:Blocks:10.2.0'
+    implementation 'org.firstinspires.ftc:RobotCore:10.2.0'
+    implementation 'org.firstinspires.ftc:RobotServer:10.2.0'
+    implementation 'org.firstinspires.ftc:OnBotJava:10.2.0'
+    implementation 'org.firstinspires.ftc:Hardware:10.2.0'
+    implementation 'org.firstinspires.ftc:FtcCommon:10.2.0'
+    implementation 'org.firstinspires.ftc:Vision:10.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.github.That-Madman:Wheelie-Java:master-SNAPSHOT'
 }
