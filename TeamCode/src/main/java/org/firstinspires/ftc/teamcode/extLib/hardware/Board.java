@@ -132,9 +132,10 @@ public class Board {
          */
     }
 
-    private void driveEncInit () {
+    public void driveEncInit () {
         for (DcMotor m : base) {
-            m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //TODO: UNCOMMENT IF DRIVEBASE ENCODERS EVER ADDED
+         //   m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }

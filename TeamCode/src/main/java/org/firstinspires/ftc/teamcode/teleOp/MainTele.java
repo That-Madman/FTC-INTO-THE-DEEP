@@ -38,6 +38,7 @@ public class MainTele extends OpMode {
     @Override
     public void init () {
         board = new Board(hardwareMap);
+        board.driveEncInit();
     }
 
     @Override
