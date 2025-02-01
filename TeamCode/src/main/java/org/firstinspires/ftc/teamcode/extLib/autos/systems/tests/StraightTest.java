@@ -1,16 +1,9 @@
 package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
-import org.firstinspires.ftc.teamcode.extLib.autos.systems.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
-import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
-import java.util.Arrays;
-
-import Wheelie.Path;
 import Wheelie.Pose2D;
 
 @Autonomous
@@ -23,9 +16,7 @@ public class StraightTest extends WheelOp {
     };
 
     @Override
-    public void onInit() {
-
-    }
+    public void onInit() {}
 
     @Override
     public void run () {
