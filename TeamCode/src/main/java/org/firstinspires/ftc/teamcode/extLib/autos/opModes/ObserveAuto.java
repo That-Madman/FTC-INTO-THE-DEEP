@@ -43,18 +43,18 @@ public class ObserveAuto extends WheelOp {
 
     final private Pose2D[] push2 = new Pose2D[] {
             new Pose2D(50, -35),
-            new Pose2D(50, -42),
-            new Pose2D(3, -42)
+            new Pose2D(50, -44),
+            new Pose2D(3, -44)
     };
 
     final private Pose2D[] readyStrafeToScore1 = new Pose2D[] {
-            new Pose2D(6, -42),
+            new Pose2D(6, -44),
             new Pose2D(6, -28)
     };
 
     final private Pose2D[] strafeToScore1 = new Pose2D [] {
             new Pose2D(5, -28),
-            new Pose2D(1, -28)
+            new Pose2D(3, -28)
     };
 
     final private Pose2D[] toSubmersible = new Pose2D[] {
