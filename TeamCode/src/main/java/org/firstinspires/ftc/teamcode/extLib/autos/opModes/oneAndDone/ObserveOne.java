@@ -1,13 +1,14 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.opModes;
+package org.firstinspires.ftc.teamcode.extLib.autos.opModes.oneAndDone;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
 
 import Wheelie.Pose2D;
 
-@Autonomous
-public class ObserveAuto extends WheelOp {
+@Autonomous (name = "One and Done")
+public class ObserveOne extends WheelOp {
 
     final private Pose2D[] forward = new Pose2D[] {
             new Pose2D(0,0),
@@ -47,22 +48,6 @@ public class ObserveAuto extends WheelOp {
             new Pose2D(3, -44)
     };
 
-    final private Pose2D[] readyStrafeToScore1 = new Pose2D[] {
-            new Pose2D(6, -44),
-            new Pose2D(6, -28)
-    };
-
-    final private Pose2D[] strafeToScore1 = new Pose2D [] {
-            new Pose2D(6, -28),
-            new Pose2D(8, -28)
-    };
-
-    final private Pose2D[] toSubmersible = new Pose2D[] {
-            new Pose2D(8, -28),
-            new Pose2D(8, 4),
-            new Pose2D(19, 4)
-    };
-
     @Override
     public void onInit() {
         board.setBigGrab(true);
@@ -96,35 +81,5 @@ public class ObserveAuto extends WheelOp {
         followPath(readyPush3);
 
         followPath(push2);
-
-        followPath(readyStrafeToScore1);
-
-        board.setRot((byte) 1);
-
-        followPath(strafeToScore1);
-
-        board.setTinyGrab(true);
-        board.setBigGrab(true);
-
-        sleep(250);
-
-        board.setRot((byte) 4);
-
-        sleep(250);
-
-        board.setLift(850);
-
-        followPath(toSubmersible);
-        moveUntilTouch();
-
-        board.setRot((byte) 3);
-
-        board.setTinyGrab(false);
-        board.setBigGrab(false);
-
-        sleep(500);
-
-        board.setLift(0);
-        board.drive(0, 0, 0);
-    }
+   }
 }
