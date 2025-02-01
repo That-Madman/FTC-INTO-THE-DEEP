@@ -267,7 +267,7 @@ public class Board {
                 swivel.setPosition(0.2);
                 break;
             case 1:
-                swivel.setPosition(0.5);
+                swivel.setPosition(0.7);
                 break;
             case 2:
                 swivel.setPosition(1);
