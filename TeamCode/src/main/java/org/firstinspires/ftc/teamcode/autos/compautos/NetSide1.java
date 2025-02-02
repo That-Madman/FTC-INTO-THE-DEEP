@@ -21,7 +21,7 @@ public class NetSide1 extends WheepOp {
             new Pose2D(-21, 0, 0),
             new Pose2D(-6, 0, 0),
             new Pose2D(-6, 50, 0),
-            new Pose2D(8, 50, 0)
+            new Pose2D(14, 50, 0)
     };
 
     final private Pose2D[] park2 = new Pose2D[] {
@@ -44,11 +44,12 @@ public class NetSide1 extends WheepOp {
         //scoring preset sample
 
         timer = new ElapsedTime();
-        while (timer.seconds() < 5 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
+        while (timer.seconds() < 10 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
                 Math.abs(board.getArmPosition() - 920) > 20)) {
-            board.powerArm(-1./500.*(920 -board.getArmPosition()));
-            board.powerExtent((Board.netExt - board.getExtentPosition())*1./250.);
-            maintain();
+            board.powerArm(-1./300.*(920 -board.getArmPosition()));
+            if(Math.abs(board.getArmPosition()) >= 460)
+                board.powerExtent((Board.netExt - board.getExtentPosition())*1./250.);
+           // maintain();
 
             telemetry.addData("Arm", board.getArmPosition());
             telemetry.addData("Extent", board.getExtentPosition());
@@ -69,7 +70,7 @@ public class NetSide1 extends WheepOp {
                 Math.abs(board.getArmPosition() - 460) > 20)) {
             board.powerArm(-1./100.*(460 -board.getArmPosition()));
             board.powerExtent(-board.getExtentPosition()*1./100.);
-            maintain();
+            //maintain();
 
             telemetry.addData("Arm", board.getArmPosition());
             telemetry.addData("Extent", board.getExtentPosition());

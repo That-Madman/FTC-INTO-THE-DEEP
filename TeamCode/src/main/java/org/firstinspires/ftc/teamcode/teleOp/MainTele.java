@@ -86,10 +86,10 @@ public class MainTele extends OpMode {
         else if(!armRunningToTarget)
             board.powerArm(-1./100.*(brakeTarget -board.getArmPosition()));
 
-        if(con2.upHeld)
+        if(con2.downHeld)
             board.setWristPosition(Range.clip(
                     board.getWristPosition() + ((System.currentTimeMillis()-millis)/1000.)*wristSpeed, 0, 1));
-        else if(con2.downHeld)
+        else if(con2.upHeld)
             board.setWristPosition(Range.clip(
                     board.getWristPosition() - ((System.currentTimeMillis()-millis)/1000.)*wristSpeed, 0, 1));
 
