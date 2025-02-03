@@ -84,6 +84,8 @@ public class MainTele extends OpMode {
 
         board.setLift(height);
 
+        board.setAscentScrews((gamepad1.left_bumper ? 1 : 0) - (gamepad1.right_bumper ? 1 : 0));
+
         if (gamepad1.a && !a1Held) {
             driveFieldRel ^= true;
         }

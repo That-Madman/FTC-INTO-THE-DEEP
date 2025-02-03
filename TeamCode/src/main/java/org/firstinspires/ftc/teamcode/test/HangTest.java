@@ -2,42 +2,23 @@ package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 @TeleOp (group = "Tests")
 public class HangTest extends OpMode {
-    Servo lhs, rhs;
-    DcMotor lhm, rhm;
+    CRServo s1, s2;
 
     @Override
-    public void init () {
-        lhs = hardwareMap.get(Servo.class, "lhs");
-        rhs = hardwareMap.get(Servo.class, "lhs");
+    public void init() {
+        s1 = hardwareMap.get(CRServo.class, "s1");
+        s2 = hardwareMap.get(CRServo.class, "s2");
 
-        lhm = hardwareMap.get(DcMotor.class, "lhs");
-        rhm = hardwareMap.get(DcMotor.class, "rhs");
+        s1.setDirection(CRServo.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
-        if (gamepad1.dpad_left) {
-            lhs.setPosition(1);
-            rhs.setPosition(1);
-        } else if (gamepad1.dpad_right) {
-            lhs.setPosition(0);
-            rhs.setPosition(0);
-        }
-
-        if (gamepad1.dpad_up) {
-            lhm.setPower(1);
-            rhm.setPower(1);
-        } else if (gamepad1.dpad_down) {
-            lhm.setPower(-1);
-            rhm.setPower(-1);
-        } else  {
-            lhm.setPower(0);
-            rhm.setPower(0);
-        }
+        s1.setPower(gamepad1.left_trigger - gamepad1.right_stick_x);
+        s2.setPower(gamepad1.left_trigger - gamepad1.right_stick_x);
     }
 }
