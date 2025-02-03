@@ -218,7 +218,7 @@ public class Board {
     }
 
     public void setBigGrab (boolean c) {
-        bigGrab.setPosition(c ? 1 : 0.5);
+        bigGrab.setPosition(c ? 1 : 0);
     }
 
     public void setRot (byte u) {

@@ -14,7 +14,7 @@ public class MainTele extends OpMode {
     private boolean driveFieldRel = true;
     private boolean resetImu;
 
-    private byte re = 1;
+    private byte re = 2;
     private byte rot;
     private byte sState = 2;
     private byte dPadState;
