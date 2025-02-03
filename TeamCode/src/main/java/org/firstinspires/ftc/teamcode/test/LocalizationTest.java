@@ -1,16 +1,16 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
+package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-import org.firstinspires.ftc.teamcode.extLib.autos.systems.PathFollowerWrapper;
+import org.firstinspires.ftc.teamcode.extLib.autoSystems.PathFollowerWrapper;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
 
 import Wheelie.Pose2D;
 
 
-@TeleOp(group = "Test")
+@TeleOp(group = "Tests")
 public class LocalizationTest extends LinearOpMode {
     Board board = null;
 

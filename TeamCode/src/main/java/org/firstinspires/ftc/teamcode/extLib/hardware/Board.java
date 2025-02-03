@@ -76,12 +76,10 @@ public class Board {
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            /* TODO: EVENTUALLY UNCOMMENT THIS
             s1 = hwMap.get(CRServo.class, "s1");
             s2 = hwMap.get(CRServo.class, "s2");
 
-            s1.setDirection(Servo.Direction.REVERSE);
-             */
+            s1.setDirection(CRServo.Direction.REVERSE);
 
 
             imu = hwMap.get(IMU.class, "imu");
@@ -118,7 +116,7 @@ public class Board {
         swivel = hwMap.get(Servo.class, "swivel");
 
         setPick(false);
-        setSwivel((byte) 1);
+        setSwivel((byte) 2);
 
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");

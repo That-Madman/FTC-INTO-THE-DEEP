@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.systems;
+package org.firstinspires.ftc.teamcode.extLib.autoSystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 

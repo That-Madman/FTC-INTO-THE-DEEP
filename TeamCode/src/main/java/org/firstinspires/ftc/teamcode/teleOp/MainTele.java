@@ -16,7 +16,7 @@ public class MainTele extends OpMode {
 
     private byte re = 1;
     private byte rot;
-    private byte sState = 1;
+    private byte sState = 2;
     private byte dPadState;
 
     private int height;
@@ -46,32 +46,32 @@ public class MainTele extends OpMode {
         if (gamepad1.left_trigger == 1) {
             if (driveFieldRel) {
                 board.driveFieldRelative(
-                        -gamepad1.left_stick_y * 0.25,
-                        gamepad1.left_stick_x * 0.25,
-                        gamepad1.right_stick_x * 0.25
+                        -gamepad1.left_stick_y * 0.1,
+                        gamepad1.left_stick_x * 0.1,
+                        gamepad1.right_stick_x * 0.1
                 );
                 telemetry.addData("Driving", "Field Relative");
             } else {
                 board.drive(
-                        -gamepad1.left_stick_y * 0.25,
-                        gamepad1.left_stick_x * 0.25,
-                        gamepad1.right_stick_x * 0.25
+                        -gamepad1.left_stick_y * 0.1,
+                        gamepad1.left_stick_x * 0.1,
+                        gamepad1.right_stick_x * 0.1
                 );
                 telemetry.addData("Driving", "Robot Relative");
             }
         } else {
             if (driveFieldRel) {
                 board.driveFieldRelative(
-                        -gamepad1.left_stick_y * 0.9,
-                        gamepad1.left_stick_x * 0.9,
-                        gamepad1.right_stick_x * 0.9
+                        -gamepad1.left_stick_y * 0.8,
+                        gamepad1.left_stick_x * 0.8,
+                        gamepad1.right_stick_x * 0.8
                 );
                 telemetry.addData("Driving", "Field Relative");
             } else {
                 board.drive(
-                        -gamepad1.left_stick_y * 0.9,
-                        gamepad1.left_stick_x * 0.9,
-                        gamepad1.right_stick_x * 0.9
+                        -gamepad1.left_stick_y * 0.8,
+                        gamepad1.left_stick_x * 0.8,
+                        gamepad1.right_stick_x * 0.8
                 );
                 telemetry.addData("Driving", "Robot Relative");
             }

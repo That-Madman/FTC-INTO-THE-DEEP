@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
-@TeleOp
+@TeleOp (group = "Tests")
 public class RamTest extends OpMode {
     private final DcMotor[] base = {null, null, null, null};
 
