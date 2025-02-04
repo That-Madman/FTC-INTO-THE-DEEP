@@ -10,6 +10,11 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import java.util.List;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -39,6 +44,9 @@ public class Board {
     private final TouchSensor t1, t2;
 
     private final SparkFunOTOS sparkFunOTOS;
+
+    private AprilTagProcessor aprilTagProcessor;
+    private VisionPortal visionPortal;
 
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
@@ -127,6 +135,10 @@ public class Board {
 
         cSensor = hwMap.get(ColorRangeSensor.class, "Csensor");
         cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
+
+        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
     }
 
     private void configureSensor() {
@@ -279,6 +291,14 @@ public class Board {
                 return false;
         }
     }
+
+    public void genericCameraThingy() {
+        StringBuilder idsFound = new StringBuilder();
+          for (AprilTagDetection detection : currentDetections) {
+             idsFound.append(detection.id);
+             idsFound.append(’ ’);
+
+    }}
 
     public void sleep (long millis, OpMode op) {
         op.resetRuntime();
