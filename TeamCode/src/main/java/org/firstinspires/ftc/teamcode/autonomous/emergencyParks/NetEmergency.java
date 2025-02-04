@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.extLib.autoSystems.WheelOp;
 import Wheelie.Pose2D;
 
 @Autonomous(group = "Emergency")
-@Disabled
 public class NetEmergency extends WheelOp {
     final Pose2D[] park = new Pose2D[] {
             new Pose2D(22, 22),
