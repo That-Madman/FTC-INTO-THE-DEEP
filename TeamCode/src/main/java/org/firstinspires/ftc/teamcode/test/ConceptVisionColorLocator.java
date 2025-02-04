@@ -19,14 +19,13 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode.test;
+
 
 import android.util.Size;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.SortOrder;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -60,7 +59,6 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Disabled
 @TeleOp(name = "Concept: Vision Color-Locator", group = "Concept")
 public class ConceptVisionColorLocator extends LinearOpMode
 {
@@ -108,7 +106,7 @@ public class ConceptVisionColorLocator extends LinearOpMode
          *                                    "pixels" in the range of 2-4 are suitable for low res images.
          */
         ColorBlobLocatorProcessor colorLocator = new ColorBlobLocatorProcessor.Builder()
-                .setTargetColorRange(ColorRange.BLUE)         // use a predefined color match
+                .setTargetColorRange(ColorRange.YELLOW)         // use a predefined color match
                 .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
                 .setRoi(ImageRegion.asUnityCenterCoordinates(-0.5, 0.5, 0.5, -0.5))  // search central 1/4 of camera view
                 .setDrawContours(true)                        // Show contours on the Stream Preview
@@ -127,9 +125,10 @@ public class ConceptVisionColorLocator extends LinearOpMode
          *  or
          *      .setCamera(BuiltinCameraDirection.BACK)    ... for a Phone Camera
          */
+
         VisionPortal portal = new VisionPortal.Builder()
                 .addProcessor(colorLocator)
-                .setCameraResolution(new Size(320, 240))
+                .setCameraResolution(new Size(640, 480))
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .build();
 
