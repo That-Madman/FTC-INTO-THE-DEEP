@@ -79,8 +79,6 @@ public class Board {
             s1 = hwMap.get(CRServo.class, "s1");
             s2 = hwMap.get(CRServo.class, "s2");
 
-            s1.setDirection(CRServo.Direction.REVERSE);
-
 
             imu = hwMap.get(IMU.class, "imu");
 
