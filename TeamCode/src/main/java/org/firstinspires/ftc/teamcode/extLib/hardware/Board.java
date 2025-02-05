@@ -12,6 +12,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -40,6 +47,9 @@ public class Board {
     private final TouchSensor t1, t2;
 
     private final SparkFunOTOS sparkFunOTOS;
+
+    private AprilTagProcessor aprilTagProcessor;
+    private VisionPortal visionPortal;
 
     public Board (HardwareMap hwMap) {
             base[0] = hwMap.get(DcMotor.class, "fl");
@@ -126,6 +136,10 @@ public class Board {
         cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
         cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
          */
+
+        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
     }
 
     public void driveEncInit () {
@@ -286,6 +300,24 @@ public class Board {
                 return false;
         }
     }
+
+    public void genericCameraThingy(Telemetry telemetry) {
+        List <AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        StringBuilder idsFound = new StringBuilder();
+          for (AprilTagDetection detection : currentDetections) {
+             idsFound.append(detection.id);
+             idsFound.append(' ');
+              if (detection.metadata != null) {
+                  telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                  telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
+                  telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
+                  telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+              } else {
+                  telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                  telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+              }
+
+    }}
 
     public void sleep (long millis, OpMode op) {
         op.resetRuntime();
