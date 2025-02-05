@@ -17,6 +17,8 @@ public class ColorCamera {
     private ColorBlobLocatorProcessor colorLocator;
     private VisionPortal portal;
 
+    private final int width = 640, height = 480;
+
     public ColorCamera(HardwareMap hardwareMap){
         colorLocator = new ColorBlobLocatorProcessor.Builder()
                 .setTargetColorRange(ColorRange.YELLOW)         // use a predefined color match
@@ -28,7 +30,7 @@ public class ColorCamera {
 
         portal = new VisionPortal.Builder()
                 .addProcessor(colorLocator)
-                .setCameraResolution(new Size(640, 480))
+                .setCameraResolution(new Size(width, height))
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .build();
 
@@ -41,6 +43,24 @@ public class ColorCamera {
         return b;
     }
 
+    public double getClosetX(){
+        List<ColorBlobLocatorProcessor.Blob> blobs = getBlobs();
+        if((long) blobs.size() ==0)
+            return -1;
+
+        RotatedRect box = blobs.get(0).getBoxFit();
+        double x = box.center.x-(width/2.);
+
+        for(ColorBlobLocatorProcessor.Blob b : getBlobs())
+        {
+            RotatedRect boxFit = b.getBoxFit();
+            if(x > Math.abs(boxFit.center.x-(width/2.)))
+                x = boxFit.center.x-(width/2.);
+        }
+
+        return x;
+    }
+
     public double getRightMostPos(){
         double x = -1;
 
@@ -51,6 +71,6 @@ public class ColorCamera {
                 x = boxFit.center.x;
         }
 
-        return x;
+        return x-(width/2.);
     }
 }

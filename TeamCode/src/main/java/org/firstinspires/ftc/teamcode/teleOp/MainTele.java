@@ -115,7 +115,7 @@ public class MainTele extends OpMode {
                     board.getWristPosition() - ((System.currentTimeMillis()-millis)/1000.)*wristSpeed, 0, 1));
 
         if(con2.bPressed)
-            board.setClawPosition(board.getClawPosition() == 1 ? 0 : 1);
+            board.setClawPosition(board.getClawPosition() == .5 ? 0 : .5);
 
         con2.update();
         con1.update();

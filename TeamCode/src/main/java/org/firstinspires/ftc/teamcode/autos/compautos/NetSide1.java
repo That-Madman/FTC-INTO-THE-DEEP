@@ -30,10 +30,12 @@ public class NetSide1 extends WheepOp {
     };
 
     private ElapsedTime timer;
+    private PID liftPID = new PID(-1./300., -.0001, -.075);
 
     @Override
     public void onInit() {
         board.setClawPosition(0);
+        liftPID.capI(0.25);
     }
 
     @Override
@@ -44,11 +46,17 @@ public class NetSide1 extends WheepOp {
         //scoring preset sample
 
         timer = new ElapsedTime();
-        while (timer.seconds() < 10 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
+        boolean flip = false;
+        while (timer.seconds() < 7.5 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
                 Math.abs(board.getArmPosition() - 920) > 20)) {
-            board.powerArm(-1./300.*(920 -board.getArmPosition()));
-            if(Math.abs(board.getArmPosition()) >= 460)
+            board.powerArm(liftPID.pidCalc(920, board.getArmPosition(), timer.seconds()));
+            if(Math.abs(board.getArmPosition()) >= 460){
                 board.powerExtent((Board.netExt - board.getExtentPosition())*1./250.);
+                if(!flip){
+                    board.flipWrist();
+                    flip = true;
+                }
+            }
            // maintain();
 
             telemetry.addData("Arm", board.getArmPosition());
@@ -56,13 +64,8 @@ public class NetSide1 extends WheepOp {
             telemetry.update();
         }
 
-        //followPath(toNet2);
-        //sleep(2000);
-        //now put it all back so it can move without falling over
-        board.flipWrist();
-        sleep(1000);
+        sleep(500);
         board.setClawPosition(1);
-
         sleep(1500);
 
         timer = new ElapsedTime();
