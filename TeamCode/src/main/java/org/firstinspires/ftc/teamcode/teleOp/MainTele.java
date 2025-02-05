@@ -16,14 +16,14 @@ public class MainTele extends OpMode {
     private double extentSlow = .5, extentMax = 1;
     private double extentPower = extentMax;
 
-    private double armSlow = .25, armMax = .5;
+    private double armSlow = .15, armMax = .5;
     private double armPower = armMax;
 
     private double wristSlow = 1./10., wristMax = 1;
     private double wristSpeed = wristMax;
 
     int brakeTarget;
-    final int pickUpTicks = 60; final double pickUpWristPos = .0267;
+    final int pickUpTicks = 50; final double pickUpWristPos = .565;
     private ElapsedTime elapsedTime;
 
     private boolean extRunningToTarget = false,
@@ -42,14 +42,35 @@ public class MainTele extends OpMode {
         millis = System.currentTimeMillis();
     }
 
+    boolean reset = false, lastReset = false;
+    @Override
+    public void init_loop(){
+
+        telemetry.addLine("Press A on con 1 to toggle reset");
+        telemetry.addData("Reset ticks on motors", reset);
+
+        if(con1.aPressed)
+            reset = !reset;
+
+        con1.update();
+        telemetry.update();
+
+        if(lastReset != reset){
+            board = new Board(hardwareMap, reset);
+            lastReset = true;
+        }
+    }
+
     long millis;
     public void loop () {
-        board.drive(
+        board.driveFieldRelative(
                 -gamepad1.left_stick_y,
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x,
                 (con1.leftTriggerHeld) ? 0.25 : 1
         );
+        if(con1.yPressed)
+            board.resetImu();
 
         extentPower = con1.leftTriggerHeld ? extentSlow : extentMax;
         armPower = con2.rightBumperHeld ? armSlow : armMax;
@@ -75,7 +96,7 @@ public class MainTele extends OpMode {
             armRunningToTarget = true;
         }
         if(armRunningToTarget){
-            board.powerArm(-1./100.*(pickUpTicks -board.getArmPosition()));
+            board.powerArm(-1./500.*(pickUpTicks -board.getArmPosition()));
         }
 
         if(con2.leftTriggerHeld || con2.rightTriggerHeld){
@@ -86,10 +107,10 @@ public class MainTele extends OpMode {
         else if(!armRunningToTarget)
             board.powerArm(-1./100.*(brakeTarget -board.getArmPosition()));
 
-        if(con2.downHeld)
+        if(con2.upHeld)
             board.setWristPosition(Range.clip(
                     board.getWristPosition() + ((System.currentTimeMillis()-millis)/1000.)*wristSpeed, 0, 1));
-        else if(con2.upHeld)
+        else if(con2.downHeld)
             board.setWristPosition(Range.clip(
                     board.getWristPosition() - ((System.currentTimeMillis()-millis)/1000.)*wristSpeed, 0, 1));
 
@@ -100,6 +121,8 @@ public class MainTele extends OpMode {
         con1.update();
 
         // DEBUG TELEMETRY
+        telemetry.addData("Robot Angle", board.getDeg());
+        telemetry.addLine();
         telemetry.addData("Extension Targeting", extRunningToTarget);
         telemetry.addData("Power", board.getExPower());
         telemetry.addData("Extension Position", board.getExtentPosition());
