@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
+package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
+import org.firstinspires.ftc.teamcode.extLib.autoSystems.WheelOp;
 
 import Wheelie.Pose2D;
 
-@Autonomous
+@Autonomous (group = "Tests")
 public class RotateMoveTest extends WheelOp {
 
     Pose2D[] path1 = new Pose2D[]{

@@ -1,19 +1,12 @@
-package org.firstinspires.ftc.teamcode.extLib.autos.systems.tests;
+package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.extLib.autoSystems.WheelOp;
 
-import org.firstinspires.ftc.teamcode.extLib.autos.systems.PathFollowerWrapper;
-import org.firstinspires.ftc.teamcode.extLib.autos.systems.WheelOp;
-import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
-
-import java.util.Arrays;
-
-import Wheelie.Path;
 import Wheelie.Pose2D;
 
-@Autonomous
+@Autonomous (group = "Tests")
 public class StraightTest extends WheelOp {
 
     Pose2D[] points = new Pose2D[] {
@@ -23,9 +16,7 @@ public class StraightTest extends WheelOp {
     };
 
     @Override
-    public void onInit() {
-
-    }
+    public void onInit() {}
 
     @Override
     public void run () {

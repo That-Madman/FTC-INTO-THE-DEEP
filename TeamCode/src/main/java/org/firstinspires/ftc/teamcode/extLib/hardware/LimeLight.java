@@ -6,6 +6,7 @@ import static java.lang.Math.atan;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+@Deprecated
 public class LimeLight {
     final Limelight3A lime;
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib.hardware;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -27,7 +28,7 @@ public class Board {
     Servo mRot;
     Servo pick;
     Servo r1, r2;
-    Servo s1, s2;
+    CRServo s1, s2;
     Servo rRot;
     Servo swivel;
     Servo tinyGrab;
@@ -83,12 +84,8 @@ public class Board {
             v1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             v2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            /* TODO: EVENTUALLY UNCOMMENT THIS
-            s1 = hwMap.get(Servo.class, "s1");
-            s2 = hwMap.get(Servo.class, "s2");
-
-            s1.setDirection(Servo.Direction.REVERSE);
-             */
+            s1 = hwMap.get(CRServo.class, "s1");
+            s2 = hwMap.get(CRServo.class, "s2");
 
 
             imu = hwMap.get(IMU.class, "imu");
@@ -125,7 +122,7 @@ public class Board {
         swivel = hwMap.get(Servo.class, "swivel");
 
         setPick(false);
-        setSwivel((byte) 1);
+        setSwivel((byte) 2);
 
         v1t = hwMap.get(TouchSensor.class, "v1t");
         v2t = hwMap.get(TouchSensor.class, "v2t");
@@ -133,12 +130,22 @@ public class Board {
         t1 = hwMap.get(TouchSensor.class, "t1");
         t2 = hwMap.get(TouchSensor.class, "t2");
 
-        cSensor = hwMap.get(ColorRangeSensor.class, "Csensor");
+        /* TODO: UNCOMMENT WHEN NEEDED
+        cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
         cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
+         */
 
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
         aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
+    }
+
+    public void driveEncInit () {
+        for (DcMotor m : base) {
+            //TODO: UNCOMMENT IF DRIVEBASE ENCODERS EVER ADDED
+         //   m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
     }
 
     private void configureSensor() {
@@ -174,9 +181,9 @@ public class Board {
         }
     }
 
-    public void setAscentScrews (double pos) {
-        s1.setPosition(pos);
-        s2.setPosition(pos);
+    public void setAscentScrews (double pow) {
+        s1.setPower(pow);
+        s2.setPower(pow);
     }
 
     public boolean getLiftTouched (boolean rl) {
@@ -221,19 +228,19 @@ public class Board {
     }
 
     public void setBigGrab (boolean c) {
-        bigGrab.setPosition(c ? 1 : 0.5);
+        bigGrab.setPosition(c ? 1 : 0);
     }
 
     public void setRot (byte u) {
         switch (u) {
             case 0:
-                lRot.setPosition(0.1);
-                rRot.setPosition(0.1);
+                lRot.setPosition(0);
+                rRot.setPosition(0);
                 mRot.setPosition(0);
                 break;
             case 1:
-                lRot.setPosition(0.955);
-                rRot.setPosition(0.955);
+                lRot.setPosition(1);
+                rRot.setPosition(1);
                 mRot.setPosition(0);
                 break;
             case 2:
@@ -247,8 +254,8 @@ public class Board {
                 mRot.setPosition(0);
                 break;
             case 3:
-                lRot.setPosition(0.2);
-                rRot.setPosition(0.2);
+                lRot.setPosition(0.15);
+                rRot.setPosition(0.15);
                 mRot.setPosition(1);
                 break;
         }
@@ -268,7 +275,7 @@ public class Board {
                 swivel.setPosition(0.2);
                 break;
             case 1:
-                swivel.setPosition(0.5);
+                swivel.setPosition(0.7);
                 break;
             case 2:
                 swivel.setPosition(1);
@@ -296,7 +303,7 @@ public class Board {
         StringBuilder idsFound = new StringBuilder();
           for (AprilTagDetection detection : currentDetections) {
              idsFound.append(detection.id);
-             idsFound.append(’ ’);
+             idsFound.append(' ');
 
     }}
 
