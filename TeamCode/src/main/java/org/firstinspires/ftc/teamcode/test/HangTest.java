@@ -12,13 +12,11 @@ public class HangTest extends OpMode {
     public void init() {
         s1 = hardwareMap.get(CRServo.class, "s1");
         s2 = hardwareMap.get(CRServo.class, "s2");
-
-        s1.setDirection(CRServo.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
-        s1.setPower(gamepad1.left_trigger - gamepad1.right_stick_x);
-        s2.setPower(gamepad1.left_trigger - gamepad1.right_stick_x);
+        s1.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+        s2.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
     }
 }
