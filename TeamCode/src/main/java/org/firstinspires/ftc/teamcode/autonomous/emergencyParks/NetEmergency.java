@@ -14,8 +14,8 @@ public class NetEmergency extends WheelOp {
             new Pose2D(22, 40),
             new Pose2D(52, 29),
             new Pose2D(55, 14, Math.toRadians(90)),
-            new Pose2D(53, 8, Math.toRadians(90)),
-            new Pose2D(53, 6, Math.toRadians(90))
+            new Pose2D(53, 20, Math.toRadians(90)),
+            new Pose2D(53, 10, Math.toRadians(90))
     };
 
     @Override
