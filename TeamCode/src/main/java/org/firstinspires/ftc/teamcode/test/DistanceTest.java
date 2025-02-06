@@ -19,6 +19,7 @@ public class DistanceTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         board = new Board(hardwareMap);
         localizer = new DistanceLocalizer(hardwareMap, board);
+        board.resetImu();
 
         while (opModeInInit()){
             localizer.update();
@@ -31,6 +32,10 @@ public class DistanceTest extends LinearOpMode {
 
             telemetry.addData("Sparkfun", toString(board.getCurrentPose()));
             telemetry.addData("Distance Sensors", toString(localizer.getPosition(useRight)));
+            telemetry.addData("Distance Sensors", localizer.getBack());
+            telemetry.addData("Distance Sensors", localizer.getLeft());
+            telemetry.addData("Distance Sensors", localizer.getRight());
+            telemetry.addData("Distance Sensors", useRight);
             telemetry.update();
         }
     }

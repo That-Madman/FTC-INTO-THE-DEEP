@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.extLib.hardware.ColorCamera;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Controller;
 
+@Autonomous
 public class CamColorTest extends OpMode {
     private ColorCamera cam;
     private final DcMotor[] base = {null, null, null, null};
@@ -16,6 +18,7 @@ public class CamColorTest extends OpMode {
     @Override
     public void init() {
         cam = new ColorCamera(hardwareMap);
+        con = new Controller(gamepad1);
 
         base[0] = hardwareMap.get(DcMotor.class, "fl");
         base[1] = hardwareMap.get(DcMotor.class, "fr");

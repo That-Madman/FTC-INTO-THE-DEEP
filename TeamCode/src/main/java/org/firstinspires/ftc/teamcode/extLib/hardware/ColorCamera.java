@@ -45,7 +45,7 @@ public class ColorCamera {
 
     public double getClosetX(){
         List<ColorBlobLocatorProcessor.Blob> blobs = getBlobs();
-        if((long) blobs.size() ==0)
+        if((long) blobs.size() == 0)
             return -1;
 
         RotatedRect box = blobs.get(0).getBoxFit();
@@ -55,7 +55,7 @@ public class ColorCamera {
         {
             RotatedRect boxFit = b.getBoxFit();
             if(x > Math.abs(boxFit.center.x-(width/2.)))
-                x = boxFit.center.x-(width/2.);
+                x = boxFit.center.x;
         }
 
         return x;

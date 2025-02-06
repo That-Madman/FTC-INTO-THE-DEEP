@@ -10,7 +10,7 @@ public class AverageDistanceSensor {
 
     private double[] distances;
     private int curIndex = 0;
-    private final double MAX_DEVIATION = 5.0; // Ignore sudden changes larger than 5 inches
+    private final double MAX_DEVIATION = 24.0; // Ignore sudden changes larger than 24 inches
 
     public AverageDistanceSensor(DistanceSensor sensor, DistanceUnit u, int savedDistances) {
         distanceSensor = sensor;
