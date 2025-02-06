@@ -70,10 +70,18 @@ public class MainTele extends OpMode {
             extRunningToTarget = false;
         }
 
-        if(con2.aPressed){
+        /*if(con2.aPressed){
             board.setWristPosition(pickUpWristPos);
             armRunningToTarget = true;
+        }*/
+
+        if (con2.aPressed) {
+            double newWristPosition = (board.getWristPosition() == pickUpWristPos) ? 1.0 : pickUpWristPos;
+            board.setWristPosition(newWristPosition);
+
+            armRunningToTarget = true;
         }
+
         if(armRunningToTarget){
             board.powerArm(-1./100.*(pickUpTicks -board.getArmPosition()));
         }
