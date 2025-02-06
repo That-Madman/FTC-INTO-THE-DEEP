@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.extLib.hardware.AverageDistanceSensor;
 import org.firstinspires.ftc.teamcode.extLib.hardware.Board;
+import org.firstinspires.ftc.teamcode.extLib.hardware.DistanceLocalizer;
 import org.firstinspires.ftc.teamcode.extLib.wheelieExt.PathFollowerWrapper;
 
 import java.util.Arrays;
@@ -18,17 +19,13 @@ public abstract class WheepOp extends LinearOpMode {
     protected Board board;
     protected Pose2D startPose = new Pose2D(0,0,0);
 
-    protected AverageDistanceSensor behind, right;
+    protected DistanceLocalizer distanceLocalizer;
 
     @Override
     public void runOpMode () {
         board = new Board (hardwareMap);
         followerWrapper = new PathFollowerWrapper(hardwareMap, startPose, 8);
-
-       /* behind = new AverageDistanceSensor(hardwareMap.get(DistanceSensor.class,"behind"),
-                DistanceUnit.INCH, 25);
-        right = new AverageDistanceSensor(hardwareMap.get(DistanceSensor.class,"right"),
-                DistanceUnit.INCH, 25);*/
+        distanceLocalizer = new DistanceLocalizer(hardwareMap, board);
 
         telemetry.addLine("Initialized");
         telemetry.update();
@@ -36,8 +33,7 @@ public abstract class WheepOp extends LinearOpMode {
         onInit();
 
         while(opModeInInit()){
-            //behind.update();
-            //right.update();
+            distanceLocalizer.update();
         }
 
         run();
@@ -96,21 +92,26 @@ public abstract class WheepOp extends LinearOpMode {
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
-        double initBehind = behind.getDistance();
-        double initRight = right.getDistance();
+        double initBehind = distanceLocalizer.getBack();
+        double initRight = distanceLocalizer.getRight();
 
         while (followerWrapper.getFollower() != null && opModeIsActive() &&
-                (Math.abs((behind.getDistance()-initBehind)-diff.x)<=2 ||
-                Math.abs((right.getDistance()-initRight)-diff.y)<=2)) {
+                (Math.abs((distanceLocalizer.getBack()-initBehind)-diff.x)<=2 ||
+                Math.abs((distanceLocalizer.getRight()-initRight)-diff.y)<=2)) {
             //Runs until end of path is reached
-            behind.update();
-            right.update();
+            distanceLocalizer.update();
             followerWrapper.updatePose(board.getCurrentPose()); //Updates position
             double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
+            if(Math.abs((distanceLocalizer.getBack()-initBehind)-diff.x)<=2)
+                vectorCom[0] = 0;
+            if(Math.abs((distanceLocalizer.getRight()-initRight)-diff.y)<=2)
+                vectorCom[1]=0;
             board.drive(vectorCom[0], -vectorCom[1], -vectorCom[2]); //Uses vector to power motors
 
-            telemetry.addData("Behind", behind.getDistance());
-            telemetry.addData("Right", right.getDistance());
+            telemetry.addData("Behind", distanceLocalizer.getBack());
+            telemetry.addData("Right", distanceLocalizer.getRight());
+            telemetry.addData("Behind", distanceLocalizer.getBack()-initBehind);
+            telemetry.addData("Right", distanceLocalizer.getRight()-initRight);
 
             telemetry.addData("Position",
                     followerWrapper.getPose().x + ", " +

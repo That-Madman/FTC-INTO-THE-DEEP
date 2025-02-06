@@ -63,14 +63,13 @@ public class MainTele extends OpMode {
 
     long millis;
     public void loop () {
-        board.driveFieldRelative(
+        board.drive(
                 -gamepad1.left_stick_y,
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x,
                 (con1.leftTriggerHeld) ? 0.25 : 1
         );
-        if(con1.yPressed)
-            board.resetImu();
+
 
         extentPower = con1.leftTriggerHeld ? extentSlow : extentMax;
         armPower = con2.rightBumperHeld ? armSlow : armMax;

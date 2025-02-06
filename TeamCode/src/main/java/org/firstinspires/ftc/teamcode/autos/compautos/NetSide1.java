@@ -14,11 +14,20 @@ import Wheelie.Pose2D;
 public class NetSide1 extends WheepOp {
         final private Pose2D[] toNet1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(-21, 0, 0),
+            new Pose2D(-15, 1, 0),
     };
 
+    //make arm slower
+    //have the arm go down when it reaches position for +3
+    //more time between wrist flip and droping..maybe 0.5 sec
+    //strafe missed for some reason :'(
+    //make it a bit slower??
+    //just gets stuck sometimes
+    //goes forward into the net??
+    //ran straight into wall once
+
     final private Pose2D[] park1 = new Pose2D[] {
-            new Pose2D(-21, 0, 0),
+            new Pose2D(-15, 0, 0),
             new Pose2D(-6, 0, 0),
             new Pose2D(-6, 50, 0),
             new Pose2D(14, 50, 0)
@@ -30,32 +39,27 @@ public class NetSide1 extends WheepOp {
     };
 
     private ElapsedTime timer;
-    private PID liftPID = new PID(-1./300., -.0001, -.075);
+    private PID liftPID = new PID(-1./750., 0, 0);
 
     @Override
     public void onInit() {
         board.setClawPosition(0);
+        board.setWristPosition(1);
         liftPID.capI(0.25);
     }
 
     @Override
     public void run() {
-        board.flipWrist();
-        followPath(toNet1);
+        followPath(toNet1, new Pose2D(-15, 1));
         //followPath(rotate);
         //scoring preset sample
 
         timer = new ElapsedTime();
-        boolean flip = false;
         while (timer.seconds() < 7.5 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
                 Math.abs(board.getArmPosition() - 920) > 20)) {
-            board.powerArm(liftPID.pidCalc(920, board.getArmPosition(), timer.seconds()));
+            board.powerArm(-1./750.*(920-board.getArmPosition()));
             if(Math.abs(board.getArmPosition()) >= 460){
                 board.powerExtent((Board.netExt - board.getExtentPosition())*1./250.);
-                if(!flip){
-                    board.flipWrist();
-                    flip = true;
-                }
             }
            // maintain();
 
@@ -64,14 +68,18 @@ public class NetSide1 extends WheepOp {
             telemetry.update();
         }
 
-        sleep(500);
+        board.setWristPosition(0);
+
+        sleep(1500);
         board.setClawPosition(1);
+        sleep(1500);
+        board.setWristPosition(1);
         sleep(1500);
 
         timer = new ElapsedTime();
         while (timer.seconds() < 5 &&opModeIsActive()&&(Math.abs(board.getExtentPosition()) > 50 ||
-                Math.abs(board.getArmPosition() - 460) > 20)) {
-            board.powerArm(-1./100.*(460 -board.getArmPosition()));
+                Math.abs(board.getArmPosition() - 100) > 20)) {
+            board.powerArm(-1./750.*(100 -board.getArmPosition()));
             board.powerExtent(-board.getExtentPosition()*1./100.);
             //maintain();
 
@@ -79,11 +87,14 @@ public class NetSide1 extends WheepOp {
             telemetry.addData("Extent", board.getExtentPosition());
             telemetry.update();
         }
+        board.setWristPosition(0);
         followPath(park1);
+        board.powerArm(.25);
+        sleep(500);
         board.powerArm(0);
         while(opModeIsActive()) {
             telemetry.addLine("complete");
-            maintain();
+            //maintain();
 
             telemetry.addData("Arm", board.getArmPosition());
             telemetry.addData("Extent", board.getExtentPosition());

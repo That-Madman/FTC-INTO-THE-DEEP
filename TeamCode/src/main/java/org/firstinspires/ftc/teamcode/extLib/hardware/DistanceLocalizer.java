@@ -38,7 +38,25 @@ public class DistanceLocalizer {
 
     public void setStartValues(boolean right){
         startX = behindSensor.getDistance();
-        startY = right ? rightSensor.getDistance() : leftSensor.getDistance();
+        double h = Math.toRadians(board.getDeg()),
+            y1 = rightSensor.getDistance(),
+            y2 = leftSensor.getDistance(),
+            x = behindSensor.getDistance();
+        Pose2D pose1 = new Pose2D(
+                (x*Math.cos(h) + y1*Math.sin(h)) - startX + startPose.x,
+                (x*Math.sin(h) + y1*Math.cos(h)) - startY + startPose.y,
+                h
+        ),pose2 = new Pose2D(
+                (x*Math.cos(h) + y2*Math.sin(h)) - startX + startPose.x,
+                (x*Math.sin(h) + y2*Math.cos(h)) - startY + startPose.y,
+                h
+        );
+
+        double distance1=Math.hypot(pose1.x-lastPose.x, pose1.y-lastPose.y),
+                distance2 =Math.hypot(pose2.x-lastPose.x, pose2.y-lastPose.y);
+        if(distance2 > distance1)
+            startY = y1;
+        else startY = y2;
     }
 
     public Pose2D getPosition(boolean right){
