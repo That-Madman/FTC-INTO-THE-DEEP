@@ -16,7 +16,7 @@ public class HangTest extends OpMode {
 
     @Override
     public void loop() {
-        s1.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
-        s2.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+        s1.setPower((gamepad1.left_bumper ? 1 : 0) - (gamepad1.share ? 1 : 0));
+        s2.setPower((gamepad1.right_bumper ? 1 : 0) - (gamepad1.start ? 1 : 0));
     }
 }

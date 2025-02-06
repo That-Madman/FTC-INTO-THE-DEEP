@@ -183,9 +183,9 @@ public class Board {
         }
     }
 
-    public void setAscentScrews (double pow) {
-        s1.setPower(pow);
-        s2.setPower(pow);
+    public void setAscentScrews (double pow1, double pow2) {
+        s1.setPower(pow1);
+        s2.setPower(pow2);
     }
 
     public boolean getLiftTouched (boolean rl) {
