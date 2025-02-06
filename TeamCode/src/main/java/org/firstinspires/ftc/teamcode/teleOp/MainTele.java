@@ -11,7 +11,7 @@ public class MainTele extends OpMode {
 
     private boolean bigClosed;
     private boolean closed;
-    private boolean driveFieldRel = true;
+//    private boolean driveFieldRel = true;
     private boolean resetImu;
 
     private byte re = 2;
@@ -21,7 +21,7 @@ public class MainTele extends OpMode {
 
     private int height;
 
-    private boolean a1Held;
+//    private boolean a1Held;
     private boolean a2Held;
     private boolean b1Held;
     private boolean b2Held;
@@ -44,37 +44,37 @@ public class MainTele extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.left_trigger == 1) {
-            if (driveFieldRel) {
-                board.driveFieldRelative(
-                        -gamepad1.left_stick_y * 0.1,
-                        gamepad1.left_stick_x * 0.1,
-                        gamepad1.right_stick_x * 0.1
-                );
-                telemetry.addData("Driving", "Field Relative");
-            } else {
+//            if (driveFieldRel) {
+//                board.driveFieldRelative(
+//                        -gamepad1.left_stick_y * 0.1,
+//                        gamepad1.left_stick_x * 0.1,
+//                        gamepad1.right_stick_x * 0.1
+//                );
+//                telemetry.addData("Driving", "Field Relative");
+//            } else {
                 board.drive(
                         -gamepad1.left_stick_y * 0.1,
                         gamepad1.left_stick_x * 0.1,
                         gamepad1.right_stick_x * 0.1
                 );
-                telemetry.addData("Driving", "Robot Relative");
-            }
+//                telemetry.addData("Driving", "Robot Relative");
+//            }
         } else {
-            if (driveFieldRel) {
-                board.driveFieldRelative(
-                        -gamepad1.left_stick_y * 0.8,
-                        gamepad1.left_stick_x * 0.8,
-                        gamepad1.right_stick_x * 0.8
-                );
-                telemetry.addData("Driving", "Field Relative");
-            } else {
+//            if (driveFieldRel) {
+//                board.driveFieldRelative(
+//                        -gamepad1.left_stick_y * 0.8,
+//                        gamepad1.left_stick_x * 0.8,
+//                        gamepad1.right_stick_x * 0.8
+//                );
+//                telemetry.addData("Driving", "Field Relative");
+//            } else {
                 board.drive(
                         -gamepad1.left_stick_y * 0.8,
                         gamepad1.left_stick_x * 0.8,
                         gamepad1.right_stick_x * 0.8
                 );
-                telemetry.addData("Driving", "Robot Relative");
-            }
+//                telemetry.addData("Driving", "Robot Relative");
+//            }
         }
 
         height += (int) ((gamepad2.left_trigger - gamepad2.right_trigger) * 10);
@@ -90,9 +90,9 @@ public class MainTele extends OpMode {
 
         );
 
-        if (gamepad1.a && !a1Held) {
-            driveFieldRel ^= true;
-        }
+//        if (gamepad1.a && !a1Held) {
+//            driveFieldRel ^= true;
+//        }
 
         if (gamepad1.y && !y1Held) {
             board.resetImu();
@@ -244,7 +244,7 @@ public class MainTele extends OpMode {
         board.setTinyGrab(bigClosed);
         board.setBigGrab(bigClosed);
 
-        a1Held = gamepad1.a;
+//        a1Held = gamepad1.a;
         a2Held = gamepad2.a;
         b1Held = gamepad1.b;
         b2Held = gamepad2.b;

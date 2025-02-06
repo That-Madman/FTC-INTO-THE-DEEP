@@ -137,9 +137,9 @@ public class Board {
         cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
          */
 
-        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
-        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
-        visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
+//        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+//        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+//        visionPortal = VisionPortal.easyCreateWithDefaults(webcamName, aprilTagProcessor);
     }
 
     public void driveEncInit () {
