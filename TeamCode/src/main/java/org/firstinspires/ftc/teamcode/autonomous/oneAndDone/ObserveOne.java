@@ -56,7 +56,7 @@ public class ObserveOne extends WheelOp {
     @Override
     public void run() {
         board.setAscentScrews(1, 1);
-        sleep(1000);
+        sleep(4000);
         board.setAscentScrews(0, 0);
 
         board.setRot((byte) 4);
