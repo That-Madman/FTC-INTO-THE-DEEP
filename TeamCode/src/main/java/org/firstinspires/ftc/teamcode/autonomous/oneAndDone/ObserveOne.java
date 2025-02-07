@@ -44,7 +44,7 @@ public class ObserveOne extends WheelOp {
     final private Pose2D[] push2 = new Pose2D[] {
             new Pose2D(50, -35),
             new Pose2D(50, -44),
-            new Pose2D(3, -44)
+            new Pose2D(7, -44)
     };
 
     @Override
@@ -61,6 +61,7 @@ public class ObserveOne extends WheelOp {
 
         board.setRot((byte) 4);
         board.setLift(850);
+        board.setSwivel((byte) 0);
 
        followPath(forward);
         moveUntilTouch();

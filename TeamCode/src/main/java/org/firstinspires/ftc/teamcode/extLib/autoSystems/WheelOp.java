@@ -100,6 +100,6 @@ import Wheelie.Pose2D;
 
             telemetry.update();
         }
-        board.drive(0.1,0,0);
+        board.drive(0.3,0,0);
     }
 }
