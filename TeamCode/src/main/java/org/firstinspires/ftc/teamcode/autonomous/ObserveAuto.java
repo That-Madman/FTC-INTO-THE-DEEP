@@ -44,24 +44,25 @@ public class ObserveAuto extends WheelOp {
     final private Pose2D[] push2 = new Pose2D[] {
             new Pose2D(50, -35),
             new Pose2D(50, -44),
-            new Pose2D(3, -44)
+            new Pose2D(7, -44)
     };
 
-    final private Pose2D[] readyStrafeToScore1 = new Pose2D[] {
-            new Pose2D(6, -44),
-            new Pose2D(6, -28)
+    final private Pose2D[] breathingSpace = new Pose2D[] {
+            new Pose2D(8, -44),
+            new Pose2D(15, -44)
     };
 
-    final private Pose2D[] strafeToScore1 = new Pose2D [] {
-            new Pose2D(6, -28),
-            new Pose2D(8, -28)
+    final private Pose2D[] unbreathingSpace = new Pose2D[] {
+            new Pose2D(9, -44),
+            new Pose2D(7, -44)
     };
 
-    final private Pose2D[] toSubmersible = new Pose2D[] {
-            new Pose2D(8, -28),
-            new Pose2D(8, 4),
-            new Pose2D(19, 4)
+    final private Pose2D[] score = new Pose2D[] {
+            new Pose2D(10, -20),
+            new Pose2D(11, -10),
+            new Pose2D(19, 8)
     };
+
 
     @Override
     public void onInit() {
@@ -77,6 +78,7 @@ public class ObserveAuto extends WheelOp {
 
         board.setRot((byte) 4);
         board.setLift(850);
+        board.setSwivel((byte) 0);
 
        followPath(forward);
         moveUntilTouch();
@@ -101,34 +103,29 @@ public class ObserveAuto extends WheelOp {
 
         followPath(push2);
 
-        followPath(readyStrafeToScore1);
+        followPath(breathingSpace);
 
         board.setRot((byte) 1);
 
-        followPath(strafeToScore1);
+        sleep(3000);
+
+        followPath(unbreathingSpace);
 
         board.setTinyGrab(true);
         board.setBigGrab(true);
 
-        sleep(250);
-
         board.setRot((byte) 4);
 
-        sleep(250);
-
-        board.setLift(850);
-
-        followPath(toSubmersible);
+        followPath(score);
         moveUntilTouch();
 
         board.setRot((byte) 3);
+        sleep (1000);
 
         board.setTinyGrab(false);
         board.setBigGrab(false);
 
-        sleep(500);
-
         board.setLift(0);
-        board.drive(0, 0, 0);
-    }
+        board.drive(0,0,0);
+   }
 }
