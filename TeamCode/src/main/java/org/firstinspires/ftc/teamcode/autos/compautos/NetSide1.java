@@ -14,7 +14,7 @@ import Wheelie.Pose2D;
 public class NetSide1 extends WheepOp {
         final private Pose2D[] toNet1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(-15.5, 1, 0),
+            new Pose2D(-15, 1, 0),
     };
 
     //make arm slower
@@ -27,7 +27,7 @@ public class NetSide1 extends WheepOp {
     //ran straight into wall once
 
     final private Pose2D[] park1 = new Pose2D[] {
-            new Pose2D(-15.5, 0, 0),
+            new Pose2D(-15, 0, 0),
             new Pose2D(-6, 0, 0),
             new Pose2D(-6, 50, 0),
             new Pose2D(14, 50, 0)
@@ -50,7 +50,7 @@ public class NetSide1 extends WheepOp {
 
     @Override
     public void run() {
-        followPath(toNet1, new Pose2D(-15.5, 1));
+        followPath(toNet1, new Pose2D(-15, 1));
         //followPath(rotate);
         //scoring preset sample
 
