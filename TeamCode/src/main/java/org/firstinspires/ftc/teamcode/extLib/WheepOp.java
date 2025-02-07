@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.extLib;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.extLib.hardware.AverageDistanceSensor;
@@ -56,9 +57,15 @@ public abstract class WheepOp extends LinearOpMode {
 
     protected void followPath(Pose2D[] a) {
         //Sets the path for follower
+        double pathLength = 0;
+        for(int i = 0; i < a.length-1; i++)
+            pathLength += Math.hypot(a[i].x-a[i+1].x, a[i].y-a[i+1].y);
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
+        ElapsedTime timer = new ElapsedTime();
+        double timeForPath = pathLength/followerWrapper.SPEED_PERCENT*18.0;
 
-        while (followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
+        while (timer.seconds() <= timeForPath &&
+                followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
             //behind.update();
             //right.update();
             followerWrapper.updatePose(board.getCurrentPose()); //Updates position
@@ -89,13 +96,20 @@ public abstract class WheepOp extends LinearOpMode {
         }
     }
     protected void followPath(Pose2D[] a, Pose2D diff) {
+        double pathLength = 0;
+        for(int i = 0; i < a.length-1; i++)
+            pathLength += Math.hypot(a[i].x-a[i+1].x, a[i].y-a[i+1].y);
+        ElapsedTime timer = new ElapsedTime();
+        double timeForPath = pathLength/followerWrapper.SPEED_PERCENT*18.0;
+
         //Sets the path for follower
         followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
 
         double initBehind = distanceLocalizer.getBack();
         double initRight = distanceLocalizer.getRight();
 
-        while (followerWrapper.getFollower() != null && opModeIsActive() &&
+        while (timer.seconds() <= timeForPath &&
+                followerWrapper.getFollower() != null && opModeIsActive() &&
                 (Math.abs((distanceLocalizer.getBack()-initBehind)-diff.x)<=2 ||
                 Math.abs((distanceLocalizer.getRight()-initRight)-diff.y)<=2)) {
             //Runs until end of path is reached
