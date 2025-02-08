@@ -226,6 +226,10 @@ public class Board {
         }
     }
 
+    /**
+     * Sets small claw
+     * @param c open is false, closed is true
+     */
     public void setTinyGrab (boolean c) {
         tinyGrab.setPosition(c ? 0.25 : 1);
     }

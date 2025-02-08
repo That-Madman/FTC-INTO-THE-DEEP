@@ -60,7 +60,7 @@ public class ObserveAuto extends WheelOp {
     final private Pose2D[] score = new Pose2D[] {
             new Pose2D(10, -20),
             new Pose2D(11, -10),
-            new Pose2D(19, -8)
+            new Pose2D(19, 6)
     };
 
     final private Pose2D[] breatheBack = new Pose2D[] {
