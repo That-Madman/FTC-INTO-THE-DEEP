@@ -19,8 +19,8 @@ public class NetAuto extends WheelOp {
     };
 
     Pose2D[] toOrange = new Pose2D[] {
-            new Pose2D(14, 47),
-            new Pose2D(14, 47),
+            new Pose2D(8, 47),
+            new Pose2D(8, 47),
     };
     Pose2D[] toYellow = new Pose2D[] {
 
