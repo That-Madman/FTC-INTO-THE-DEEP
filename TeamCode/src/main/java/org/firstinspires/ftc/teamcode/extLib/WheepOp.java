@@ -95,6 +95,44 @@ public abstract class WheepOp extends LinearOpMode {
             telemetry.update();
         }
     }
+
+    protected void followPath(Pose2D[] a, double seconds) {
+        followerWrapper.setPath(followerWrapper.getPose(), new Path(followerWrapper.getPose(), a));
+        ElapsedTime timer = new ElapsedTime();
+
+        while (timer.seconds() <= seconds &&
+                followerWrapper.getFollower() != null && opModeIsActive()) { //Runs until end of path is reached
+            //behind.update();
+            //right.update();
+            followerWrapper.updatePose(board.getCurrentPose()); //Updates position
+            double[] vectorCom = followerWrapper.follow(); //Gets the movement vector
+            board.drive(vectorCom[0], -vectorCom[1], -vectorCom[2]); //Uses vector to power motors
+
+            telemetry.addData("Position",
+                    followerWrapper.getPose().x + ", " +
+                            followerWrapper.getPose().y + ", " +
+                            followerWrapper.getPose().h);
+            telemetry.addData("Vector", Arrays.toString(vectorCom));
+
+            telemetry.addLine();
+            if (followerWrapper.getFollower() != null) {
+                Pose2D goal = a[followerWrapper.getCurrentWayPoint() + 1];
+                telemetry.addData("Goal",
+                        goal.x + ", " +
+                                goal.y + ", " +
+                                goal.h);
+
+                /*telemetry.addData("Movement",
+                          followerWrapper.followerValues().x + ", " +
+                                followerWrapper.followerValues().y + ", " +
+                                followerWrapper.followerValues().h);*/
+            }
+
+            telemetry.update();
+        }
+        board.drive(0, 0, 0);
+    }
+
     protected void followPath(Pose2D[] a, Pose2D diff) {
         double pathLength = 0;
         for(int i = 0; i < a.length-1; i++)

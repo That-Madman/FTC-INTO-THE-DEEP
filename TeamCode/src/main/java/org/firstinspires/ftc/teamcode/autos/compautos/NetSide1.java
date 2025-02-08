@@ -14,7 +14,7 @@ import Wheelie.Pose2D;
 public class NetSide1 extends WheepOp {
         final private Pose2D[] toNet1 = new Pose2D[]{
             new Pose2D(0, 0, 0),
-            new Pose2D(-14, 1, 0),
+            new Pose2D(-18.5, 1, 0),
     };
 
     //make arm slower
@@ -27,9 +27,9 @@ public class NetSide1 extends WheepOp {
     //ran straight into wall once
 
     final private Pose2D[] park1 = new Pose2D[] {
-            new Pose2D(-14, 0, 0),
-            new Pose2D(-6, 0, 0),
-            new Pose2D(-6, 50, 0),
+            new Pose2D(-18.5, 0, 0),
+            new Pose2D(-5, 0, 0),
+            new Pose2D(-5, 50, 0),
             new Pose2D(14, 50, 0)
     };
 
@@ -50,13 +50,13 @@ public class NetSide1 extends WheepOp {
 
     @Override
     public void run() {
-        followPath(toNet1, new Pose2D(-12, 1));
+        followPath(toNet1, new Pose2D(-18.5, 1));
         //followPath(rotate);
         //scoring preset sample
 
         timer = new ElapsedTime();
         while (timer.seconds() < 5 && opModeIsActive()&&(Math.abs(Board.netExt - board.getExtentPosition()) > 50 ||
-                Math.abs(board.getArmPosition() - 920) > 20)) {
+                Math.abs(board.getArmPosition() - Board.ARM_NET) > 20)) {
             distanceLocalizer.update();
             board.powerArm(-1./750.*(920-board.getArmPosition()));
             if(Math.abs(board.getArmPosition()) >= 460){
@@ -79,9 +79,9 @@ public class NetSide1 extends WheepOp {
 
         timer = new ElapsedTime();
         while (timer.seconds() < 5 &&opModeIsActive()&&(Math.abs(board.getExtentPosition()) > 50 ||
-                Math.abs(board.getArmPosition() - 250) > 20)) {
+                Math.abs(board.getArmPosition() - 300) > 20)) {
             distanceLocalizer.update();
-            board.powerArm(-1./750.*(250 -board.getArmPosition()));
+            board.powerArm(-1./750.*(300 -board.getArmPosition()));
             board.powerExtent(-board.getExtentPosition()*1./100.);
             //maintain();
 
@@ -89,11 +89,9 @@ public class NetSide1 extends WheepOp {
             telemetry.addData("Extent", board.getExtentPosition());
             telemetry.update();
         }
-        board.setWristPosition(0);
-        followPath(park1);
-        board.powerArm(-.25);
-        sleep(5);
-        board.powerArm(0);
+        followPath(park1, 7);
+        board.powerArm(-0.6);
+        sleep(2000);
         while(opModeIsActive()) {
             telemetry.addLine("complete");
             //maintain();

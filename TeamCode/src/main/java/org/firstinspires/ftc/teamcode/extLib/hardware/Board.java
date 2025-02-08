@@ -25,7 +25,7 @@ public class Board {
    private DcMotorEx lFulcrum, rFulcrum, extent;
    private final int fulMin = 15, fulMax = 800;
    public static final int subExt = 4000, netExt = -4300, defaultExt = 15;
-   public static final int ARM_NET = 920, PICK_UP = 220;
+   public static final int ARM_NET = 980, PICK_UP = 220;
 
    private Servo wristClaw, claw;
 

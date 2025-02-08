@@ -28,7 +28,7 @@ public class PathFollowerWrapper {
     private Pose2D maintainPoint;
 
     //The max speed of the motors
-    public double SPEED_PERCENT = .85;
+    public double SPEED_PERCENT = .75;
 
     //The acceptable margin of error in inches and radians
     public final double MAX_TRANSLATION_ERROR = 2, MAX_ROTATION_ERROR = Math.toRadians (5);
