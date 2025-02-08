@@ -231,7 +231,7 @@ public class MainTele extends OpMode {
         }
 
         // Rumbles in last 15 seconds
-        if (getRuntime() >= 105) {
+        if (getRuntime() >= 135) {
             gamepad1.rumble(15000);
             gamepad2.rumble(15000);
         }
