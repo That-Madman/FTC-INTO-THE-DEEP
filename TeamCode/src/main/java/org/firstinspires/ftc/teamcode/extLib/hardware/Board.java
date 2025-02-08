@@ -133,10 +133,10 @@ public class Board {
         t1 = hwMap.get(TouchSensor.class, "t1");
         t2 = hwMap.get(TouchSensor.class, "t2");
 
-        /* TODO: UNCOMMENT WHEN NEEDED
-        cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
-        cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
-         */
+         //TODO: UNCOMMENT WHEN NEEDED
+        //cSensor = hwMap.get(ColorRangeSensor.class, "cSensor");
+        //cSensor2 = hwMap.get(ColorRangeSensor.class, "Csensor2");
+
 
 //        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
 //        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
