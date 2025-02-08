@@ -8,22 +8,38 @@ import Wheelie.Pose2D;
 
 @Autonomous
 public class NetAuto extends WheelOp {
-    Pose2D[] toBucket1 = new Pose2D[] {
-            new Pose2D(5, 0),
-            new Pose2D(5, 20),
-            new Pose2D(2, 20)
+    Pose2D[] toRed = new Pose2D[] {
+            new Pose2D(18, 0),
+            new Pose2D(18, 0),
     };
 
-    Pose2D[] grab1 = new Pose2D[] {
-            new Pose2D(4,18),
-            new Pose2D(6,16),
+    Pose2D[] toPink = new Pose2D[] {
+            new Pose2D(18, 46),
+            new Pose2D(18, 46),
     };
 
-    Pose2D[] toBucket2 = new Pose2D[] {
-            new Pose2D(4, 18),
-            new Pose2D(2, 20)
+    Pose2D[] toOrange = new Pose2D[] {
+            new Pose2D(8, 47),
+            new Pose2D(8, 47),
     };
+    Pose2D[] toYellow = new Pose2D[] {
 
+    };
+    Pose2D[] toBlue = new Pose2D[]{
+
+    };
+    Pose2D[] toGrey = new Pose2D[]{
+
+    };
+    Pose2D[] toGreen = new Pose2D[]{
+
+    };
+    Pose2D[] toBrown = new Pose2D[]{
+
+    };
+    Pose2D[] toPurple = new Pose2D[]{
+
+    };
     @Override
     public void onInit() {
         board.setBigGrab(true);
@@ -32,10 +48,20 @@ public class NetAuto extends WheelOp {
 
     @Override
     public void run() {
+        followPath(toRed);
+        sleep(100);
+        followPath(toPink);
+        sleep(100);
+        board.setLift(2700);
         board.setRot((byte) 2);
+        sleep(100);
+        followPath(toOrange);
+
+
+        /*board.setRot((byte) 2);
         board.setLift(2700);
 
-        followPath(toBucket1);
+        followPath(toRed);
 
         board.setBigGrab(false);
         board.setTinyGrab(false);
@@ -43,15 +69,15 @@ public class NetAuto extends WheelOp {
 
         board.setLift(0);
 
-        followPath(grab1);
+        followPath(toPink);
 
         board.setReach((byte) 1);
 
         board.setPick(false);
-        board.setSwivel((byte) 2);
+        board.setSwivel((byte) 2);*/
 
         { //Block of Handoff
-            board.setRot((byte) 0);
+           /* board.setRot((byte) 0);
             board.setBigGrab(false);
             board.setTinyGrab(false);
 
@@ -79,17 +105,18 @@ public class NetAuto extends WheelOp {
             board.setBigGrab(true);
             sleep(150);
 
-            board.setRot((byte) 2);
+            board.setRot((byte) 2);/*
         }
 
-        board.setLift(2700);
+        /*board.setLift(2700);
 
-        followPath(toBucket2);
+        followPath(toOrange);
 
         board.setBigGrab(false);
         board.setTinyGrab(false);
         sleep(500);
 
-        board.setLift(0);
-    }
-}
+        board.setLift(0);*/
+
+
+        }}}
