@@ -49,20 +49,30 @@ public class ObserveAuto extends WheelOp {
 
     final private Pose2D[] breathingSpace = new Pose2D[] {
             new Pose2D(8, -44),
-            new Pose2D(15, -44)
+            new Pose2D(20, -44)
     };
 
     final private Pose2D[] unbreathingSpace = new Pose2D[] {
             new Pose2D(9, -44),
-            new Pose2D(7, -44)
+            new Pose2D(4, -44)
     };
 
     final private Pose2D[] score = new Pose2D[] {
             new Pose2D(10, -20),
             new Pose2D(11, -10),
-            new Pose2D(19, 8)
+            new Pose2D(19, -8)
     };
 
+    final private Pose2D[] breatheBack = new Pose2D[] {
+            new Pose2D(10, -20),
+            new Pose2D(9, -44),
+            new Pose2D(20, -44)
+    };
+
+    final private Pose2D[] park = new Pose2D[] {
+            new Pose2D(9, -8),
+            new Pose2D(7, -44)
+    };
 
     @Override
     public void onInit() {
@@ -103,6 +113,8 @@ public class ObserveAuto extends WheelOp {
 
         followPath(push2);
 
+        //Should be good up to here
+
         followPath(breathingSpace);
 
         board.setRot((byte) 1);
@@ -113,8 +125,10 @@ public class ObserveAuto extends WheelOp {
 
         board.setTinyGrab(true);
         board.setBigGrab(true);
+        sleep(250);
 
         board.setRot((byte) 4);
+        board.setLift(850);
 
         followPath(score);
         moveUntilTouch();
@@ -127,5 +141,32 @@ public class ObserveAuto extends WheelOp {
 
         board.setLift(0);
         board.drive(0,0,0);
+
+        followPath(breatheBack);
+
+        board.setRot((byte) 1);
+
+        followPath(unbreathingSpace);
+
+        board.setTinyGrab(true);
+        board.setBigGrab(true);
+        sleep(250);
+
+        board.setRot((byte) 4);
+        board.setLift(850);
+
+        followPath(score);
+        moveUntilTouch();
+
+        board.setRot((byte) 3);
+        sleep (1000);
+
+        board.setTinyGrab(false);
+        board.setBigGrab(false);
+
+        board.setLift(0);
+        board.drive(0,0,0);
+
+        followPath(park);
    }
 }
