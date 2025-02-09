@@ -19,14 +19,16 @@ public class NetAuto extends WheelOp {
     };
 
     Pose2D[] toOrange = new Pose2D[] {
-            new Pose2D(8, 47),
-            new Pose2D(8, 47),
+            new Pose2D(8, 48),
+            new Pose2D(8, 48),
     };
     Pose2D[] toYellow = new Pose2D[] {
-
+        new Pose2D(8, 32),
+        new Pose2D(8, 32),
     };
     Pose2D[] toBlue = new Pose2D[]{
-
+        new Pose2D(20, 32),
+        new Pose2D(20,32),
     };
     Pose2D[] toGrey = new Pose2D[]{
 
@@ -50,12 +52,32 @@ public class NetAuto extends WheelOp {
     public void run() {
         followPath(toRed);
         sleep(100);
+
         followPath(toPink);
         sleep(100);
+
         board.setLift(2700);
         board.setRot((byte) 2);
-        sleep(100);
+        sleep(500);
+
         followPath(toOrange);
+        sleep(100);
+
+        board.setBigGrab(false);
+        board.setTinyGrab(false);
+        sleep(1000);
+
+        board.setRot((byte) 0);
+
+        board.setLift(0);
+        sleep(100);
+
+        followPath(toYellow);
+        sleep(50);
+        followPath(toBlue);
+        sleep(50);
+
+
 
 
         /*board.setRot((byte) 2);
