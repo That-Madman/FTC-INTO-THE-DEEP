@@ -122,6 +122,9 @@ public class Board {
         r2.setDirection(Servo.Direction.REVERSE);
 
         pick = hwMap.get(Servo.class, "pick");
+
+        pick.setDirection(Servo.Direction.REVERSE);
+
         swivel = hwMap.get(Servo.class, "swivel");
 
         setPick(false);
