@@ -244,8 +244,8 @@ public class Board {
     public void setRot (byte u) {
         switch (u) {
             case 0:
-                lRot.setPosition(0);
-                rRot.setPosition(0);
+                lRot.setPosition(0.1);
+                rRot.setPosition(0.1);
                 mRot.setPosition(0);
                 break;
             case 1:
@@ -272,7 +272,7 @@ public class Board {
     }
 
     public void setPick (boolean c) {
-        pick.setPosition(c ? 0.5 : 1);
+        pick.setPosition(c ? 0 : 1);
     }
 
     public boolean getTouched () {

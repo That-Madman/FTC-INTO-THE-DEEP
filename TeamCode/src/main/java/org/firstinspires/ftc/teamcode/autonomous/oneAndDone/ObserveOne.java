@@ -60,7 +60,7 @@ public class ObserveOne extends WheelOp {
         board.setAscentScrews(0, 0);
 
         board.setRot((byte) 4);
-        board.setLift(850);
+        board.setLift(900);
         board.setSwivel((byte) 0);
 
        followPath(forward);
